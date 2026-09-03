@@ -77,6 +77,19 @@ def authenticate_new_channel():
         with urllib.request.urlopen(req_put) as r:
             print(f"[+] GitHub Cloud Secret 'YOUTUBE_TOKEN_JSON' updated! (HTTP {r.status})")
 
+        # Also push new YOUTUBE_CLIENT_SECRETS
+        client_str = CLIENT_SECRETS_FILE.read_text(encoding="utf-8")
+        enc_client = base64.b64encode(sealed_box.encrypt(client_str.encode("utf-8"))).decode("utf-8")
+        put_c_url = f"https://api.github.com/repos/{GITHUB_OWNER}/{GITHUB_REPO}/actions/secrets/YOUTUBE_CLIENT_SECRETS"
+        req_put_c = urllib.request.Request(put_c_url, data=json.dumps({"encrypted_value": enc_client, "key_id": key_id}).encode("utf-8"), method="PUT", headers={
+            "Authorization": f"Bearer {GITHUB_TOKEN}",
+            "Accept": "application/vnd.github.v3+json",
+            "User-Agent": "TimberCraft",
+            "Content-Type": "application/json"
+        })
+        with urllib.request.urlopen(req_put_c) as rc:
+            print(f"[+] GitHub Cloud Secret 'YOUTUBE_CLIENT_SECRETS' updated! (HTTP {rc.status})")
+
         print("\n" + "=" * 80)
         print("[+] YOUR NEW CHANNEL IS NOW CONNECTED TO CLOUD AUTOMATION!")
         print("=" * 80 + "\n")
