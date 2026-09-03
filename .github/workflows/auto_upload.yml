@@ -48,11 +48,13 @@ jobs:
           python-version: '3.13'
           cache: 'pip'
 
-      # 3. Verify FFmpeg (Pre-installed on Ubuntu runners)
-      - name: Verify FFmpeg
+      # 3. Install FFmpeg & FFprobe
+      - name: Install FFmpeg & FFprobe
         run: |
-          ffmpeg -version | head -n 1
-          ffprobe -version | head -n 1
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          which ffmpeg && ffmpeg -version | head -n 1
+          which ffprobe && ffprobe -version | head -n 1
 
       # 4. Install Python Dependencies
       - name: Install Python Dependencies
