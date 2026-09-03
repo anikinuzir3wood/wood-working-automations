@@ -1,6 +1,7 @@
 {
   "processed_ids": [
-    "64f527fd000000001e03f043"
+    "64f527fd000000001e03f043",
+    "67acb36a000000002903f7ac"
   ],
   "history": [
     {
@@ -10,6 +11,15 @@
       "output_file": "output/TimberCraft_20260903_124125.mp4",
       "youtube_id": null,
       "processed_at": "2026-09-03T12:52:52.685530",
+      "status": "COMPLETED"
+    },
+    {
+      "item_id": "67acb36a000000002903f7ac",
+      "account": "wooden_man",
+      "title": "The Ancient Sandalwood Lock",
+      "output_file": "/home/runner/work/wood-working-automations/wood-working-automations/output/TimberCraft_20260903_081944.mp4",
+      "youtube_id": "mock_1788423748",
+      "processed_at": "2026-09-03T08:22:31.237394",
       "status": "COMPLETED"
     }
   ]
