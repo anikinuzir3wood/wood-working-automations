@@ -87,11 +87,27 @@ jobs:
           echo "[*] Adding organic anti-bot jitter: sleeping ${JITTER}s..."
           sleep $JITTER
 
-      # 8. Run TimberCraft Master Autopilot (Safe Mode: defaults to dry_run until user chooses channel)
+      # 8. Launch Date Gate — automation starts Sep 5, 2026
+      - name: Check Launch Date
+        id: launch_gate
+        if: github.event_name == 'schedule'
+        run: |
+          TODAY=$(date -u +%Y%m%d)
+          LAUNCH="20260905"
+          if [ "$TODAY" -lt "$LAUNCH" ]; then
+            echo "[*] Launch date is Sep 5. Today is $(date -u +%Y-%m-%d). Skipping."
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "[+] Launch date reached! Let's go."
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
+      # 9. Run TimberCraft Master Autopilot (LIVE MODE — gated by launch date)
       - name: Run Master Autopilot
+        if: steps.launch_gate.outputs.skip != 'true'
         env:
           GITHUB_ACTIONS: 'true'
-          DRY_RUN: ${{ github.event.inputs.dry_run || 'true' }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
           SKIP_WAIT: ${{ github.event.inputs.skip_wait || 'false' }}
         run: |
           CMD_FLAGS="--run-next --ci-mode"
@@ -104,7 +120,7 @@ jobs:
           echo "[*] Running: python auto_pilot.py $CMD_FLAGS"
           python auto_pilot.py $CMD_FLAGS
 
-      # 9. Commit & Push Updated Queue + Processed History
+      # 10. Commit & Push Updated Queue + Processed History
       - name: Commit Processing History & Queue
         run: |
           git config user.name "TimberCraft Cloud Bot"
@@ -118,7 +134,7 @@ jobs:
             echo "[+] Queue and history successfully committed to cloud repo."
           fi
 
-      # 10. Clean up sensitive credentials & temporary renders
+      # 11. Clean up sensitive credentials & temporary renders
       - name: Cleanup Sensitive Artifacts
         if: always()
         run: |
