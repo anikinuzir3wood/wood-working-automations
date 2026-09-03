@@ -87,11 +87,11 @@ jobs:
           echo "[*] Adding organic anti-bot jitter: sleeping ${JITTER}s..."
           sleep $JITTER
 
-      # 8. Run TimberCraft Master Autopilot
+      # 8. Run TimberCraft Master Autopilot (Safe Mode: defaults to dry_run until user chooses channel)
       - name: Run Master Autopilot
         env:
           GITHUB_ACTIONS: 'true'
-          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'true' }}
           SKIP_WAIT: ${{ github.event.inputs.skip_wait || 'false' }}
         run: |
           CMD_FLAGS="--run-next --ci-mode"

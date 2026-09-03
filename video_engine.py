@@ -152,50 +152,12 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
         output_thumb_path: Path
     ) -> Path:
         """
-        Extracts peak action frame at 38% duration, applies 8% crop, scale, color grade,
-        and bakes in the Masthead text banner at y=110 safezone (WCAG 21:1 pure white on 85% black).
+        Uses pro ThumbnailEngine for glassmorphic pill badges, 3D shadow headlines,
+        wood grain micro-contrast, and macro inspection reticles.
         """
-        masthead_title = plan.get("masthead_text", "ZERO NAILS USED")
-        font_size = 58 if len(masthead_title) > 22 else 72
-        
-        # Cross-platform font resolution (Windows vs Linux CI)
-        import platform
-        font_param = ""
-        if platform.system() == "Windows":
-            font_param = "fontfile='C\\:/Windows/Fonts/arialbd.ttf':"
-        else:
-            for f_cand in ["/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", "/usr/share/fonts/truetype/freefont/FreeSansBold.ttf"]:
-                if Path(f_cand).exists():
-                    font_param = f"fontfile='{f_cand}':"
-                    break
-
-        color_grade = (
-            "curves=r='0/0 0.5/0.53 1/1':b='0/0 0.5/0.47 1/1',"
-            "eq=contrast=1.14:saturation=1.22,"
-            "unsharp=5:5:0.8:5:5:0.0"
-        )
-        draw_masthead = (
-            f"drawtext=text='{masthead_title}':"
-            f"{font_param}fontcolor=white:fontsize={font_size}:"
-            f"x=(w-text_w)/2:y={MASTHEAD_Y}:"
-            f"box=1:boxcolor=black@0.85:boxborderw=24"
-        )
-
-        seek_time = max(plan.get("target_duration", 34.0) * 0.38, 2.0)
-        vf = f"crop=in_w*{CROP_FACTOR}:in_h*{CROP_FACTOR},scale={VIDEO_WIDTH}:{VIDEO_HEIGHT},hflip,{color_grade},{draw_masthead}"
-
-        cmd = [
-            "ffmpeg", "-y",
-            "-ss", str(seek_time),
-            "-i", str(raw_video_path),
-            "-vframes", "1",
-            "-vf", vf,
-            "-q:v", "2",
-            str(output_thumb_path)
-        ]
-        subprocess.run(cmd, check=True, capture_output=True)
-        print(f"[+] Custom Honest Masthead Thumbnail generated: {output_thumb_path}")
-        return output_thumb_path
+        from thumbnail_engine import ThumbnailEngine
+        te = ThumbnailEngine()
+        return te.render_high_ctr_thumbnail(raw_video_path, plan, output_thumb_path)
 
     def assemble_human_touch_short(
         self,
