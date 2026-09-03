@@ -1,0 +1,25 @@
+{
+  "tracks": [
+    {
+      "filename": "woodworking_zen_pizzicato.wav",
+      "mood": "chisel_asmr",
+      "title": "Zen Pizzicato Chisel Bed",
+      "reuse_count": 9,
+      "source": "local_acoustic_studio"
+    },
+    {
+      "filename": "ancient_temple_marimba.wav",
+      "mood": "temple_joint",
+      "title": "Ancient Temple Resonance",
+      "reuse_count": 0,
+      "source": "local_acoustic_studio"
+    },
+    {
+      "filename": "kumiko_acoustic_drone.wav",
+      "mood": "kumiko_lattice",
+      "title": "Kumiko Harmonic Lattice Drone",
+      "reuse_count": 0,
+      "source": "local_acoustic_studio"
+    }
+  ]
+}

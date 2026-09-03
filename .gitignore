@@ -1,0 +1,14 @@
+# Large rendered output and temporary scratch files
+scratch/
+output/
+__pycache__/
+
+# Secrets - stored in GitHub Actions Secrets, NEVER in repo
+token.json
+client_secrets.json
+ai33_config.json
+
+# System files
+*.pyc
+.DS_Store
+Thumbs.db

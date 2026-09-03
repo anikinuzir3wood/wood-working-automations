@@ -1,0 +1,124 @@
+name: TimberCraft Auto-Upload Pipeline
+
+on:
+  # Cron Schedule: 2 PM EDT (18:00 UTC) & 8 PM EDT (00:00 UTC)
+  schedule:
+    - cron: '0 18 * * *'   # Slot 1: 2:00 PM EDT daily (11:30 PM IST)
+    - cron: '0 0 * * *'    # Slot 2: 8:00 PM EDT daily (5:30 AM IST)
+
+  # Manual trigger from GitHub Actions tab
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Run in dry-run mode (simulates upload without touching live YouTube)'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+      skip_wait:
+        description: 'Skip 3-minute Content ID wait buffer'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+
+permissions:
+  contents: write
+
+jobs:
+  render-and-upload:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      # 1. Checkout repository with full history
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # 2. Setup Python 3.13
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: 'pip'
+
+      # 3. Verify FFmpeg (Pre-installed on Ubuntu runners)
+      - name: Verify FFmpeg
+        run: |
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
+
+      # 4. Install Python Dependencies
+      - name: Install Python Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # 5. Inject Credentials from GitHub Secrets
+      - name: Inject Credentials
+        env:
+          YOUTUBE_TOKEN: ${{ secrets.YOUTUBE_TOKEN_JSON }}
+          CLIENT_SECRETS: ${{ secrets.YOUTUBE_CLIENT_SECRETS }}
+          AI33_CONFIG: ${{ secrets.AI33_CONFIG_JSON }}
+        run: |
+          echo "$YOUTUBE_TOKEN" > token.json
+          echo "$CLIENT_SECRETS" > client_secrets.json
+          echo "$AI33_CONFIG" > ai33_config.json
+          echo "[+] Credentials configured securely."
+
+      # 6. Ensure Required Directories Exist
+      - name: Ensure Directories
+        run: |
+          mkdir -p scratch output assets/foley assets/overlays assets/raw_sources
+
+      # 7. Anti-Bot Organic Jitter (Schedule runs only)
+      - name: Anti-Bot Organic Jitter
+        if: github.event_name == 'schedule'
+        run: |
+          JITTER=$(( RANDOM % 600 + 60 ))
+          echo "[*] Adding organic anti-bot jitter: sleeping ${JITTER}s..."
+          sleep $JITTER
+
+      # 8. Run TimberCraft Master Autopilot
+      - name: Run Master Autopilot
+        env:
+          GITHUB_ACTIONS: 'true'
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+          SKIP_WAIT: ${{ github.event.inputs.skip_wait || 'false' }}
+        run: |
+          CMD_FLAGS="--run-next --ci-mode"
+          if [ "$DRY_RUN" = "true" ]; then
+            CMD_FLAGS="$CMD_FLAGS --dry-run"
+          fi
+          if [ "$SKIP_WAIT" = "true" ]; then
+            CMD_FLAGS="$CMD_FLAGS --skip-wait"
+          fi
+          echo "[*] Running: python auto_pilot.py $CMD_FLAGS"
+          python auto_pilot.py $CMD_FLAGS
+
+      # 9. Commit & Push Updated Queue + Processed History
+      - name: Commit Processing History & Queue
+        run: |
+          git config user.name "TimberCraft Cloud Bot"
+          git config user.email "bot@timbercraft.auto"
+          git add video_queue.json processed_history.json assets/music/music_library.json
+          if git diff --staged --quiet; then
+            echo "[*] No queue or history changes to commit."
+          else
+            git commit -m "?? [TimberCraft Cloud] Processed short: $(date -u +'%Y-%m-%d %H:%M:%SZ')"
+            git push origin master
+            echo "[+] Queue and history successfully committed to cloud repo."
+          fi
+
+      # 10. Clean up sensitive credentials & temporary renders
+      - name: Cleanup Sensitive Artifacts
+        if: always()
+        run: |
+          rm -f token.json client_secrets.json ai33_config.json
+          rm -rf scratch/*
