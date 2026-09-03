@@ -39,7 +39,8 @@ class TimberCraftPipeline:
         self,
         raw_video_path: Path,
         video_title: str = "The Impossible Joint",
-        custom_plan: dict = None
+        custom_plan: dict = None,
+        extra_plan_flags: dict = None
     ) -> Path:
         """Executes the full automated transformation on a raw video."""
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -53,6 +54,9 @@ class TimberCraftPipeline:
 
         # 2. Generate Director Script & Human Touch Directives
         plan = custom_plan or self.director.generate_short_plan()
+        # Merge any extra flags (e.g. has_foreign_captions) into plan
+        if extra_plan_flags:
+            plan.update(extra_plan_flags)
         print(f"[2/5] AI Director Plan Ready:")
         print(f"      - Title: {plan['title']}")
         print(f"      - Masthead: {plan['masthead_text']}")

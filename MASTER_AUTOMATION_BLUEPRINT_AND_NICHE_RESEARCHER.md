@@ -51,6 +51,7 @@
    * **HARD REJECT:** Any video with **bouncing/jumping/floating watermarks** that move across the frame. These are impossible to remove cleanly.
    * **ALLOWED (with edit):** Small **static watermarks** in a corner can be cropped or masked out during the 8% smart crop phase.
    * **ALLOWED (with trim):** If the video **thumbnail/first frame has text** but the actual video content is clean, simply **trim the thumbnail intro portion** (first 1-2 seconds) and use the clean remainder.
+   * **ALLOWED (with caption swap):** If the video has **Chinese captions/subtitles burned in**, apply a **localized blur mask** over the original caption area and overlay our own **English narration captions** on top. This both removes the foreign text and adds original editorial value.
    * **Qualified (Goldmine):** 100% pure camera recordings, clean telephoto/macro optics, zero subtitles, and natural field sound.
 
 4. **Pacing & Hook Philosophy:**

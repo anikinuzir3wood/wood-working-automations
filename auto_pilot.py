@@ -81,7 +81,13 @@ class TimberCraftAutopilot:
         print(f"[+] Using Raw Footage Source: {raw_source.name} ({raw_source.stat().st_size / (1024*1024):.2f} MB)")
 
         # 1. Execute Pipeline Render
-        final_video = self.pipeline.run(raw_source, video_title=title_theme)
+        # Pass foreign captions flag so video engine can blur Chinese subs
+        extra_plan_flags = {}
+        if item.get("has_foreign_captions"):
+            extra_plan_flags["has_foreign_captions"] = True
+            print("[*] Source flagged with foreign captions — blur + English overlay will be applied.")
+
+        final_video = self.pipeline.run(raw_source, video_title=title_theme, extra_plan_flags=extra_plan_flags)
         meta_file = final_video.with_name(final_video.stem + "_metadata.json")
 
         with open(meta_file, "r", encoding="utf-8") as f:

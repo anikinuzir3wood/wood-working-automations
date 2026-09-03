@@ -234,8 +234,20 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 
         # Video Filter Chain
         # Loop raw video, crop 8%, scale, hflip, grade, add masthead
+        # Foreign Caption Blur: If source has Chinese subtitles, blur bottom 15% before our overlays
+        caption_blur_filter = ""
+        if plan.get("has_foreign_captions", False):
+            # Localized Gaussian blur on bottom 15% of frame where Chinese subs typically sit
+            # boxblur=20:20 creates a strong enough blur to erase burned-in text
+            caption_blur_filter = (
+                f"split[main][blur_src];"
+                f"[blur_src]crop=in_w:in_h*0.15:0:in_h*0.85,boxblur=25:25[blurred];"
+                f"[main][blurred]overlay=0:H*0.85,"
+            )
+            print("[*] Foreign caption blur enabled (bottom 15% zone)")
+
         vf_parts = [
-            f"[0:v]crop=in_w*{CROP_FACTOR}:in_h*{CROP_FACTOR},scale={VIDEO_WIDTH}:{VIDEO_HEIGHT},hflip,{color_grade},{draw_masthead}[base]"
+            f"[0:v]crop=in_w*{CROP_FACTOR}:in_h*{CROP_FACTOR},scale={VIDEO_WIDTH}:{VIDEO_HEIGHT},hflip,{caption_blur_filter}{color_grade},{draw_masthead}[base]"
         ]
 
         current_layer = "[base]"
