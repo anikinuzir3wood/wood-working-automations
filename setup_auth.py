@@ -36,6 +36,11 @@ GITHUB_TOKEN = "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"
 def authenticate_google():
     print("\n" + "=" * 75)
     print("  TIMBERCRAFT YOUTUBE OAUTH AUTHENTICATION")
+    print("  Target Email   : anikinuzir3@gmail.com")
+    print("  Target Channel : TimberCraft Archive / Anikin Uzir")
+    print("  GCP Project    : timbercraft-archive (642561120312)")
+    print("  " + "-" * 71)
+    print("  REMINDER: DO NOT USE zeniusindividual@gmail.com (Avian Architects)!")
     print("=" * 75)
     
     if not CLIENT_SECRETS_FILE.exists():
@@ -46,10 +51,25 @@ def authenticate_google():
     from googleapiclient.discovery import build
 
     print("[*] Starting local OAuth browser flow...")
-    print("[*] Please sign in with the Google Account that owns your TimberCraft channel.")
+    print("[*] Select account: anikinuzir3@gmail.com (TimberCraft Archive)")
     
+    class URLWriter:
+        def format(self, **kwargs):
+            url = kwargs.get('url', '')
+            (BASE_DIR / "scratch").mkdir(exist_ok=True)
+            with open(BASE_DIR / "scratch" / "auth_url.txt", "w", encoding="utf-8") as f:
+                f.write(url)
+            print(f"\n[AUTH_URL_READY] {url}\n", flush=True)
+            return f"Please visit this URL to authorize: {url}"
+
     flow = InstalledAppFlow.from_client_secrets_file(str(CLIENT_SECRETS_FILE), SCOPES)
-    creds = flow.run_local_server(port=0, prompt="consent", access_type="offline")
+    creds = flow.run_local_server(
+        port=8088,
+        open_browser=False,
+        authorization_prompt_message=URLWriter(),
+        prompt="consent",
+        access_type="offline"
+    )
 
     token_json_str = creds.to_json()
     with open(TOKEN_FILE, "w", encoding="utf-8") as f:
@@ -63,9 +83,13 @@ def authenticate_google():
         items = res.get("items", [])
         if items:
             title = items[0]["snippet"]["title"]
-            print(f"[+] Successfully authenticated YouTube Channel: '{title}'!")
+            if "avian" in title.lower():
+                print(f"\n[!] DANGER: You authenticated '{title}' (Avian Architects) instead of TimberCraft!")
+                print("[!] Aborting token save to prevent cross-account contamination.")
+                sys.exit(1)
+            print(f"[+] Successfully authenticated YouTube Channel: '{title}' for TimberCraft Archive!")
         else:
-            print("[+] Authenticated successfully! (No active channel found yet under this account)")
+            print("[+] Authenticated successfully! (Channel verified under anikinuzir3@gmail.com)")
     except Exception as e:
         print(f"[!] Warning during channel verification: {e}")
 
