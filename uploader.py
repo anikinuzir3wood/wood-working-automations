@@ -64,24 +64,31 @@ class YouTubeUploader:
                 creds = Credentials.from_authorized_user_file(str(TOKEN_FILE), SCOPES)
 
             if not creds or not creds.valid:
+                refresh_success = False
                 if creds and creds.expired and creds.refresh_token:
-                    print("[*] Refreshing expired YouTube OAuth2 credentials...")
-                    creds.refresh(Request())
-                    with open(TOKEN_FILE, "w") as token:
-                        token.write(creds.to_json())
-                elif os.environ.get("GITHUB_ACTIONS") == "true":
-                    print("[!] Running in CI: Interactive OAuth login not possible. Falling back to dry-run.")
-                    self.dry_run = True
-                    return
-                else:
+                    try:
+                        creds.refresh(Request())
+                        refresh_success = True
+                    except Exception as e:
+                        print(f"[!] Token refresh failed ({e}). Re-authenticating via OAuth flow...")
+
+                if not refresh_success:
+                    if os.getenv("GITHUB_ACTIONS") == "true":
+                        raise RuntimeError(
+                            "YouTube OAuth token is invalid/revoked (invalid_grant). "
+                            "Please run 'setup_auth.py' locally to refresh and sync credentials to GitHub Secrets."
+                        )
                     flow = InstalledAppFlow.from_client_secrets_file(str(CLIENT_SECRETS_FILE), SCOPES)
-                    creds = flow.run_local_server(port=0)
-                    with open(TOKEN_FILE, "w") as token:
-                        token.write(creds.to_json())
+                    creds = flow.run_local_server(port=0, prompt="consent", access_type="offline")
+
+                with open(TOKEN_FILE, "w") as token:
+                    token.write(creds.to_json())
 
             self.service = build("youtube", "v3", credentials=creds)
             print("[+] YouTube Data API v3 client authenticated successfully.")
         except Exception as e:
+            if os.getenv("GITHUB_ACTIONS") == "true":
+                raise e
             print(f"[!] Authentication Error: {e}. Falling back to dry-run mode.")
             self.dry_run = True
 
