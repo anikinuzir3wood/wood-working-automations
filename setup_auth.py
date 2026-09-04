@@ -87,9 +87,15 @@ def authenticate_google():
                 print(f"\n[!] DANGER: You authenticated '{title}' (Avian Architects) instead of TimberCraft!")
                 print("[!] Aborting token save to prevent cross-account contamination.")
                 sys.exit(1)
-            print(f"[+] Successfully authenticated YouTube Channel: '{title}' for TimberCraft Archive!")
+            if "timbercraft" not in title.lower():
+                print(f"\n[!] WRONG CHANNEL SELECTED: '{title}' (Personal Channel)!")
+                print("[!] You must select 'TimberCraft Archive' (Brand Account) from the list.")
+                print("[!] Aborting to prevent saving credentials for the wrong channel.")
+                sys.exit(1)
+            print(f"[+] SUCCESS! Verified YouTube Brand Channel: '{title}'!")
         else:
-            print("[+] Authenticated successfully! (Channel verified under anikinuzir3@gmail.com)")
+            print("[!] Warning: No channel found.")
+            sys.exit(1)
     except Exception as e:
         print(f"[!] Warning during channel verification: {e}")
 
