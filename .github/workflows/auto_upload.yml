@@ -25,6 +25,14 @@ on:
         options:
           - 'false'
           - 'true'
+      keep_unlisted:
+        description: 'Keep video UNLISTED (for test verification without public publishing)'
+        required: false
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
 
 permissions:
   contents: write
@@ -117,6 +125,9 @@ jobs:
           if [ "$SKIP_WAIT" = "true" ]; then
             CMD_FLAGS="$CMD_FLAGS --skip-wait"
           fi
+          if [ "${{ github.event.inputs.keep_unlisted }}" = "true" ]; then
+            CMD_FLAGS="$CMD_FLAGS --keep-unlisted"
+          fi
           echo "[*] Running: python auto_pilot.py $CMD_FLAGS"
           python auto_pilot.py $CMD_FLAGS
 
@@ -129,7 +140,7 @@ jobs:
           if git diff --staged --quiet; then
             echo "[*] No queue or history changes to commit."
           else
-            git commit -m "?? [TimberCraft Cloud] Processed short: $(date -u +'%Y-%m-%d %H:%M:%SZ')"
+            git commit -m "🤖 [TimberCraft Cloud] Processed short: $(date -u +'%Y-%m-%d %H:%M:%SZ')"
             git push origin master
             echo "[+] Queue and history successfully committed to cloud repo."
           fi

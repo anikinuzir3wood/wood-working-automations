@@ -35,7 +35,7 @@ class TimberCraftAutopilot:
         self.pipeline = TimberCraftPipeline()
         self.uploader = YouTubeUploader(dry_run=self.dry_run)
 
-    def process_next_in_queue(self, skip_upload_wait: bool = False) -> bool:
+    def process_next_in_queue(self, skip_upload_wait: bool = False, keep_unlisted: bool = False) -> bool:
         """Pulls the next pending video from queue, renders it, and executes pre-flight upload."""
         item = self.qm.get_next_pending()
         if not item:
@@ -94,7 +94,12 @@ class TimberCraftAutopilot:
             metadata = json.load(f)
 
         # 2. Execute Pre-Flight Upload
-        video_id = self.uploader.upload_preflight_short(final_video, metadata, skip_wait=skip_upload_wait)
+        video_id = self.uploader.upload_preflight_short(
+            final_video,
+            metadata,
+            skip_wait=skip_upload_wait,
+            keep_unlisted=keep_unlisted
+        )
 
         # 3. Mark Processed in History
         self.qm.mark_processed(
@@ -130,13 +135,17 @@ if __name__ == "__main__":
     parser.add_argument("--status", action="store_true", help="Display system status, queue, and next schedule slot")
     parser.add_argument("--dry-run", action="store_true", help="Run without live YouTube credentials")
     parser.add_argument("--skip-wait", action="store_true", help="Skip 3-minute Content ID wait during test")
+    parser.add_argument("--keep-unlisted", action="store_true", help="Keep video unlisted for preview/testing")
     parser.add_argument("--ci-mode", action="store_true", help="Run in GitHub Actions CI mode with automatic cleanup")
 
     args = parser.parse_args()
     autopilot = TimberCraftAutopilot(dry_run=args.dry_run)
 
     if args.run_next:
-        success = autopilot.process_next_in_queue(skip_upload_wait=args.skip_wait)
+        success = autopilot.process_next_in_queue(
+            skip_upload_wait=args.skip_wait,
+            keep_unlisted=args.keep_unlisted
+        )
         if not success:
             print("[!] Processing returned False or Queue was empty.")
             sys.exit(0)  # Don't fail CI if queue is simply empty

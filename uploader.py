@@ -97,7 +97,8 @@ class YouTubeUploader:
         video_path: Path,
         metadata: Dict[str, Any],
         thumbnail_path: Optional[Path] = None,
-        skip_wait: bool = False
+        skip_wait: bool = False,
+        keep_unlisted: bool = False
     ) -> Optional[str]:
         """
         Executes White-Hat Pre-Flight Upload Sequence:
@@ -188,14 +189,17 @@ class YouTubeUploader:
 
         # Step 4: Promote to PUBLIC
         print("[+] Content ID Scan Result: 100% CLEAN! Zero copyright restrictions.")
-        print("[*] Promoting video to PUBLIC...")
-        update_body = {
-            "id": video_id,
-            "status": {
-                "privacyStatus": "public"
+        if keep_unlisted:
+            print("[*] TEST / PREVIEW MODE: Keeping video strictly UNLISTED as requested.")
+        else:
+            print("[*] Promoting video to PUBLIC...")
+            update_body = {
+                "id": video_id,
+                "status": {
+                    "privacyStatus": "public"
+                }
             }
-        }
-        self.service.videos().update(part="status", body=update_body).execute()
+            self.service.videos().update(part="status", body=update_body).execute()
 
         # Step 4b: Upload Custom Honest Masthead Thumbnail (Part 4 of Blueprint)
         if not thumbnail_path:
