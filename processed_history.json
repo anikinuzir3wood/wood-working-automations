@@ -3,7 +3,8 @@
     "64f527fd000000001e03f043",
     "67acb36a000000002903f7ac",
     "6803c43a000000001d02f0d2",
-    "65cb662d000000000700528a"
+    "65cb662d000000000700528a",
+    "67c58d78000000002901c421"
   ],
   "history": [
     {
@@ -40,6 +41,15 @@
       "output_file": "/home/runner/work/wood-working-automations/wood-working-automations/output/TimberCraft_20260905_002338.mp4",
       "youtube_id": "5KMqpZZSOhU",
       "processed_at": "2026-09-05T00:29:20.547701",
+      "status": "COMPLETED"
+    },
+    {
+      "item_id": "67c58d78000000002901c421",
+      "account": "wood_head",
+      "title": "The Precision Mortise-Tenon Furniture Joint",
+      "output_file": "/home/runner/work/wood-working-automations/wood-working-automations/output/TimberCraft_20260905_182103.mp4",
+      "youtube_id": "VBOrR8BNBJU",
+      "processed_at": "2026-09-05T18:27:33.477799",
       "status": "COMPLETED"
     }
   ]
