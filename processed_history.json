@@ -2,7 +2,8 @@
   "processed_ids": [
     "64f527fd000000001e03f043",
     "67acb36a000000002903f7ac",
-    "6803c43a000000001d02f0d2"
+    "6803c43a000000001d02f0d2",
+    "wood_soul_gauge_01"
   ],
   "history": [
     {
@@ -31,9 +32,20 @@
       "youtube_id": "0WgWG-OJvQ8",
       "processed_at": "2026-09-04T17:16:59.177598",
       "status": "COMPLETED"
+    },
+    {
+      "item_id": "wood_soul_gauge_01",
+      "account": "wood_soul",
+      "title": "The Precision Marking Gauge Trick",
+      "output_file": "/home/runner/work/wood-working-automations/wood-working-automations/output/TimberCraft_20260906_182528.mp4",
+      "youtube_id": "anXzU0hGLl4",
+      "raw_hash": "cb42ead3ef8895161421d62049c345d5066bced48d69065f231b81b6f90d5148",
+      "processed_at": "2026-09-06T18:31:51.139121",
+      "status": "COMPLETED"
     }
   ],
   "processed_hashes": [
-    "d259a7c1638d1ece2649585f9ff2a20debdce073b4632171ee2d68b27f7bf82b"
+    "d259a7c1638d1ece2649585f9ff2a20debdce073b4632171ee2d68b27f7bf82b",
+    "cb42ead3ef8895161421d62049c345d5066bced48d69065f231b81b6f90d5148"
   ]
 }
