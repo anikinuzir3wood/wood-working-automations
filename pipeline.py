@@ -53,7 +53,7 @@ class TimberCraftPipeline:
         print(f"[1/5] Raw Video Probed: {info['width']}x{info['height']}, {info['duration']:.1f}s, Codec: {info['codec']}")
 
         # 2. Generate Director Script & Human Touch Directives
-        plan = custom_plan or self.director.generate_short_plan()
+        plan = custom_plan or self.director.generate_short_plan(topic=video_title)
         # Merge any extra flags (e.g. has_foreign_captions) into plan
         if extra_plan_flags:
             plan.update(extra_plan_flags)

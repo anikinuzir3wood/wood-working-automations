@@ -1,218 +1,38 @@
 [
   {
-    "item_id": "6a1659ae0000000007010f4d",
-    "account": "duoduo_commentary",
-    "source_url": "https://www.rednote.com/discovery/item/6a1659ae0000000007010f4d",
-    "title_theme": "Ancient Wisdom Interlocking Joinery",
-    "status": "PENDING",
-    "added_at": "2026-09-03T11:01:43.333981+00:00"
-  },
-  {
-    "item_id": "67d7bde7000000001d018590",
-    "account": "douger_homecoming",
-    "source_url": "https://www.rednote.com/discovery/item/67d7bde7000000001d018590",
-    "title_theme": "19 Types of Mortise-Tenon Joints",
-    "status": "PENDING",
-    "added_at": "2026-09-03T11:01:43.333981+00:00"
-  },
-  {
-    "item_id": "6a6da8f2000000002800640a",
-    "account": "xinghe_explorer",
-    "source_url": "https://www.rednote.com/discovery/item/6a6da8f2000000002800640a",
-    "title_theme": "The Zero-Nail Puzzle Lock",
-    "status": "PENDING",
-    "added_at": "2026-09-03T11:01:43.333981+00:00"
-  },
-  {
-    "item_id": "6a74b22e000000003300d6ca",
-    "account": "shansbai",
-    "source_url": "https://www.rednote.com/discovery/item/6a74b22e000000003300d6ca",
-    "title_theme": "The Rosewood Sunmao Throne",
-    "status": "PENDING",
-    "added_at": "2026-09-03T11:01:43.333981+00:00"
-  },
-  {
-    "item_id": "6a23f023000000003501e31b",
+    "item_id": "wood_soul_gauge_01",
     "account": "wood_soul",
-    "source_url": "https://www.rednote.com/discovery/item/6a23f023000000003501e31b",
-    "title_theme": "The Invisible Friction-Fit Joint",
+    "source_url": "https://www.rednote.com/discovery/item/65cb662d000000000700528a",
+    "direct_stream_url": "http://sns-v11.rednotecdn.com/stream/110/258/01e5cb662d065911010370038da287b760_258.mp4",
+    "title_theme": "The Precision Marking Gauge Trick",
     "status": "PENDING",
-    "added_at": "2026-09-03T11:01:43.333981+00:00"
+    "added_at": "2026-09-06T09:50:00.000000"
   },
   {
-    "item_id": "6970d227000000002203910d",
-    "account": "cangwu_chronicle",
-    "source_url": "https://www.rednote.com/discovery/item/6970d227000000002203910d",
-    "title_theme": "Dougong Bracket Architecture Secret",
-    "status": "PENDING",
-    "added_at": "2026-09-03T11:01:43.333981+00:00"
-  },
-  {
-    "item_id": "67d42420000000001d0270b2",
+    "item_id": "wood_soul_dovetail_02",
     "account": "wood_soul",
-    "source_url": "https://www.rednote.com/discovery/item/67d42420000000001d0270b2",
-    "title_theme": "The DIY Timber Frame Joint",
+    "source_url": "https://www.rednote.com/discovery/item/6a9c2dcf00000000280023c8",
+    "direct_stream_url": "http://sns-v11.rednotecdn.com/stream/1/110/258/01ea9c2dc87b5bfd01037001a072133ae6_258.mp4",
+    "title_theme": "The 3D Secret Dovetail Puzzle",
     "status": "PENDING",
-    "added_at": "2026-09-03T11:01:43.333981+00:00"
+    "added_at": "2026-09-06T09:50:00.000000"
   },
   {
-    "item_id": "6a98d045000000002603b01d",
-    "account": "designer_xiaohai",
-    "source_url": "https://www.rednote.com/discovery/item/6a98d045000000002603b01d",
-    "title_theme": "The Floating Tensegrity Table",
-    "status": "PENDING",
-    "added_at": "2026-09-03T11:01:43.333981+00:00"
-  },
-  {
-    "item_id": "69bd2443000000002301d3c4",
-    "account": "huizhou_carpenter",
-    "source_url": "https://www.rednote.com/discovery/item/69bd2443000000002301d3c4",
-    "title_theme": "The Heirloom Eight Immortals Table",
-    "status": "PENDING",
-    "added_at": "2026-09-03T11:01:43.333981+00:00"
-  },
-  {
-    "item_id": "693c8e8c000000001e001d55",
-    "account": "jiangren",
-    "source_url": "https://www.rednote.com/discovery/item/693c8e8c000000001e001d55",
-    "title_theme": "The DIY Mortise-Tenon Corner Joint",
-    "status": "PENDING",
-    "added_at": "2026-09-03T11:14:55.660062+00:00"
-  },
-  {
-    "item_id": "6a030b7600000000360001b5",
-    "account": "wood_soul",
-    "source_url": "https://www.rednote.com/discovery/item/6a030b7600000000360001b5",
-    "title_theme": "The Precision Corner Joint Trick",
-    "status": "PENDING",
-    "added_at": "2026-09-03T11:14:55.660062+00:00"
-  },
-  {
-    "item_id": "6a7041e9000000002c004743",
-    "account": "jingcheng_guijiang",
-    "source_url": "https://www.rednote.com/discovery/item/6a7041e9000000002c004743",
-    "title_theme": "The Evolution of Japanese Chisels",
-    "status": "PENDING",
-    "added_at": "2026-09-03T11:14:55.660062+00:00"
-  },
-  {
-    "item_id": "67ab52c1000000001e030f12",
-    "account": "wood_soul",
-    "source_url": "https://www.rednote.com/discovery/item/67ab52c1000000001e030f12",
-    "title_theme": "The Translucent Wood Ribbon Test",
-    "status": "PENDING",
-    "added_at": "2026-09-03T11:14:55.660062+00:00"
-  },
-  {
-    "item_id": "67cf8d2a000000002901a73b",
+    "item_id": "wooden_man_rosewood_01",
     "account": "wooden_man",
-    "source_url": "https://www.rednote.com/discovery/item/67cf8d2a000000002901a73b",
-    "title_theme": "The 1000-Year Puzzle Lock",
+    "source_url": "https://www.rednote.com/discovery/item/67acb36a000000002903f7ac",
+    "direct_stream_url": "http://sns-v11.rednotecdn.com/stream/79/110/258/01e7acb28c48a6134f03700194fa9d4cee_258.mp4",
+    "title_theme": "The Ancient Chinese Sunmao Assembly",
     "status": "PENDING",
-    "added_at": "2026-09-03T11:14:55.660062+00:00"
+    "added_at": "2026-09-06T09:50:00.000000"
   },
   {
-    "item_id": "6822a410000000001d03b2c5",
-    "account": "amazing_inventors",
-    "source_url": "https://www.rednote.com/discovery/item/6822a410000000001d03b2c5",
-    "title_theme": "The Expanding Geometry Joint",
-    "status": "PENDING",
-    "added_at": "2026-09-03T11:14:55.660062+00:00"
-  },
-  {
-    "item_id": "67b9e531000000002c026a84",
-    "account": "wood_soul",
-    "source_url": "https://www.rednote.com/discovery/item/67b9e531000000002c026a84",
-    "title_theme": "The Impossible Cross Joint",
-    "status": "PENDING",
-    "added_at": "2026-09-03T11:14:55.660062+00:00"
-  },
-  {
-    "item_id": "680c7a2e000000001d02c8b0",
-    "account": "amazing_inventors",
-    "source_url": "https://www.rednote.com/discovery/item/680c7a2e000000001d02c8b0",
-    "title_theme": "The Self-Locking 4-Way Joint",
-    "status": "PENDING",
-    "added_at": "2026-09-03T11:14:55.660062+00:00"
-  },
-  {
-    "item_id": "67d1f875000000001e031a2e",
+    "item_id": "wooden_man_interlock_02",
     "account": "wooden_man",
-    "source_url": "https://www.rednote.com/discovery/item/67d1f875000000001e031a2e",
-    "title_theme": "The Rosewood Puzzle Box",
+    "source_url": "https://www.rednote.com/discovery/item/697602f7000000000b011829",
+    "direct_stream_url": "http://sns-v11.rednotecdn.com/stream/79/110/258/01e97602f619096c4f0370019bf4fc0bd5_258.mp4",
+    "title_theme": "The Zero-Gap Kumiko Joint",
     "status": "PENDING",
-    "added_at": "2026-09-03T11:14:55.660062+00:00"
-  },
-  {
-    "item_id": "68156bcf000000001d038c19",
-    "account": "amazing_inventors",
-    "source_url": "https://www.rednote.com/discovery/item/68156bcf000000001d038c19",
-    "title_theme": "The Hidden Sliding Dovetail",
-    "status": "PENDING",
-    "added_at": "2026-09-03T11:14:55.660062+00:00"
-  },
-  {
-    "item_id": "67c2ab94000000002901b9e3",
-    "account": "wood_soul",
-    "source_url": "https://www.rednote.com/discovery/item/67c2ab94000000002901b9e3",
-    "title_theme": "The Ancient T-Joint Technique",
-    "status": "PENDING",
-    "added_at": "2026-09-03T11:14:55.660062+00:00"
-  },
-  {
-    "item_id": "67de3f1c000000001e033c57",
-    "account": "wooden_man",
-    "source_url": "https://www.rednote.com/discovery/item/67de3f1c000000001e033c57",
-    "title_theme": "The Cedar Shrine Joint",
-    "status": "PENDING",
-    "added_at": "2026-09-03T11:14:55.660062+00:00"
-  },
-  {
-    "item_id": "681e9c3d000000001d03d1a8",
-    "account": "amazing_inventors",
-    "source_url": "https://www.rednote.com/discovery/item/681e9c3d000000001d03d1a8",
-    "title_theme": "The 3-Piece Timber Puzzle",
-    "status": "PENDING",
-    "added_at": "2026-09-03T11:14:55.660062+00:00"
-  },
-  {
-    "item_id": "67aa1f85000000002903e210",
-    "account": "wood_soul",
-    "source_url": "https://www.rednote.com/discovery/item/67aa1f85000000002903e210",
-    "title_theme": "The Mirror-Smooth Chisel Finish",
-    "status": "PENDING",
-    "added_at": "2026-09-03T11:14:55.660062+00:00"
-  },
-  {
-    "item_id": "67e5a2b1000000001e035714",
-    "account": "wooden_man",
-    "source_url": "https://www.rednote.com/discovery/item/67e5a2b1000000001e035714",
-    "title_theme": "The Double Tenon Bridge Joint",
-    "status": "PENDING",
-    "added_at": "2026-09-03T11:14:55.660062+00:00"
-  },
-  {
-    "item_id": "6827d5e2000000001d03c4f6",
-    "account": "amazing_inventors",
-    "source_url": "https://www.rednote.com/discovery/item/6827d5e2000000001d03c4f6",
-    "title_theme": "The Ancient Butterfly Key",
-    "status": "PENDING",
-    "added_at": "2026-09-03T11:14:55.660062+00:00"
-  },
-  {
-    "item_id": "67b24c18000000002c02533f",
-    "account": "wood_soul",
-    "source_url": "https://www.rednote.com/discovery/item/67b24c18000000002c02533f",
-    "title_theme": "The Feathered Dovetail Secret",
-    "status": "PENDING",
-    "added_at": "2026-09-03T11:14:55.660062+00:00"
-  },
-  {
-    "item_id": "67ec18a5000000001e0371d9",
-    "account": "wooden_man",
-    "source_url": "https://www.rednote.com/discovery/item/67ec18a5000000001e0371d9",
-    "title_theme": "The Wedged Tenon Assembly",
-    "status": "PENDING",
-    "added_at": "2026-09-03T11:14:55.660062+00:00"
+    "added_at": "2026-09-06T09:50:00.000000"
   }
 ]

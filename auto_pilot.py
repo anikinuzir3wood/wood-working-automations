@@ -52,9 +52,22 @@ class TimberCraftAutopilot:
         print(f"- Item ID : {item_id}")
         print("=" * 80 + "\n")
 
-        # 1. Resolve Raw Video Source (Downloaded Stream / Cached / Asset Fallback)
+        # 1. Resolve Raw Video Source (Strict Anti-Duplicate Mode)
         raw_source = None
-        if item.get("direct_stream_url"):
+
+        # Check A: Dedicated pre-downloaded file in assets/raw_sources/<item_id>.mp4
+        local_cand = Path(__file__).resolve().parent / "assets" / "raw_sources" / f"{item_id}.mp4"
+        if local_cand.exists() and local_cand.stat().st_size > 50000:
+            raw_source = local_cand
+
+        # Check B: Explicit local path specified in queue item
+        if not raw_source and item.get("local_raw_path"):
+            lp = Path(item["local_raw_path"])
+            if lp.exists() and lp.stat().st_size > 50000:
+                raw_source = lp
+
+        # Check C: Download from direct_stream_url if provided
+        if not raw_source and item.get("direct_stream_url"):
             from downloader import download_stream
             cand = SCRATCH_DIR / f"raw_{item_id}.mp4"
             try:
@@ -62,25 +75,24 @@ class TimberCraftAutopilot:
                 if cand.exists() and cand.stat().st_size > 50000:
                     raw_source = cand
             except Exception as e:
-                print(f"[!] Stream download failed: {e}. Falling back to clean archive footage.")
+                print(f"[!] Direct stream download failed for {item_id}: {e}")
 
+        # Strict Verification: NEVER fall back to a generic file
         if not raw_source or not raw_source.exists():
-            for candidate in [
-                SCRATCH_DIR / "raw_wood_soul.mp4",
-                SCRATCH_DIR / f"raw_{item_id}.mp4",
-                Path(__file__).resolve().parent / "assets" / "raw_sources" / "wood_soul_joint.mp4"
-            ]:
-                if candidate.exists() and candidate.stat().st_size > 50000:
-                    raw_source = candidate
-                    break
-
-        if not raw_source or not raw_source.exists():
-            print(f"[!] Raw source for item {item_id} not found. Please provide raw footage.")
+            print(f"[!] ERROR: No unique raw footage available for item {item_id} ('{title_theme}').")
+            print(f"    Automated upload safely skipped to protect channel from duplicate uploads.")
             return False
 
-        print(f"[+] Using Raw Footage Source: {raw_source.name} ({raw_source.stat().st_size / (1024*1024):.2f} MB)")
+        # Strict Duplicate Protection: Verify content hash was not previously uploaded
+        if self.qm.is_raw_hash_processed(raw_source):
+            print(f"[!] CRITICAL ANTI-DUPLICATE GUARD:")
+            print(f"    Raw footage '{raw_source.name}' was ALREADY processed in a previous upload!")
+            print(f"    Aborting immediately to prevent uploading identical video to YouTube.")
+            return False
 
-        # 1. Execute Pipeline Render
+        print(f"[+] Verified Unique Raw Footage: {raw_source.name} ({raw_source.stat().st_size / (1024*1024):.2f} MB)")
+
+        # 2. Execute Pipeline Render
         # Pass foreign captions flag so video engine can blur Chinese subs
         extra_plan_flags = {}
         if item.get("has_foreign_captions"):
@@ -93,7 +105,7 @@ class TimberCraftAutopilot:
         with open(meta_file, "r", encoding="utf-8") as f:
             metadata = json.load(f)
 
-        # 2. Execute Pre-Flight Upload
+        # 3. Execute Pre-Flight Upload
         video_id = self.uploader.upload_preflight_short(
             final_video,
             metadata,
@@ -101,13 +113,14 @@ class TimberCraftAutopilot:
             keep_unlisted=keep_unlisted
         )
 
-        # 3. Mark Processed in History
+        # 4. Mark Processed in History (including raw source hash)
         self.qm.mark_processed(
             item_id=item_id,
             account=account,
             output_file=str(final_video),
             title=title_theme,
-            youtube_video_id=video_id
+            youtube_video_id=video_id,
+            raw_source_path=raw_source
         )
 
         print("\n" + "=" * 80)

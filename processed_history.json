@@ -2,10 +2,7 @@
   "processed_ids": [
     "64f527fd000000001e03f043",
     "67acb36a000000002903f7ac",
-    "6803c43a000000001d02f0d2",
-    "65cb662d000000000700528a",
-    "67c58d78000000002901c421",
-    "6a1e07d90000000035021eff"
+    "6803c43a000000001d02f0d2"
   ],
   "history": [
     {
@@ -34,33 +31,9 @@
       "youtube_id": "0WgWG-OJvQ8",
       "processed_at": "2026-09-04T17:16:59.177598",
       "status": "COMPLETED"
-    },
-    {
-      "item_id": "65cb662d000000000700528a",
-      "account": "wood_soul",
-      "title": "The Zero-Gap Kumiko Joint",
-      "output_file": "/home/runner/work/wood-working-automations/wood-working-automations/output/TimberCraft_20260905_002338.mp4",
-      "youtube_id": "5KMqpZZSOhU",
-      "processed_at": "2026-09-05T00:29:20.547701",
-      "status": "COMPLETED"
-    },
-    {
-      "item_id": "67c58d78000000002901c421",
-      "account": "wood_head",
-      "title": "The Precision Mortise-Tenon Furniture Joint",
-      "output_file": "/home/runner/work/wood-working-automations/wood-working-automations/output/TimberCraft_20260905_182103.mp4",
-      "youtube_id": "VBOrR8BNBJU",
-      "processed_at": "2026-09-05T18:27:33.477799",
-      "status": "COMPLETED"
-    },
-    {
-      "item_id": "6a1e07d90000000035021eff",
-      "account": "wood_soul",
-      "title": "The Hand-Cut Sunmao Assembly",
-      "output_file": "/home/runner/work/wood-working-automations/wood-working-automations/output/TimberCraft_20260906_002747.mp4",
-      "youtube_id": "-p9e1Cdt4S4",
-      "processed_at": "2026-09-06T00:34:17.955325",
-      "status": "COMPLETED"
     }
+  ],
+  "processed_hashes": [
+    "d259a7c1638d1ece2649585f9ff2a20debdce073b4632171ee2d68b27f7bf82b"
   ]
 }
