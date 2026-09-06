@@ -61,5 +61,50 @@
     "title_theme": "The Magical Friction-Fit Joint",
     "status": "PENDING",
     "added_at": "2026-09-06T10:00:00.000000"
+  },
+  {
+    "item_id": "wood_soul_asmr_03",
+    "account": "wood_soul",
+    "source_url": "https://www.rednote.com/discovery/item/6a95f98f000000002803895b",
+    "direct_stream_url": "http://sns-v11.rednotecdn.com/stream/79/110/258/01ea95f98c7575f24f037001a059d71e28_258.mp4",
+    "title_theme": "The Satisfying Hand Plane Shaving",
+    "status": "PENDING",
+    "added_at": "2026-09-06T10:15:00.000000"
+  },
+  {
+    "item_id": "wood_soul_art_04",
+    "account": "wood_soul",
+    "source_url": "https://www.rednote.com/discovery/item/6a95f37f0000000027009860",
+    "direct_stream_url": "http://sns-v11.rednotecdn.com/stream/79/110/258/01ea95f37d5ead4c4f037001a059bf53ae_258.mp4",
+    "title_theme": "The Precision Dovetail Box Joint",
+    "status": "PENDING",
+    "added_at": "2026-09-06T10:15:00.000000"
+  },
+  {
+    "item_id": "wood_soul_artisan_05",
+    "account": "wood_soul",
+    "source_url": "https://www.rednote.com/discovery/item/6a94bda2000000001f002d68",
+    "direct_stream_url": "http://sns-v11.rednotecdn.com/stream/79/110/258/01ea94bd9f5d38e34f037001a05505351a_258.mp4",
+    "title_theme": "Traditional Handmade Joinery Craft",
+    "status": "PENDING",
+    "added_at": "2026-09-06T10:15:00.000000"
+  },
+  {
+    "item_id": "wooden_man_legjoint_03",
+    "account": "wooden_man",
+    "source_url": "https://www.rednote.com/discovery/item/685ea338000000000d018865",
+    "direct_stream_url": "http://sns-v11.rednotecdn.com/stream/1/110/258/01e85ea3371790e00103700197b1ae105f_258.mp4",
+    "title_theme": "The No-Nails Table Leg Sunmao Joint",
+    "status": "PENDING",
+    "added_at": "2026-09-06T10:15:00.000000"
+  },
+  {
+    "item_id": "wooden_man_dissect_04",
+    "account": "wooden_man",
+    "source_url": "https://www.rednote.com/discovery/item/685a86f0000000001100159e",
+    "direct_stream_url": "http://sns-v11.rednotecdn.com/stream/1/110/258/01e85a862f17bf360103700197a19f4dbe_258.mp4",
+    "title_theme": "Dissecting the Hidden Locking Mortise",
+    "status": "PENDING",
+    "added_at": "2026-09-06T10:15:00.000000"
   }
 ]
