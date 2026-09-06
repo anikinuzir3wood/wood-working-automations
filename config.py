@@ -29,8 +29,8 @@ TARGET_FPS = 60
 CROP_FACTOR = 0.92  # 8% crop & subtle zoom to invalidate digital video hash
 
 # Safezone Layout (Avoiding YouTube Shorts bottom and side UI collisions)
-MASTHEAD_Y = 110      # Top foliage safezone for pillbox header
-SUBTITLE_Y = 1420     # Placed above bottom 350px YouTube metadata overlay
+MASTHEAD_Y = 240     # Top safezone for pillbox header (below mobile notch & YouTube search/dots)
+SUBTITLE_Y = 1420    # Placed above bottom 350px YouTube metadata overlay
 BOTTOM_UI_MARGIN = 350
 
 # Voiceover Settings (Edge-TTS)
