@@ -4,7 +4,8 @@
     "67acb36a000000002903f7ac",
     "6803c43a000000001d02f0d2",
     "65cb662d000000000700528a",
-    "67c58d78000000002901c421"
+    "67c58d78000000002901c421",
+    "6a1e07d90000000035021eff"
   ],
   "history": [
     {
@@ -50,6 +51,15 @@
       "output_file": "/home/runner/work/wood-working-automations/wood-working-automations/output/TimberCraft_20260905_182103.mp4",
       "youtube_id": "VBOrR8BNBJU",
       "processed_at": "2026-09-05T18:27:33.477799",
+      "status": "COMPLETED"
+    },
+    {
+      "item_id": "6a1e07d90000000035021eff",
+      "account": "wood_soul",
+      "title": "The Hand-Cut Sunmao Assembly",
+      "output_file": "/home/runner/work/wood-working-automations/wood-working-automations/output/TimberCraft_20260906_002747.mp4",
+      "youtube_id": "-p9e1Cdt4S4",
+      "processed_at": "2026-09-06T00:34:17.955325",
       "status": "COMPLETED"
     }
   ]
