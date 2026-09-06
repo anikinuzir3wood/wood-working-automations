@@ -89,83 +89,72 @@ class VideoEngine:
 
     def create_blueprint_hud_overlay(self, overlay_info: Dict[str, Any], output_path: Path) -> Path:
         """
-        Creates a high-contrast, mobile-optimized architectural drafting HUD overlay:
-        - Positioned safely on the left (x=70, w=580) clear of right-hand YouTube buttons
-        - Large, bold, crystal-clear typography (32px title, 26px specs)
-        - High-contrast obsidian dark glass card with neon cyan border
-        - 4px thick neon cyan & gold reticle target with shadow backing
-        - 4px angled leader line connecting card to target
+        OPTION C: Sleek Lower-Third Tag Overlay
+        - Placed safely in the lower-third zone (y = 1425) directly above subtitles
+        - Middle screen (hands, tools, wood grain) is 100% unobstructed and crystal clear
+        - High-contrast obsidian glass chip with 2px gold/cyan outline and soft drop shadow
         """
         img = Image.new("RGBA", (VIDEO_WIDTH, VIDEO_HEIGHT), (0, 0, 0, 0))
         draw = ImageDraw.Draw(img)
 
-        cyan = (0, 240, 255, 255)
         gold = (255, 215, 0, 255)
+        cyan = (0, 240, 255, 255)
         white = (255, 255, 255, 255)
-        card_bg = (10, 15, 25, 235)
-        card_header_bg = (0, 240, 255, 45)
         black_shadow = (0, 0, 0, 190)
+        card_bg = (10, 16, 26, 230)
 
-        # Focal Action Center (cutting / joint zone)
-        cx, cy = overlay_info.get("center", (560, 880))
-        r = 115
+        # Build clean concise tag text from title and primary spec
+        title = overlay_info.get("title", "TECH SPEC").strip()
+        specs = overlay_info.get("specs", [])
+        
+        # Pick the most interesting spec (tolerance, tool, action)
+        primary_spec = ""
+        for s in specs:
+            if any(k in s.lower() for k in ["tolerance", "accuracy", "cut", "joint", "vector", "wedge", "pin", "tool", "fiber"]):
+                primary_spec = s
+                break
+        if not primary_spec and specs:
+            primary_spec = specs[0]
 
-        # 1. Target Reticle at (cx, cy)
-        for w_offset, color in [(7, black_shadow), (4, cyan)]:
-            draw.arc([cx - r, cy - r, cx + r, cy + r], 0, 360, fill=color, width=w_offset)
-            draw.line([cx - r - 25, cy, cx - r + 15, cy], fill=color, width=w_offset)
-            draw.line([cx + r - 15, cy, cx + r + 25, cy], fill=color, width=w_offset)
-            draw.line([cx, cy - r - 25, cx, cy - r + 15], fill=color, width=w_offset)
-            draw.line([cx, cy + r - 15, cx, cy + r + 25], fill=color, width=w_offset)
+        # Clean spec text (remove redundant label prefix if any)
+        clean_spec = primary_spec
+        if ":" in clean_spec:
+            clean_spec = clean_spec.split(":", 1)[1].strip()
 
-        draw.arc([cx - r - 18, cy - r - 18, cx + r + 18, cy + r + 18], 30, 70, fill=gold, width=3)
-        draw.arc([cx - r - 18, cy - r - 18, cx + r + 18, cy + r + 18], 210, 250, fill=gold, width=3)
-        draw.ellipse([cx - 7, cy - 7, cx + 7, cy + 7], fill=gold)
+        if clean_spec:
+            tag_text = f"{title}  •  {clean_spec.upper()}"
+        else:
+            tag_text = f"{title}"
 
-        # 2. HUD Card (Left Safezone x=70, w=580, y=440, h=225)
-        card_x = 70
-        card_y = 440
-        card_w = 580
-        card_h = 225
+        # Font resolution and size adjustment
+        font_size = 28
+        font_tag = self._get_font(font_size, bold=True)
+        tbox = draw.textbbox((0, 0), tag_text, font=font_tag)
+        tw, th = tbox[2] - tbox[0], tbox[3] - tbox[1]
 
-        # Soft drop shadow
-        draw.rounded_rectangle([card_x + 4, card_y + 4, card_x + card_w + 4, card_y + card_h + 4], radius=16, fill=black_shadow)
-        # Main Obsidian Glass Card
-        draw.rounded_rectangle([card_x, card_y, card_x + card_w, card_y + card_h], radius=16, fill=card_bg, outline=cyan, width=3)
-        # Header accent bar
-        draw.rounded_rectangle([card_x + 3, card_y + 3, card_x + card_w - 3, card_y + 56], radius=13, fill=card_header_bg)
+        while tw > 820 and font_size > 20:
+            font_size -= 1
+            font_tag = self._get_font(font_size, bold=True)
+            tbox = draw.textbbox((0, 0), tag_text, font=font_tag)
+            tw, th = tbox[2] - tbox[0], tbox[3] - tbox[1]
 
-        # Header Diamond + Title
-        font_title = self._get_font(32, bold=True)
-        c_dia_x = card_x + 30
-        c_dia_y = card_y + 28
-        draw.polygon([(c_dia_x - 7, c_dia_y), (c_dia_x, c_dia_y - 7), (c_dia_x + 7, c_dia_y), (c_dia_x, c_dia_y + 7)], fill=cyan)
+        # Pill dimensions (height ~48px)
+        tpw, tph = tw + 70, th + 26
+        tpx = (VIDEO_WIDTH - tpw) // 2
+        tpy = 1360  # Perfectly spaced above subtitles (y=1500) and below woodwork
 
-        title_text = overlay_info.get("title", "LAYOUT GEOMETRY")
-        draw.text((card_x + 48, card_y + 12), title_text, fill=cyan, font=font_title)
+        # 3D Soft Drop Shadow
+        draw.rounded_rectangle([tpx + 3, tpy + 3, tpx + tpw + 3, tpy + tph + 3], radius=16, fill=black_shadow)
+        # Main Obsidian Pill
+        draw.rounded_rectangle([tpx, tpy, tpx + tpw, tpy + tph], radius=16, fill=card_bg, outline=gold, width=2)
 
-        # Specifications Rows
-        font_spec = self._get_font(26, bold=True)
-        specs = overlay_info.get("specs", ["Tool: MASTER CHISEL", "Tolerance: 0.05mm FIT"])
-        for idx, spec in enumerate(specs[:3]):
-            sy = card_y + 76 + (idx * 46)
-            # Arrow icon
-            draw.polygon([(card_x + 24, sy + 6), (card_x + 34, sy + 13), (card_x + 24, sy + 20)], fill=cyan)
-            # Alternate color for contrast
-            val_col = gold if idx == 1 else white
-            draw.text((card_x + 44, sy), spec, fill=val_col, font=font_spec)
+        # Draw Accent Diamond Icon
+        dia_cx = tpx + 28
+        dia_cy = tpy + tph // 2
+        draw.polygon([(dia_cx - 7, dia_cy), (dia_cx, dia_cy - 7), (dia_cx + 7, dia_cy), (dia_cx, dia_cy + 7)], fill=gold)
 
-        # 3. Angled Leader Line (Card Bottom to Reticle Top)
-        start_pt = (card_x + card_w - 60, card_y + card_h)
-        elbow_pt = (card_x + card_w - 60, cy - r - 40)
-        end_pt = (cx - 40, cy - r)
-
-        for w_offset, color in [(7, black_shadow), (4, cyan)]:
-            draw.line([start_pt[0], start_pt[1], elbow_pt[0], elbow_pt[1]], fill=color, width=w_offset)
-            draw.line([elbow_pt[0], elbow_pt[1], end_pt[0], end_pt[1]], fill=color, width=w_offset)
-
-        draw.ellipse([start_pt[0] - 6, start_pt[1] - 6, start_pt[0] + 6, start_pt[1] + 6], fill=cyan)
-        draw.ellipse([end_pt[0] - 7, end_pt[1] - 7, end_pt[0] + 7, end_pt[1] + 7], fill=gold)
+        # Draw Text
+        draw.text((tpx + 46, tpy + (tph - th) // 2 - 2), tag_text, fill=white, font=font_tag)
 
         img.save(str(output_path), "PNG")
         return output_path
