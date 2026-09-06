@@ -18,6 +18,24 @@
     "added_at": "2026-09-06T09:50:00.000000"
   },
   {
+    "item_id": "inventors_puzzle_01",
+    "account": "amazing_inventors",
+    "source_url": "https://www.rednote.com/discovery/item/68f21ff60000000005032250",
+    "direct_stream_url": "http://sns-v11.rednotecdn.com/stream/1/110/258/01e8f21fdbe8a3090103700199f1cd4be2_258.mp4",
+    "title_theme": "The Secret Interlocking Puzzle Box",
+    "status": "PENDING",
+    "added_at": "2026-09-06T10:00:00.000000"
+  },
+  {
+    "item_id": "inventors_mortise_02",
+    "account": "amazing_inventors",
+    "source_url": "https://www.rednote.com/discovery/item/686a920b000000002203cacd",
+    "direct_stream_url": "http://sns-v11.rednotecdn.com/stream/79/110/258/01e86a920749c2cb4f03700197e04ac644_258.mp4",
+    "title_theme": "The Master Tenon Corner Assembly",
+    "status": "PENDING",
+    "added_at": "2026-09-06T10:00:00.000000"
+  },
+  {
     "item_id": "wooden_man_rosewood_01",
     "account": "wooden_man",
     "source_url": "https://www.rednote.com/discovery/item/67acb36a000000002903f7ac",
@@ -34,5 +52,14 @@
     "title_theme": "The Zero-Gap Kumiko Joint",
     "status": "PENDING",
     "added_at": "2026-09-06T09:50:00.000000"
+  },
+  {
+    "item_id": "inventors_magicjoint_03",
+    "account": "amazing_inventors",
+    "source_url": "https://www.rednote.com/discovery/item/68581c40000000001c030ff5",
+    "direct_stream_url": "http://sns-v11.rednotecdn.com/stream/79/110/258/01e8581c377df9214f03700197982edfd5_258.mp4",
+    "title_theme": "The Magical Friction-Fit Joint",
+    "status": "PENDING",
+    "added_at": "2026-09-06T10:00:00.000000"
   }
 ]
