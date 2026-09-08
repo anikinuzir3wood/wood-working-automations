@@ -6,7 +6,8 @@
     "wood_soul_gauge_01",
     "wood_soul_dovetail_02",
     "inventors_puzzle_01",
-    "inventors_mortise_02"
+    "inventors_mortise_02",
+    "wooden_man_rosewood_01"
   ],
   "history": [
     {
@@ -75,6 +76,16 @@
       "raw_hash": "afe136e4e5f5941ae9bdb08edcde14530daf808ed89f3790b8a990eb259b972a",
       "processed_at": "2026-09-08T00:34:46.571108",
       "status": "COMPLETED"
+    },
+    {
+      "item_id": "wooden_man_rosewood_01",
+      "account": "wooden_man",
+      "title": "The Ancient Sunmao Assembly",
+      "output_file": "/home/runner/work/wood-working-automations/wood-working-automations/output/TimberCraft_20260908_182138.mp4",
+      "youtube_id": "9wFgOc7Ghkw",
+      "raw_hash": "0247d30080d4dc4d3a28e2e93a376c215adb87bcff73d09ed69e2a8b4511d375",
+      "processed_at": "2026-09-08T18:28:02.343617",
+      "status": "COMPLETED"
     }
   ],
   "processed_hashes": [
@@ -82,6 +93,7 @@
     "cb42ead3ef8895161421d62049c345d5066bced48d69065f231b81b6f90d5148",
     "3cc3c5b497dba4f64d171e2bd38395236cec2e22ae2a50a4d3aa77b4d89aa9b1",
     "ac82c7d6bb8a162f9cf8952fc0ec4ea8f7e44b3944c7794f1bf7bdf6beb13eb6",
-    "afe136e4e5f5941ae9bdb08edcde14530daf808ed89f3790b8a990eb259b972a"
+    "afe136e4e5f5941ae9bdb08edcde14530daf808ed89f3790b8a990eb259b972a",
+    "0247d30080d4dc4d3a28e2e93a376c215adb87bcff73d09ed69e2a8b4511d375"
   ]
 }
