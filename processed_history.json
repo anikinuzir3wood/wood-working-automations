@@ -5,7 +5,8 @@
     "6803c43a000000001d02f0d2",
     "wood_soul_gauge_01",
     "wood_soul_dovetail_02",
-    "inventors_puzzle_01"
+    "inventors_puzzle_01",
+    "inventors_mortise_02"
   ],
   "history": [
     {
@@ -64,12 +65,23 @@
       "raw_hash": "ac82c7d6bb8a162f9cf8952fc0ec4ea8f7e44b3944c7794f1bf7bdf6beb13eb6",
       "processed_at": "2026-09-07T18:30:36.094862",
       "status": "COMPLETED"
+    },
+    {
+      "item_id": "inventors_mortise_02",
+      "account": "amazing_inventors",
+      "title": "The Master Tenon Corner Assembly",
+      "output_file": "/home/runner/work/wood-working-automations/wood-working-automations/output/TimberCraft_20260908_002843.mp4",
+      "youtube_id": "hbv7xnJEH4s",
+      "raw_hash": "afe136e4e5f5941ae9bdb08edcde14530daf808ed89f3790b8a990eb259b972a",
+      "processed_at": "2026-09-08T00:34:46.571108",
+      "status": "COMPLETED"
     }
   ],
   "processed_hashes": [
     "d259a7c1638d1ece2649585f9ff2a20debdce073b4632171ee2d68b27f7bf82b",
     "cb42ead3ef8895161421d62049c345d5066bced48d69065f231b81b6f90d5148",
     "3cc3c5b497dba4f64d171e2bd38395236cec2e22ae2a50a4d3aa77b4d89aa9b1",
-    "ac82c7d6bb8a162f9cf8952fc0ec4ea8f7e44b3944c7794f1bf7bdf6beb13eb6"
+    "ac82c7d6bb8a162f9cf8952fc0ec4ea8f7e44b3944c7794f1bf7bdf6beb13eb6",
+    "afe136e4e5f5941ae9bdb08edcde14530daf808ed89f3790b8a990eb259b972a"
   ]
 }
