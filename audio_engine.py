@@ -7,6 +7,7 @@ Features:
   No dynamic ducking. No sidechain compression. No volume up/down. One level. Every video. Always.
 """
 
+import os
 import asyncio
 import subprocess
 from pathlib import Path
@@ -15,6 +16,7 @@ import json
 import edge_tts
 from config import (
     SCRATCH_DIR, ASSETS_DIR, MUSIC_DIR, FOLEY_DIR,
+    AI33_CONFIG_FILE, TTS_PROVIDER, AI33_VOICE_ID, AI33_VOICE_NAME, AI33_TTS_SPEED,
     TTS_VOICE, TTS_RATE, TTS_PITCH,
     BROADCAST_AUDIO_FILTER
 )
@@ -33,14 +35,25 @@ class AudioEngine:
         self.scratch = SCRATCH_DIR
         self.scratch.mkdir(parents=True, exist_ok=True)
 
+    def _get_ai33_api_key(self) -> Optional[str]:
+        """Loads ai33.pro API key from config or environment."""
+        if AI33_CONFIG_FILE.exists():
+            try:
+                with open(AI33_CONFIG_FILE, "r", encoding="utf-8") as f:
+                    cfg = json.load(f)
+                    return cfg.get("api_key")
+            except Exception:
+                pass
+        return os.getenv("AI33_API_KEY")
+
     def _probe_duration(self, file_path: Path) -> float:
         """Measure exact duration of an audio file in seconds."""
         cmd = ["ffprobe", "-v", "quiet", "-print_format", "json", "-show_format", str(file_path)]
         res = subprocess.run(cmd, capture_output=True, text=True, check=True)
         return float(json.loads(res.stdout)["format"]["duration"])
 
-    async def _synthesize_segment(self, text: str, out_file: Path):
-        """Generate speech for a single segment using Edge-TTS."""
+    async def _synthesize_edge_segment(self, text: str, out_file: Path):
+        """Generate speech for a single segment using Edge-TTS fallback."""
         communicate = edge_tts.Communicate(
             text=text,
             voice=TTS_VOICE,
@@ -48,6 +61,49 @@ class AudioEngine:
             pitch=TTS_PITCH
         )
         await communicate.save(str(out_file))
+
+    async def _synthesize_ai33_segment(self, session, text: str, out_file: Path, api_key: str) -> bool:
+        """Synthesize a single segment via ai33.pro using Lawrence Cooper's voice."""
+        url = "https://api.ai33.pro/v3/text-to-speech"
+        headers = {"xi-api-key": api_key}
+        data = {
+            "voice_id": AI33_VOICE_ID,
+            "text": text,
+            "speed": str(AI33_TTS_SPEED),
+            "with_transcript": "false"
+        }
+        try:
+            async with session.post(url, headers=headers, data=data, timeout=25) as resp:
+                if resp.status != 200:
+                    print(f"[!] ai33.pro HTTP {resp.status} for segment: '{text[:30]}...'")
+                    return False
+                res = await resp.json()
+                task_id = res.get("task_id")
+                if not task_id:
+                    return False
+
+            poll_url = f"https://api.ai33.pro/v1/task/{task_id}"
+            for _ in range(30):
+                await asyncio.sleep(2)
+                async with session.get(poll_url, headers=headers, timeout=10) as t_resp:
+                    if t_resp.status == 200:
+                        t_data = await t_resp.json()
+                        if t_data.get("status") == "done":
+                            audio_url = (
+                                t_data.get("metadata", {}).get("audio_url")
+                                or t_data.get("audio_url")
+                            )
+                            if audio_url:
+                                async with session.get(audio_url, timeout=30) as dl_resp:
+                                    content = await dl_resp.read()
+                                    with open(out_file, "wb") as f:
+                                        f.write(content)
+                                return True
+                        elif t_data.get("status") == "failed":
+                            return False
+        except Exception as e:
+            print(f"[!] ai33.pro synthesis error: {e}")
+        return False
 
     def generate_narration_track(
         self,
@@ -58,22 +114,58 @@ class AudioEngine:
     ) -> Tuple[Path, List[Dict[str, Any]]]:
         """
         Synthesizes all segments and places them on a dynamic precision timeline:
-        - Measures exact duration of each audio segment
+        - Primary: ai33.pro studio voice (Lawrence Cooper)
+        - Fallback: Edge-TTS baritone (en-US-ChristopherNeural)
+        - Measures exact duration of each audio segment with ffprobe
         - Dynamically schedules speech with natural breathing gaps (no overlapping)
         - Preserves the ASMR silence window
         - Returns mastered audio AND actual speech timestamps for subtitle sync
         """
-        print("[*] Synthesizing speech segments via Edge-TTS...")
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        
+        ai33_key = self._get_ai33_api_key()
+        use_ai33 = (TTS_PROVIDER == "ai33") and bool(ai33_key)
+
+        if use_ai33:
+            print(f"[*] Synthesizing speech via ai33.pro (Voice: {AI33_VOICE_NAME} [{AI33_VOICE_ID}])...")
+            import aiohttp
+            async def _batch_ai33():
+                async with aiohttp.ClientSession() as session:
+                    tasks = [
+                        self._synthesize_ai33_segment(
+                            session,
+                            seg["text"],
+                            self.scratch / f"seg_{i}.mp3",
+                            ai33_key
+                        )
+                        for i, seg in enumerate(segments)
+                    ]
+                    return await asyncio.gather(*tasks)
+
+            try:
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+                results = loop.run_until_complete(_batch_ai33())
+                loop.close()
+                if not all(results):
+                    print("[!] One or more ai33.pro segments failed. Falling back to Edge-TTS...")
+                    use_ai33 = False
+            except Exception as e:
+                print(f"[!] ai33.pro error ({e}). Falling back to Edge-TTS...")
+                use_ai33 = False
+
+        if not use_ai33:
+            print(f"[*] Synthesizing speech segments via Edge-TTS ({TTS_VOICE})...")
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            for i, seg in enumerate(segments):
+                seg_wav = self.scratch / f"seg_{i}.mp3"
+                loop.run_until_complete(self._synthesize_edge_segment(seg["text"], seg_wav))
+            loop.close()
+
         raw_files = []
         for i, seg in enumerate(segments):
             seg_wav = self.scratch / f"seg_{i}.mp3"
-            loop.run_until_complete(self._synthesize_segment(seg["text"], seg_wav))
             dur = self._probe_duration(seg_wav)
             raw_files.append((seg, seg_wav, dur))
-        loop.close()
 
         # Dynamically compute non-overlapping timeline
         actual_segments = []

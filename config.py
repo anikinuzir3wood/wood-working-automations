@@ -33,7 +33,13 @@ MASTHEAD_Y = 240     # Top safezone for pillbox header (below mobile notch & You
 SUBTITLE_Y = 1420    # Placed above bottom 350px YouTube metadata overlay
 BOTTOM_UI_MARGIN = 350
 
-# Voiceover Settings (Edge-TTS)
+# Voiceover Settings (ai33.pro Studio Narration -> Lawrence Cooper)
+TTS_PROVIDER = "ai33"                   # Primary: ai33.pro studio voice
+AI33_VOICE_ID = "clone_2647301"         # Lawrence Cooper
+AI33_VOICE_NAME = "Lawrence Cooper"
+AI33_TTS_SPEED = 1.0
+
+# Edge-TTS Fallback (used only if ai33.pro connection fails)
 TTS_VOICE = "en-US-ChristopherNeural"  # Authoritative, calm, BBC/NatGeo baritone
 TTS_RATE = "-4%"                       # Deliberate, unhurried cadence
 TTS_PITCH = "-2Hz"                     # Deep chest resonance
