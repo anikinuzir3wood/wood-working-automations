@@ -73,7 +73,13 @@ class TimberCraftPipeline:
         force_new_music = plan.get("force_new_music", False)
 
         print(f"[3/5] Audio Studio Synthesis:")
-        self.audio_engine.generate_narration_track(plan["narration_segments"], plan["target_duration"], narration_file)
+        narration_file, actual_segments = self.audio_engine.generate_narration_track(
+            plan["narration_segments"],
+            plan["target_duration"],
+            narration_file,
+            silence_window=plan.get("silence_window")
+        )
+        plan["narration_segments"] = actual_segments
         self.audio_engine.generate_acoustic_music_track(
             duration=plan["target_duration"],
             output_path=music_file,

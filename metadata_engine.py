@@ -15,8 +15,152 @@ class MetadataEngine:
         """Generate complete upload-ready metadata package tailored to the specific topic."""
         t = (title_theme or "").lower()
 
-        # 1. Marking gauge / layout precision
-        if any(w in t for w in ["marking", "gauge", "划线器", "layout", "pencil", "line"]):
+        # 1. Dissecting hidden mortise / internal mechanism
+        if any(w in t for w in ["dissect", "hidden", "internal", "拆解"]):
+            title = f"{title_theme}: Secret Internal Lock #Shorts"
+            description = (
+                "Taking apart a hidden locking mortise to reveal what happens inside the timber.\n\n"
+                "From the outside, it appears to be a solid block of wood. But sliding out the central wooden keyway "
+                "unlocks an internal expanding wedge mechanism carved directly into the core, trapping the tenon so tightly "
+                "it can never work loose under tension.\n\n"
+                "Craftsmanship Specifications:\n"
+                "• Joint Anatomy: Concealed Expanding Wedge Mortise\n"
+                "• Locking Mechanism: Hand-Carved Sliding Keyway Pin\n"
+                "• Structural Clearance: 0.05mm Friction Fit\n"
+                "• Fasteners: 100% Solid Timber (Zero Hardware / Glue)\n"
+                "• Heritage: Traditional Mechanical Joinery\n\n"
+                "Subscribe to TimberCraft for daily joinery breakdowns, internal mechanisms, and master craftsmanship.\n\n"
+                "#Woodworking #Joinery #MechanicalWood #HiddenLock #HandTools #Carpentry #Woodwork #ASMR #Shorts"
+            )
+            tags = [
+                "woodworking", "hidden joint", "locking mortise", "secret joint",
+                "internal joinery", "woodworking asmr", "satisfying fit", "carpentry",
+                "hand tools", "timbercraft", "master woodworker", "shorts"
+            ]
+            pinned_comment = "Did you expect that expanding wedge inside? Tell us what you think below 👇"
+
+        # 2. Table leg joint
+        elif any(w in t for w in ["table leg", "legjoint", "leg"]):
+            title = f"{title_theme}: 3-Way Zero-Wobble Lock #Shorts"
+            description = (
+                "This three-way interlocking corner joint is the secret to building heirloom furniture that lasts generations.\n\n"
+                "Two horizontal apron rails and one vertical leg intersect at a single junction, locking together through hand-cut "
+                "interlocking notches. Downward table weight drives the joint tighter under compression, creating an unbreakable "
+                "frame with zero racking or wobble.\n\n"
+                "Craftsmanship Specifications:\n"
+                "• Joint Style: 3-Axis Interlocking Table Corner\n"
+                "• Fasteners: 100% Interlocking Timber (Zero Screws/Nails)\n"
+                "• Mechanics: Gravity-Assisted Mechanical Lock\n"
+                "• Tolerance: Hand-Chiseled Sub-Millimeter Seat\n"
+                "• Durability: Multi-Generational Heirloom Rigidity\n\n"
+                "Subscribe to TimberCraft for daily master furniture joinery, timber framing, and artisan techniques.\n\n"
+                "#Woodworking #TableJoint #FurnitureMaking #Joinery #NoNails #HandmadeFurniture #Carpentry #Shorts"
+            )
+            tags = [
+                "table joint", "furniture joinery", "woodworking", "zero hardware",
+                "table leg", "interlocking wood", "woodworking asmr", "hand tools",
+                "timbercraft", "carpentry", "shorts"
+            ]
+            pinned_comment = "Three pieces of timber locking into one solid corner without a single screw. What do you think? 👇"
+
+        # 3. Puzzle, Dovetail, Lock
+        elif any(w in t for w in ["puzzle", "lock", "鲁班锁", "secret", "slider", "magic", "impossible"]):
+            title = f"{title_theme}: The Impossible 3D Joint #Shorts"
+            description = (
+                "From the outside, this interlocking wooden joint appears physically impossible to assemble or dismantle.\n\n"
+                "With diagonal dovetail pins showing on all four faces, geometry suggests the components must collide and bind instantly. "
+                "The secret lies in an internal 45-degree sliding vector carved inside the block, allowing the puzzle components to glide "
+                "seamlessly into an invisible mechanical lock.\n\n"
+                "Craftsmanship Specifications:\n"
+                "• Mechanism: 3D Multi-Way Sliding Dovetail Lock (鲁班锁)\n"
+                "• Wood Species: Seasoned Dense Hardwood\n"
+                "• Sliding Vector: 45.0° Hidden Keyway Track\n"
+                "• Internal Clearance: 0.05mm Micro-Tolerance\n"
+                "• Joint Type: Invisible Friction Puzzle Assembly\n\n"
+                "Subscribe to TimberCraft for daily puzzle joinery, impossible woodwork, and artisan mechanical marvels.\n\n"
+                "#Woodworking #PuzzleLock #ImpossibleJoint #Dovetail #MechanicalWood #Satisfying #Artisan #Shorts"
+            )
+            tags = [
+                "impossible joint", "puzzle lock", "woodworking puzzle", "secret dovetail",
+                "satisfying wood slide", "luban lock", "wood joinery", "hand tools",
+                "timbercraft", "woodworking asmr", "shorts"
+            ]
+            pinned_comment = "Did you guess how the hidden sliding track worked before the reveal? 👇"
+
+        # 4. Hand plane shaving / razor plane
+        elif any(w in t for w in ["plane", "shaving", "shave", "刨", "ribbon", "kanna"]):
+            title = f"{title_theme}: 0.01mm Translucent Ribbon #Shorts"
+            description = (
+                "Watch what happens when a razor-sharp hand plane glides across solid hardwood.\n\n"
+                "The blade is tuned with such precision that it does not scrape—it shears cleanly through vertical cellulose fibers "
+                "at a microscopic angle. A continuous, see-through wooden ribbon floats up from the sole, leaving a mirror-smooth "
+                "burnished surface without using any sandpaper.\n\n"
+                "Craftsmanship Specifications:\n"
+                "• Tool: Traditional Wood Hand Plane (鉋 / 刨子)\n"
+                "• Blade: Hand-Forged High Carbon Steel Razor Edge\n"
+                "• Shaving Thickness: 0.01mm Translucent Micro-Ribbon\n"
+                "• Surface Finish: Pure Cellular Polish (Zero Sandpaper)\n"
+                "• Action: Cellular Grain Shear\n\n"
+                "Subscribe to TimberCraft for daily hand plane ASMR, tool tuning, and master woodworking.\n\n"
+                "#HandPlane #Woodworking #ASMR #WoodShaving #Satisfying #HandTools #Carpentry #MirrorFinish #Shorts"
+            )
+            tags = [
+                "hand plane", "wood shavings", "woodworking asmr", "satisfying wood",
+                "razor sharp", "hand tools", "plane shaving", "mirror finish",
+                "timbercraft", "woodcraft", "shorts"
+            ]
+            pinned_comment = "A shaving so thin you can read right through it! Have you ever tuned a hand plane to this level? 👇"
+
+        # 5. Dovetail box joint
+        elif any(w in t for w in ["dovetail", "燕尾", "box joint"]):
+            title = f"{title_theme}: Zero-Gap Hand-Cut Joint #Shorts"
+            description = (
+                "A hand-cut dovetail joint is the undisputed signature of a master cabinetmaker.\n\n"
+                "Each pin and tail is laid out by hand and carved with a razor chisel to create interlocking mechanical wedges "
+                "that physically cannot pull apart. As the two boards meet, the friction fit seats the corner completely flush, "
+                "allowing the wood grain to flow seamlessly around the box.\n\n"
+                "Craftsmanship Specifications:\n"
+                "• Joinery Style: Traditional Hand-Cut Dovetail\n"
+                "• Wedge Ratio: 1:8 Mechanical Locking Slope\n"
+                "• Cutting Method: Japanese Dozuki Saw & Razor Chisel\n"
+                "• Tolerance: 0.02mm Light-Tight Fit\n"
+                "• Application: Heirloom Cabinetry & Fine Boxes\n\n"
+                "Subscribe to TimberCraft for daily fine woodworking, dovetail masterclasses, and hand-cut joinery.\n\n"
+                "#Dovetail #Woodworking #Cabinetmaking #HandTools #Joinery #PrecisionCraft #Carpentry #Shorts"
+            )
+            tags = [
+                "dovetail joint", "hand cut dovetail", "woodworking", "cabinetmaking",
+                "joinery", "woodworking asmr", "hand tools", "chisel work",
+                "timbercraft", "satisfying fit", "shorts"
+            ]
+            pinned_comment = "Nothing beats the feeling of pressing a hand-cut dovetail together with zero light leaks. Tell us below 👇"
+
+        # 6. Master tenon corner assembly
+        elif any(w in t for w in ["corner assembly", "master tenon", "corner"]):
+            title = f"{title_theme}: 90° Precision Frame Lock #Shorts"
+            description = (
+                "Watch this corner frame joint seat together without a single screw, nail, or drop of glue.\n\n"
+                "Every surface of this mortise and tenon is hand-chiseled with zero room for error, aligning the structural "
+                "timber perfectly square at 90 degrees. As the tenon seats into the mortise, wood fibers compress under "
+                "pure friction to create an unbreakable corner.\n\n"
+                "Craftsmanship Specifications:\n"
+                "• Joint: Hand-Cut Corner Mortise & Tenon\n"
+                "• Assembly: 100% Timber Friction Seat\n"
+                "• Fasteners: Zero Screws, Nails, or Adhesives\n"
+                "• Squareness: 90.0° Verified True\n"
+                "• Heritage: Traditional Timber Framing Craft\n\n"
+                "Subscribe to TimberCraft for daily mortise and tenon breakdowns, frame joinery, and timbercraft.\n\n"
+                "#MortiseAndTenon #Woodworking #Joinery #TimberFrame #HandTools #Carpentry #Satisfying #Shorts"
+            )
+            tags = [
+                "mortise and tenon", "corner joint", "woodworking", "timber framing",
+                "hand cut joint", "wood joinery", "satisfying fit", "carpentry",
+                "timbercraft", "hand tools", "shorts"
+            ]
+            pinned_comment = "True square without a single fastener. What do you think of this corner tenon? 👇"
+
+        # 7. Marking gauge / layout precision
+        elif any(w in t for w in ["marking", "gauge", "划线器", "layout", "pencil", "line"]):
             title = f"{title_theme}: The 0.1mm Layout Secret #Shorts"
             description = (
                 "Before a single chisel or hand saw touches the timber, a master carpenter wins the battle with layout.\n\n"
@@ -39,7 +183,7 @@ class MetadataEngine:
             ]
             pinned_comment = "Do you prefer a traditional marking gauge or a wheel gauge for layout? Tell us below 👇"
 
-        # 2. Kumiko lattice
+        # 8. Kumiko lattice
         elif any(w in t for w in ["kumiko", "lattice", "组子", "hexagonal", "grid"]):
             title = f"{title_theme}: Zero-Gap Friction Lock #Shorts"
             description = (
@@ -63,54 +207,7 @@ class MetadataEngine:
             ]
             pinned_comment = "The sound when the final piece snaps in... pure satisfaction! Have you ever tried Kumiko? 👇"
 
-        # 3. Mortise, Tenon, Sunmao
-        elif any(w in t for w in ["sunmao", "mortise", "tenon", "榫卯", "joint", "interlock", "corner"]):
-            title = f"{title_theme}: 5,000-Year Ancient Joinery #Shorts"
-            description = (
-                "Chinese Sunmao joinery has kept thousand-year-old timber structures standing through earthquakes, typhoons, and centuries of time.\n\n"
-                "Unlike modern metal fasteners that rust and loosen as timber breathes, a classical mortise and tenon joint harnesses the natural "
-                "hygroscopic expansion of wood to lock tighter over time. Every mortise keyway is hand-chopped to microscopic tolerances.\n\n"
-                "Craftsmanship Specifications:\n"
-                "• Joinery Heritage: Classical Chinese Sunmao (榫卯结构)\n"
-                "• Assembly: Hand-Cut Mortise & Tenon Interlock\n"
-                "• Structural Integrity: Zero Nails, Screws, or Synthetic Adhesive\n"
-                "• Clearance Tolerance: 0.05mm Friction Seat\n"
-                "• Durability: Multi-Century Self-Tightening Action\n\n"
-                "Subscribe to TimberCraft for daily ancient engineering, joinery breakdowns, and timber craftsmanship.\n\n"
-                "#Sunmao #Woodworking #MortiseAndTenon #AncientJoinery #Carpentry #Satisfying #Engineering #Shorts"
-            )
-            tags = [
-                "sunmao", "mortise and tenon", "chinese joinery", "ancient woodworking",
-                "wood joinery", "hand cut joint", "satisfying fit", "carpentry",
-                "timbercraft", "woodworking asmr", "shorts"
-            ]
-            pinned_comment = "Five thousand years old and still stronger than modern screws. What do you think of Sunmao? 👇"
-
-        # 4. Puzzle, Dovetail, Lock
-        elif any(w in t for w in ["puzzle", "lock", "dovetail", "鲁班锁", "secret", "slider", "impossible"]):
-            title = f"{title_theme}: The Impossible 3D Joint #Shorts"
-            description = (
-                "From the outside, this interlocking wooden joint appears physically impossible to assemble or dismantle.\n\n"
-                "With diagonal dovetail pins showing on all four faces, geometry suggests the components must collide and bind instantly. "
-                "The secret lies in an internal 45-degree sliding vector carved inside the block, allowing the puzzle components to glide "
-                "seamlessly into an invisible mechanical lock.\n\n"
-                "Craftsmanship Specifications:\n"
-                "• Mechanism: 3D Multi-Way Sliding Dovetail Lock (鲁班锁)\n"
-                "• Wood Species: Seasoned Dense Rosewood\n"
-                "• Sliding Vector: 45.0° Hidden Keyway Track\n"
-                "• Internal Clearance: 0.05mm Micro-Tolerance\n"
-                "• Joint Type: Invisible Friction Puzzle Assembly\n\n"
-                "Subscribe to TimberCraft for daily puzzle joinery, impossible woodwork, and artisan mechanical marvels.\n\n"
-                "#Woodworking #PuzzleLock #ImpossibleJoint #Dovetail #MechanicalWood #Satisfying #Artisan #Shorts"
-            )
-            tags = [
-                "impossible joint", "puzzle lock", "woodworking puzzle", "secret dovetail",
-                "satisfying wood slide", "luban lock", "wood joinery", "hand tools",
-                "timbercraft", "woodworking asmr", "shorts"
-            ]
-            pinned_comment = "Did you guess how the hidden sliding track worked before the reveal? 👇"
-
-        # 5. Dougong, Architecture, Temple
+        # 9. Dougong, Architecture, Temple
         elif any(w in t for w in ["dougong", "bracket", "斗拱", "temple", "earthquake", "pavilion", "shrine"]):
             title = f"{title_theme}: Earthquake-Proof Ancient Architecture #Shorts"
             description = (
@@ -128,13 +225,13 @@ class MetadataEngine:
             )
             tags = [
                 "dougong", "ancient architecture", "earthquake proof wood", "timber frame",
-                "temple architecture", "chinese carpentry", "interlocking timber",
+                "temple architecture", "heritage carpentry", "interlocking timber",
                 "timbercraft", "woodworking", "shorts"
             ]
             pinned_comment = "Ancient engineers solved earthquake resilience over 1,500 years ago using only wood. Incredible engineering! 👇"
 
-        # 6. Chisel sharpness, end grain, blade restoration
-        elif any(w in t for w in ["end_grain", "chisel", "sharpness", "blade", "plane", "slice", "shaving", "ribbon"]):
+        # 10. Chisel sharpness, end grain
+        elif any(w in t for w in ["end_grain", "chisel", "sharpness", "blade", "slice"]):
             title = f"{title_theme}: Slicing End Grain #Shorts"
             description = (
                 "To any master woodworker, end-grain is the ultimate and most unforgiving test of an edge.\n\n"
@@ -156,7 +253,30 @@ class MetadataEngine:
             ]
             pinned_comment = "Have you ever seen end-grain cut this smoothly? Tell us what steel you use below 👇"
 
-        # 7. Generic dynamic fallback for any other craftsmanship topic
+        # 11. Traditional Sunmao / Mortise & Tenon
+        elif any(w in t for w in ["sunmao", "mortise", "tenon", "榫卯", "joint", "interlock"]):
+            title = f"{title_theme}: Ancient Self-Locking Joinery #Shorts"
+            description = (
+                "Traditional Sunmao joinery has kept thousand-year-old timber structures standing through centuries of natural elements.\n\n"
+                "Unlike modern metal fasteners that rust and loosen as timber breathes, a classical mortise and tenon joint harnesses the natural "
+                "hygroscopic expansion of wood to lock tighter over time. Every mortise keyway is hand-chopped to microscopic tolerances.\n\n"
+                "Craftsmanship Specifications:\n"
+                "• Joinery Heritage: Traditional Sunmao (榫卯结构)\n"
+                "• Assembly: Hand-Cut Mortise & Tenon Interlock\n"
+                "• Structural Integrity: Zero Nails, Screws, or Synthetic Adhesive\n"
+                "• Clearance Tolerance: 0.05mm Friction Seat\n"
+                "• Durability: Multi-Century Self-Tightening Action\n\n"
+                "Subscribe to TimberCraft for daily ancient engineering, joinery breakdowns, and timber craftsmanship.\n\n"
+                "#Sunmao #Woodworking #MortiseAndTenon #AncientJoinery #Carpentry #Satisfying #Engineering #Shorts"
+            )
+            tags = [
+                "sunmao", "mortise and tenon", "ancient joinery", "traditional woodworking",
+                "wood joinery", "hand cut joint", "satisfying fit", "carpentry",
+                "timbercraft", "woodworking asmr", "shorts"
+            ]
+            pinned_comment = "Stronger than modern screws through pure friction. What do you think of traditional Sunmao? 👇"
+
+        # 12. Generic dynamic fallback for any other craftsmanship topic
         else:
             clean = title_theme.replace("#Shorts", "").strip()
             title = f"{clean} #Shorts"

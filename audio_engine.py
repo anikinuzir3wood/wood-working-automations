@@ -10,7 +10,8 @@ Features:
 import asyncio
 import subprocess
 from pathlib import Path
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional, Tuple
+import json
 import edge_tts
 from config import (
     SCRATCH_DIR, ASSETS_DIR, MUSIC_DIR, FOLEY_DIR,
@@ -23,15 +24,6 @@ from config import (
 #   Voice mean = -23.0 dB, Music at -7dB cut => Music mean = -26.7 dB
 #   Gap = 3.7 dB => Warm, clearly audible on all devices (phone, laptop,
 #   headphones), never overpowers voiceover, never inaudibly low.
-#
-#   Test range was -12dB to -4dB. Results:
-#     -12dB -> 8.7dB gap -> phone-invisible (too quiet)
-#     -10dB -> 6.7dB gap -> barely perceptible
-#      -8dB -> 4.7dB gap -> warm but subtle on phone
-#  >>> -7dB -> 3.7dB gap -> SWEET SPOT: clear, present, subordinate <<<
-#      -6dB -> 2.7dB gap -> starts competing with consonants
-#      -5dB -> 1.7dB gap -> voice losing clarity
-#      -4dB -> 0.7dB gap -> music overwhelms
 # ──────────────────────────────────────────────────────────────────────
 MUSIC_FIXED_SWEET_SPOT_DB = -7
 
@@ -40,6 +32,12 @@ class AudioEngine:
     def __init__(self):
         self.scratch = SCRATCH_DIR
         self.scratch.mkdir(parents=True, exist_ok=True)
+
+    def _probe_duration(self, file_path: Path) -> float:
+        """Measure exact duration of an audio file in seconds."""
+        cmd = ["ffprobe", "-v", "quiet", "-print_format", "json", "-show_format", str(file_path)]
+        res = subprocess.run(cmd, capture_output=True, text=True, check=True)
+        return float(json.loads(res.stdout)["format"]["duration"])
 
     async def _synthesize_segment(self, text: str, out_file: Path):
         """Generate speech for a single segment using Edge-TTS."""
@@ -51,32 +49,68 @@ class AudioEngine:
         )
         await communicate.save(str(out_file))
 
-    def generate_narration_track(self, segments: List[Dict[str, Any]], target_duration: float, output_path: Path) -> Path:
+    def generate_narration_track(
+        self,
+        segments: List[Dict[str, Any]],
+        target_duration: float,
+        output_path: Path,
+        silence_window: Optional[Dict[str, Any]] = None
+    ) -> Tuple[Path, List[Dict[str, Any]]]:
         """
-        Synthesizes all segments and places them on a precision timeline with exact silence gaps,
-        specifically respecting the 3-Second Rule of Silence.
+        Synthesizes all segments and places them on a dynamic precision timeline:
+        - Measures exact duration of each audio segment
+        - Dynamically schedules speech with natural breathing gaps (no overlapping)
+        - Preserves the ASMR silence window
+        - Returns mastered audio AND actual speech timestamps for subtitle sync
         """
         print("[*] Synthesizing speech segments via Edge-TTS...")
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
         
-        segment_files = []
+        raw_files = []
         for i, seg in enumerate(segments):
             seg_wav = self.scratch / f"seg_{i}.mp3"
             loop.run_until_complete(self._synthesize_segment(seg["text"], seg_wav))
-            segment_files.append((seg["start"], seg_wav))
+            dur = self._probe_duration(seg_wav)
+            raw_files.append((seg, seg_wav, dur))
         loop.close()
+
+        # Dynamically compute non-overlapping timeline
+        actual_segments = []
+        cur_time = 0.0
+        silence_start = silence_window.get("start", 19.5) if silence_window else 20.0
+        silence_end = silence_window.get("end", 23.5) if silence_window else 24.0
+
+        for i, (seg, seg_wav, dur) in enumerate(raw_files):
+            # If this is the final segment (payoff after silence window), ensure it starts after silence_end
+            if i == len(raw_files) - 1 and silence_window:
+                st = max(cur_time, silence_end + 0.3)
+            elif i == 0:
+                st = seg.get("start", 0.0)
+            else:
+                planned_st = seg.get("start", cur_time)
+                st = max(planned_st, cur_time)
+
+            en = st + dur
+            cur_time = en + 0.35  # Natural breathing room
+            actual_segments.append({
+                "start": round(st, 2),
+                "end": round(en, 2),
+                "text": seg["text"],
+                "file": seg_wav
+            })
+            print(f"    - Seg {i}: [{st:.2f}s -> {en:.2f}s] (dur {dur:.2f}s) '{seg['text'][:40]}...'")
 
         # Build FFmpeg complex filter to delay each segment to its exact start time and mix
         inputs = []
         filter_parts = []
-        for idx, (start_time, seg_file) in enumerate(segment_files):
-            inputs.extend(["-i", str(seg_file)])
-            delay_ms = int(start_time * 1000)
+        for idx, seg_info in enumerate(actual_segments):
+            inputs.extend(["-i", str(seg_info["file"])])
+            delay_ms = int(seg_info["start"] * 1000)
             filter_parts.append(f"[{idx}:a]adelay={delay_ms}|{delay_ms}[a{idx}];")
 
-        mix_inputs = "".join(f"[a{i}]" for i in range(len(segment_files)))
-        filter_graph = f"{''.join(filter_parts)}{mix_inputs}amix=inputs={len(segment_files)}:normalize=0,apad=whole_dur={target_duration}[outa]"
+        mix_inputs = "".join(f"[a{i}]" for i in range(len(actual_segments)))
+        filter_graph = f"{''.join(filter_parts)}{mix_inputs}amix=inputs={len(actual_segments)}:normalize=0,apad=whole_dur={target_duration}[outa]"
 
         raw_mixed = self.scratch / "raw_speech_timeline.wav"
         cmd = ["ffmpeg", "-y"] + inputs + [
@@ -97,7 +131,7 @@ class AudioEngine:
         ]
         subprocess.run(cmd_master, check=True, capture_output=True)
         print(f"[+] Mastered Narration Track ready: {output_path}")
-        return output_path
+        return output_path, actual_segments
 
     def generate_acoustic_music_track(
         self,

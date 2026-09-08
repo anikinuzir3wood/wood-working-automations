@@ -285,7 +285,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 
         # Video Filter Chain
         # Loop raw video, crop 8%, scale, hflip, grade, add masthead banner
-        # Foreign Caption Blur: If source has Chinese subtitles, blur bottom 15% before our overlays
+        # Foreign Caption Blur: If source has foreign subtitles, blur bottom 15% before our overlays
         caption_blur_filter = ""
         if plan.get("has_foreign_captions", False):
             caption_blur_filter = (

@@ -93,7 +93,7 @@ class TimberCraftAutopilot:
         print(f"[+] Verified Unique Raw Footage: {raw_source.name} ({raw_source.stat().st_size / (1024*1024):.2f} MB)")
 
         # 2. Execute Pipeline Render
-        # Pass foreign captions flag so video engine can blur Chinese subs
+        # Pass foreign captions flag so video engine can blur foreign subs
         extra_plan_flags = {}
         if item.get("has_foreign_captions"):
             extra_plan_flags["has_foreign_captions"] = True
