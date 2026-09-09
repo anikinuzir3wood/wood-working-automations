@@ -7,7 +7,8 @@
     "wood_soul_dovetail_02",
     "inventors_puzzle_01",
     "inventors_mortise_02",
-    "wooden_man_rosewood_01"
+    "wooden_man_rosewood_01",
+    "wooden_man_interlock_02"
   ],
   "history": [
     {
@@ -86,6 +87,16 @@
       "raw_hash": "0247d30080d4dc4d3a28e2e93a376c215adb87bcff73d09ed69e2a8b4511d375",
       "processed_at": "2026-09-08T18:28:02.343617",
       "status": "COMPLETED"
+    },
+    {
+      "item_id": "wooden_man_interlock_02",
+      "account": "wooden_man",
+      "title": "The Zero-Gap Kumiko Joint",
+      "output_file": "/home/runner/work/wood-working-automations/wood-working-automations/output/TimberCraft_20260909_002750.mp4",
+      "youtube_id": "ernIuDAB29E",
+      "raw_hash": "556ae57f88995ef92ba6545a6d211fcac3d343dc6bc4868dedf6f7dfef85680f",
+      "processed_at": "2026-09-09T00:34:37.312237",
+      "status": "COMPLETED"
     }
   ],
   "processed_hashes": [
@@ -94,6 +105,7 @@
     "3cc3c5b497dba4f64d171e2bd38395236cec2e22ae2a50a4d3aa77b4d89aa9b1",
     "ac82c7d6bb8a162f9cf8952fc0ec4ea8f7e44b3944c7794f1bf7bdf6beb13eb6",
     "afe136e4e5f5941ae9bdb08edcde14530daf808ed89f3790b8a990eb259b972a",
-    "0247d30080d4dc4d3a28e2e93a376c215adb87bcff73d09ed69e2a8b4511d375"
+    "0247d30080d4dc4d3a28e2e93a376c215adb87bcff73d09ed69e2a8b4511d375",
+    "556ae57f88995ef92ba6545a6d211fcac3d343dc6bc4868dedf6f7dfef85680f"
   ]
 }
