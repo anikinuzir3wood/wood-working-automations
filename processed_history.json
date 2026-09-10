@@ -10,7 +10,8 @@
     "wooden_man_rosewood_01",
     "wooden_man_interlock_02",
     "inventors_magicjoint_03",
-    "wood_soul_asmr_03"
+    "wood_soul_asmr_03",
+    "wood_soul_art_04"
   ],
   "history": [
     {
@@ -119,6 +120,16 @@
       "raw_hash": "94e2706c01da43eb8cd4756f52fec386b6d6bbb6ee8d8a914c5bec5e9ec4358b",
       "processed_at": "2026-09-10T00:26:02.401345",
       "status": "COMPLETED"
+    },
+    {
+      "item_id": "wood_soul_art_04",
+      "account": "wood_soul",
+      "title": "The Precision Dovetail Box Joint",
+      "output_file": "/home/runner/work/wood-working-automations/wood-working-automations/output/TimberCraft_20260910_181807.mp4",
+      "youtube_id": "7qw7P1vkAmg",
+      "raw_hash": "ff20d97ea7cd2dd9082ac5f566be771a36a3d837d4aa6947c7d653609b8a055c",
+      "processed_at": "2026-09-10T18:24:30.035129",
+      "status": "COMPLETED"
     }
   ],
   "processed_hashes": [
@@ -130,6 +141,7 @@
     "0247d30080d4dc4d3a28e2e93a376c215adb87bcff73d09ed69e2a8b4511d375",
     "556ae57f88995ef92ba6545a6d211fcac3d343dc6bc4868dedf6f7dfef85680f",
     "985af42909ca3ee83d78a8dca1ecf2eafb955c5ca37e555ec9c9869cd8e9da42",
-    "94e2706c01da43eb8cd4756f52fec386b6d6bbb6ee8d8a914c5bec5e9ec4358b"
+    "94e2706c01da43eb8cd4756f52fec386b6d6bbb6ee8d8a914c5bec5e9ec4358b",
+    "ff20d97ea7cd2dd9082ac5f566be771a36a3d837d4aa6947c7d653609b8a055c"
   ]
 }
