@@ -9,7 +9,8 @@
     "inventors_mortise_02",
     "wooden_man_rosewood_01",
     "wooden_man_interlock_02",
-    "inventors_magicjoint_03"
+    "inventors_magicjoint_03",
+    "wood_soul_asmr_03"
   ],
   "history": [
     {
@@ -108,6 +109,16 @@
       "raw_hash": "985af42909ca3ee83d78a8dca1ecf2eafb955c5ca37e555ec9c9869cd8e9da42",
       "processed_at": "2026-09-09T18:32:20.301676",
       "status": "COMPLETED"
+    },
+    {
+      "item_id": "wood_soul_asmr_03",
+      "account": "wood_soul",
+      "title": "The Satisfying Hand Plane Shaving",
+      "output_file": "/home/runner/work/wood-working-automations/wood-working-automations/output/TimberCraft_20260910_001958.mp4",
+      "youtube_id": "qSm4H91VysQ",
+      "raw_hash": "94e2706c01da43eb8cd4756f52fec386b6d6bbb6ee8d8a914c5bec5e9ec4358b",
+      "processed_at": "2026-09-10T00:26:02.401345",
+      "status": "COMPLETED"
     }
   ],
   "processed_hashes": [
@@ -118,6 +129,7 @@
     "afe136e4e5f5941ae9bdb08edcde14530daf808ed89f3790b8a990eb259b972a",
     "0247d30080d4dc4d3a28e2e93a376c215adb87bcff73d09ed69e2a8b4511d375",
     "556ae57f88995ef92ba6545a6d211fcac3d343dc6bc4868dedf6f7dfef85680f",
-    "985af42909ca3ee83d78a8dca1ecf2eafb955c5ca37e555ec9c9869cd8e9da42"
+    "985af42909ca3ee83d78a8dca1ecf2eafb955c5ca37e555ec9c9869cd8e9da42",
+    "94e2706c01da43eb8cd4756f52fec386b6d6bbb6ee8d8a914c5bec5e9ec4358b"
   ]
 }
