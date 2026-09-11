@@ -11,7 +11,8 @@
     "wooden_man_interlock_02",
     "inventors_magicjoint_03",
     "wood_soul_asmr_03",
-    "wood_soul_art_04"
+    "wood_soul_art_04",
+    "wood_soul_artisan_05"
   ],
   "history": [
     {
@@ -130,6 +131,16 @@
       "raw_hash": "ff20d97ea7cd2dd9082ac5f566be771a36a3d837d4aa6947c7d653609b8a055c",
       "processed_at": "2026-09-10T18:24:30.035129",
       "status": "COMPLETED"
+    },
+    {
+      "item_id": "wood_soul_artisan_05",
+      "account": "wood_soul",
+      "title": "Traditional Handmade Joinery Craft",
+      "output_file": "/home/runner/work/wood-working-automations/wood-working-automations/output/TimberCraft_20260911_002208.mp4",
+      "youtube_id": "_tzWsvpxbVE",
+      "raw_hash": "decb8288e36f3b0645bed10f16226303626d5ff02fe11866095b398ca6f05b01",
+      "processed_at": "2026-09-11T00:27:48.635888",
+      "status": "COMPLETED"
     }
   ],
   "processed_hashes": [
@@ -142,6 +153,7 @@
     "556ae57f88995ef92ba6545a6d211fcac3d343dc6bc4868dedf6f7dfef85680f",
     "985af42909ca3ee83d78a8dca1ecf2eafb955c5ca37e555ec9c9869cd8e9da42",
     "94e2706c01da43eb8cd4756f52fec386b6d6bbb6ee8d8a914c5bec5e9ec4358b",
-    "ff20d97ea7cd2dd9082ac5f566be771a36a3d837d4aa6947c7d653609b8a055c"
+    "ff20d97ea7cd2dd9082ac5f566be771a36a3d837d4aa6947c7d653609b8a055c",
+    "decb8288e36f3b0645bed10f16226303626d5ff02fe11866095b398ca6f05b01"
   ]
 }
