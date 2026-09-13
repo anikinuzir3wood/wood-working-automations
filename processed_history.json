@@ -12,7 +12,8 @@
     "inventors_magicjoint_03",
     "wood_soul_asmr_03",
     "wood_soul_art_04",
-    "wood_soul_artisan_05"
+    "wood_soul_artisan_05",
+    "wooden_man_legjoint_03"
   ],
   "history": [
     {
@@ -141,6 +142,16 @@
       "raw_hash": "decb8288e36f3b0645bed10f16226303626d5ff02fe11866095b398ca6f05b01",
       "processed_at": "2026-09-11T00:27:48.635888",
       "status": "COMPLETED"
+    },
+    {
+      "item_id": "wooden_man_legjoint_03",
+      "account": "wooden_man",
+      "title": "The No-Nails Table Leg Sunmao Joint",
+      "output_file": "/home/runner/work/wood-working-automations/wood-working-automations/output/TimberCraft_20260913_064411.mp4",
+      "youtube_id": "6lDqrjlF_T4",
+      "raw_hash": "7fd572ac47ea656fcc8fa5f8486b2091b3d36e43458bce768b0ac624c5e15fe7",
+      "processed_at": "2026-09-13T06:46:31.244536",
+      "status": "COMPLETED"
     }
   ],
   "processed_hashes": [
@@ -154,6 +165,7 @@
     "985af42909ca3ee83d78a8dca1ecf2eafb955c5ca37e555ec9c9869cd8e9da42",
     "94e2706c01da43eb8cd4756f52fec386b6d6bbb6ee8d8a914c5bec5e9ec4358b",
     "ff20d97ea7cd2dd9082ac5f566be771a36a3d837d4aa6947c7d653609b8a055c",
-    "decb8288e36f3b0645bed10f16226303626d5ff02fe11866095b398ca6f05b01"
+    "decb8288e36f3b0645bed10f16226303626d5ff02fe11866095b398ca6f05b01",
+    "7fd572ac47ea656fcc8fa5f8486b2091b3d36e43458bce768b0ac624c5e15fe7"
   ]
 }
