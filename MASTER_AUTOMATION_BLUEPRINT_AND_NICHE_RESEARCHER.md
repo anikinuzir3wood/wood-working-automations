@@ -17,8 +17,8 @@
    * **Strict 6-Hour Gap** between uploads so videos never cannibalize each other's algorithm traffic.
 
 3. **Golden US Timezone Schedule (Eastern Time EDT - 48% US Population):**
-   * **Slot 1 (US Afternoon Peak):** `2:00 PM EDT` *(Indian Time: 11:30 PM IST)*
-   * **Slot 2 (US Prime Evening Peak):** `8:00 PM EDT` *(Indian Time: 5:30 AM IST next morning)*
+   * **Slot 1 (US Afternoon Peak):** `3:00 PM EDT` *(Indian Time: 12:30 AM IST next day)*
+   * **Slot 2 (US Prime Evening Peak):** `7:00 PM EDT` *(Indian Time: 4:30 AM IST next day)*
    * **Humanized Anti-Bot Jitter:** Every automated upload MUST include a random `1 to 10 minute` delay so timestamps appear 100% organic and natural to platform algorithms.
 
 4. **Retention Sweet-Spot Duration (30s to 45s Rule):**

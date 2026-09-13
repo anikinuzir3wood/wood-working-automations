@@ -1,7 +1,11 @@
 """
 AI Director Module for TimberCraft Automation
-Generates high-retention NatGeo-style baritone narration scripts,
-timing cues, and "Human Touch" directives that EXACTLY MATCH the physical video action.
+Generates high-retention narration scripts, timing cues, and "Human Touch" directives.
+CRITICAL MANDATE:
+- Uses ONLY ULTRA-SIMPLE, plain English words (Grade 4 level).
+- NO difficult or pretentious jargon (banned: tolerances, microscopic, fiber severance, surgical discipline, unwavering patience).
+- Strictly matches the actual physical video action visible on screen.
+- Supports Gemini Vision analysis when available for 100% grounded narration.
 """
 
 from typing import Dict, Any, List
@@ -12,33 +16,168 @@ class ScriptDirector:
     def __init__(self):
         pass
 
-    def generate_marking_gauge_plan(self) -> Dict[str, Any]:
-        """Plan for layout, marking gauge (划线器), and measuring accuracy."""
+    def generate_vision_grounded_plan(self, topic: str, analysis: Dict[str, Any]) -> Dict[str, Any]:
+        """Builds a customized short plan directly from Gemini Vision frame analysis."""
+        clean_topic = topic.replace("#Shorts", "").strip()
+        obj = analysis.get("object", clean_topic)
+        masthead = obj.upper()
+        if len(masthead) > 28:
+            masthead = masthead[:25] + "..."
+
+        parts = analysis.get("script_parts", [])
+        if len(parts) < 4:
+            return self.generate_dynamic_craft_plan(topic)
+
         return {
-            "title": "The Master Carpenter's 0.1mm Marking Trick #Shorts",
-            "masthead_text": "0.1mm PRECISION LAYOUT",
+            "title": f"The Zero-Nail {obj} #Shorts" if "Shorts" not in clean_topic else clean_topic,
+            "masthead_text": masthead,
+            "target_duration": 32.0,
+            "narration_segments": [
+                {"start": 0.0, "end": 5.5, "text": parts[0]},
+                {"start": 6.0, "end": 13.5, "text": parts[1]},
+                {"start": 14.0, "end": 21.5, "text": parts[2]},
+                {"start": 26.5, "end": 31.8, "text": parts[3]}
+            ],
+            "silence_window": {
+                "start": 22.0,
+                "end": 26.0,
+                "reason": "Climax pay-off: Pure acoustic wood joinery ASMR"
+            },
+            "hud_overlays": [
+                {
+                    "start": 1.0,
+                    "end": 6.0,
+                    "title": "TRADITIONAL WOODCRAFT",
+                    "specs": ["Design: ZERO NAILS", "Method: 100% WOOD"]
+                },
+                {
+                    "start": 7.0,
+                    "end": 13.5,
+                    "title": "CORNER INTERLOCK",
+                    "specs": ["Joint: SLIDE & LOCK", "Fit: CLEAN WOOD"]
+                },
+                {
+                    "start": 14.5,
+                    "end": 21.0,
+                    "title": "SOLID FRAME",
+                    "specs": ["Holding: PURE FRICTION", "Strength: HEIRLOOM"]
+                },
+                {
+                    "start": 26.5,
+                    "end": 31.5,
+                    "title": "FINISHED PIECE",
+                    "specs": ["Quality: LIFETIME BUILD", "Craft: MASTER HAND"]
+                }
+            ],
+            "speed_ramps": [
+                {"start": 0.0, "end": 6.0, "speed": 1.0, "label": "Opening"},
+                {"start": 6.0, "end": 14.0, "speed": 1.0, "label": "Interlocking action"},
+                {"start": 14.0, "end": 22.0, "speed": 0.95, "label": "Locking"},
+                {"start": 22.0, "end": 26.0, "speed": 1.0, "label": "ASMR lock"},
+                {"start": 26.0, "end": 32.0, "speed": 1.0, "label": "Full reveal"}
+            ],
+            "music_mood": "chisel_asmr",
+            "sub_niche": "Traditional Woodworking",
+            "force_new_music": False
+        }
+
+    def generate_bed_frame_joint_plan(self) -> Dict[str, Any]:
+        """Plan for bed frame corner joinery (matching traditional rosewood bed assembly)."""
+        return {
+            "title": "The Zero-Nail Bed Frame Joint #Shorts",
+            "masthead_text": "ZERO-NAIL BED JOINT",
+            "target_duration": 31.5,
+            "narration_segments": [
+                {
+                    "start": 0.0,
+                    "end": 4.5,
+                    "text": "Look at how this entire wooden bed is built without a single nail or screw."
+                },
+                {
+                    "start": 5.0,
+                    "end": 11.5,
+                    "text": "Two side rails slide straight into the corner post through clean, hand-cut slots."
+                },
+                {
+                    "start": 12.0,
+                    "end": 18.5,
+                    "text": "The wood hooks together so tightly that the weight of the bed locks it right in place..."
+                },
+                {
+                    "start": 23.5,
+                    "end": 30.0,
+                    "text": "giving you a rock-solid bed built to last for generations. No wobble, no screws, just pure wood."
+                }
+            ],
+            "silence_window": {
+                "start": 19.0,
+                "end": 23.0,
+                "reason": "Climax pay-off: Solid wood joint seating ASMR"
+            },
+            "hud_overlays": [
+                {
+                    "start": 1.0,
+                    "end": 5.0,
+                    "title": "BED FRAME CORNER",
+                    "specs": ["Joint: 3-WAY SUNMAO", "Hardware: ZERO NAILS"]
+                },
+                {
+                    "start": 6.0,
+                    "end": 12.0,
+                    "title": "SLIDING RAILS",
+                    "specs": ["Timber: ROSEWOOD", "Connection: HAND-CUT"]
+                },
+                {
+                    "start": 13.0,
+                    "end": 18.5,
+                    "title": "SELF-LOCKING WEIGHT",
+                    "specs": ["Strength: INTERLOCKING", "Hold: LIFETIME"]
+                },
+                {
+                    "start": 24.0,
+                    "end": 29.5,
+                    "title": "FINISHED BED",
+                    "specs": ["Design: SOLID WOOD", "Durability: HEIRLOOM"]
+                }
+            ],
+            "speed_ramps": [
+                {"start": 0.0, "end": 5.0, "speed": 1.0, "label": "Opening"},
+                {"start": 5.0, "end": 12.0, "speed": 1.0, "label": "Rails slide"},
+                {"start": 12.0, "end": 19.0, "speed": 0.95, "label": "Locking"},
+                {"start": 19.0, "end": 23.5, "speed": 1.0, "label": "Pure ASMR tap"},
+                {"start": 23.5, "end": 31.5, "speed": 1.0, "label": "Bed reveal"}
+            ],
+            "music_mood": "temple_joint",
+            "sub_niche": "Classical Chinese Furniture",
+            "force_new_music": False
+        }
+
+    def generate_marking_gauge_plan(self) -> Dict[str, Any]:
+        """Plan for layout, marking gauge, and measuring accuracy."""
+        return {
+            "title": "The Master Carpenter's Marking Trick #Shorts",
+            "masthead_text": "CLEAN LINE LAYOUT",
             "target_duration": 31.8,
             "narration_segments": [
                 {
                     "start": 0.0,
                     "end": 5.5,
-                    "text": "Before a single chisel touches the timber, a master carpenter wins the battle with layout."
+                    "text": "Before you cut any wood, you must start with a clean, straight line."
                 },
                 {
                     "start": 6.0,
                     "end": 13.8,
-                    "text": "Watch how the brass pin of this handmade marking gauge scores across the grain, severing wood fibers cleanly rather than tearing them like a pencil."
+                    "text": "Watch this brass pin glide across the wood, cutting a tiny line instead of using a pencil."
                 },
                 {
                     "start": 14.2,
                     "end": 22.0,
-                    "text": "This microscopic knife line creates an undeniable physical groove for the hand saw and chisel to track against..."
+                    "text": "A pencil mark is too wide, but this small cut gives the hand saw an exact track to follow..."
                 },
-                # Silence window: crisp scoring ASMR
                 {
                     "start": 26.5,
                     "end": 31.5,
-                    "text": "guaranteeing zero-gap tolerances before the cut even begins. True precision is never an accident."
+                    "text": "so when you make the cut, both pieces fit together with zero gaps. Perfect every time."
                 }
             ],
             "silence_window": {
@@ -50,34 +189,34 @@ class ScriptDirector:
                 {
                     "start": 1.0,
                     "end": 6.0,
-                    "title": "LAYOUT GEOMETRY",
-                    "specs": ["Tool: HARDWOOD GAUGE", "Tolerance: 0.10mm LINE"]
+                    "title": "LAYOUT LINE",
+                    "specs": ["Tool: HARDWOOD GAUGE", "Guide: SHARP PIN"]
                 },
                 {
                     "start": 7.0,
                     "end": 13.5,
-                    "title": "FIBER SEVERANCE",
-                    "specs": ["Pin: HARDENED BRASS", "Action: CLEAN KNIFE CUT"]
+                    "title": "CLEAN CUT",
+                    "specs": ["Pin: BRASS TIP", "Action: KNIFE SCORE"]
                 },
                 {
                     "start": 14.5,
                     "end": 21.5,
-                    "title": "REFERENCE FENCE",
-                    "specs": ["Fence: PARALLEL ALIGNMENT", "Square: 90.0° TRUE"]
+                    "title": "SAW TRACK",
+                    "specs": ["Groove: PHYSICAL GUIDE", "Square: 90.0 TRUE"]
                 },
                 {
                     "start": 26.5,
                     "end": 31.0,
-                    "title": "ZERO-GAP TRACK",
-                    "specs": ["Groove: PHYSICAL GUIDE", "Grade: MASTER TOLERANCE"]
+                    "title": "ZERO GAP FIT",
+                    "specs": ["Result: TIGHT JOINT", "Grade: MASTER BUILD"]
                 }
             ],
             "speed_ramps": [
                 {"start": 0.0, "end": 6.0, "speed": 1.0, "label": "Hook: Gauge contact"},
                 {"start": 6.0, "end": 14.0, "speed": 1.0, "label": "Smooth scoring stroke"},
-                {"start": 14.0, "end": 22.0, "speed": 0.95, "label": "Tension: knife line detail"},
+                {"start": 14.0, "end": 22.0, "speed": 0.95, "label": "Knife line detail"},
                 {"start": 22.0, "end": 26.5, "speed": 1.0, "label": "Pure ASMR sliding payoff"},
-                {"start": 26.5, "end": 31.8, "speed": 1.0, "label": "Zero-gap alignment showcase"}
+                {"start": 26.5, "end": 31.8, "speed": 1.0, "label": "Clean fit showcase"}
             ],
             "music_mood": "chisel_asmr",
             "sub_niche": "Precision Woodworking Layout",
@@ -85,457 +224,599 @@ class ScriptDirector:
         }
 
     def generate_kumiko_plan(self) -> Dict[str, Any]:
-        """Plan for Kumiko lattice joinery (组子细工)."""
+        """Plan for Kumiko lattice joinery."""
         return {
-            "title": "The Zero-Gap Japanese Kumiko Joint #Shorts",
-            "masthead_text": "ZERO-GAP KUMIKO JOINERY",
+            "title": "The Zero-Nail Japanese Kumiko Joint #Shorts",
+            "masthead_text": "ZERO-NAIL KUMIKO LATTICE",
             "target_duration": 33.5,
             "narration_segments": [
                 {
                     "start": 0.0,
                     "end": 5.8,
-                    "text": "In traditional Japanese Kumiko, dozens of delicate wooden slats lock together without a single nail or drop of glue."
+                    "text": "Look at how all these tiny wooden strips fit together without any glue or nails."
                 },
                 {
                     "start": 6.2,
                     "end": 14.0,
-                    "text": "Each piece is beveled on a custom wooden guide block, shaved at exact sixty-degree angles with a razor-sharp hand plane."
+                    "text": "Each piece is cut by hand with a sharp hand plane so the angles match exactly."
                 },
                 {
                     "start": 14.5,
                     "end": 22.0,
-                    "text": "Watch the tension fit. If the dimension is off by the thickness of a single human hair, the entire lattice will warp..."
+                    "text": "Watch them slide into place. The pieces fit so snug that friction holds the whole pattern together..."
                 },
                 {
                     "start": 27.0,
                     "end": 33.0,
-                    "text": "Hear that acoustic snap? That pure friction lock is the hallmark of master joinery passed down for centuries."
+                    "text": "Hear that little snap? That means it is locked in tight, creating a beautiful wooden grid."
                 }
             ],
             "silence_window": {
-                "start": 22.5,
-                "end": 26.5,
-                "reason": "Climax pay-off: Pure acoustic wooden lattice snap ASMR"
+                "start": 22.2,
+                "end": 26.8,
+                "reason": "Climax pay-off: Pure wood friction click & snap ASMR"
             },
             "hud_overlays": [
                 {
                     "start": 1.0,
                     "end": 6.0,
-                    "title": "KUMIKO LATTICE",
-                    "specs": ["Fasteners: ZERO NAILS / GLUE", "Pattern: ASA-NO-HA"]
+                    "title": "KUMIKO GRID",
+                    "specs": ["Style: JAPANESE LATTICE", "Hardware: ZERO NAILS"]
                 },
                 {
                     "start": 7.0,
-                    "end": 13.5,
-                    "title": "MICRO-BEVELING",
-                    "specs": ["Guide Angle: 60.0° BEVEL", "Plane: JAPANESE KANNA"]
+                    "end": 14.0,
+                    "title": "HAND PLANE CUT",
+                    "specs": ["Angle: 60.0 DEGREE", "Tool: SHARP KANNA"]
                 },
                 {
                     "start": 15.0,
-                    "end": 21.5,
-                    "title": "FRICTION LOCK",
-                    "specs": ["Tolerance: ±0.02mm HAIR", "Wood: AGED HINOKI CYPRESS"]
+                    "end": 22.0,
+                    "title": "SNUG FIT",
+                    "specs": ["Hold: WOOD FRICTION", "Fit: ZERO PLAY"]
                 },
                 {
                     "start": 27.0,
-                    "end": 32.5,
-                    "title": "ACOUSTIC SNAP",
-                    "specs": ["Joint: FULL MECHANICAL FIT", "Grade: HERITAGE CRAFT"]
+                    "end": 33.0,
+                    "title": "FINISHED PATTERN",
+                    "specs": ["Pattern: STAR LATTICE", "Art: HANDMADE"]
                 }
             ],
             "speed_ramps": [
-                {"start": 0.0, "end": 6.0, "speed": 1.0, "label": "Hook: Lattice assembly"},
-                {"start": 6.0, "end": 14.0, "speed": 1.0, "label": "Beveling details"},
-                {"start": 14.0, "end": 22.5, "speed": 0.9, "label": "Tension build: final piece"},
-                {"start": 22.5, "end": 26.5, "speed": 1.0, "label": "Pure ASMR snap payoff"},
-                {"start": 26.5, "end": 33.5, "speed": 1.0, "label": "Flawless geometric showcase"}
+                {"start": 0.0, "end": 6.0, "speed": 1.0, "label": "Lattice overview"},
+                {"start": 6.0, "end": 14.5, "speed": 1.0, "label": "Shaving angles"},
+                {"start": 14.5, "end": 22.2, "speed": 0.95, "label": "Careful slotting"},
+                {"start": 22.2, "end": 27.0, "speed": 1.0, "label": "Pure ASMR snap"},
+                {"start": 27.0, "end": 33.5, "speed": 1.0, "label": "Full lattice reveal"}
             ],
             "music_mood": "kumiko_lattice",
-            "sub_niche": "Japanese Kumiko Joinery",
+            "sub_niche": "Japanese Kumiko Lattice",
             "force_new_music": False
         }
 
     def generate_sunmao_mortise_plan(self) -> Dict[str, Any]:
-        """Plan for classical mortise & tenon and Sunmao architecture (榫卯)."""
+        """Plan for traditional Sunmao mortise and tenon joinery."""
         return {
-            "title": "The Ancient Sunmao Assembly #Shorts",
-            "masthead_text": "ANCIENT SUNMAO ASSEMBLY",
-            "target_duration": 31.5,
+            "title": "The Ancient No-Nail Wood Joint #Shorts",
+            "masthead_text": "ANCIENT SUNMAO JOINT",
+            "target_duration": 31.0,
             "narration_segments": [
                 {
                     "start": 0.0,
                     "end": 4.5,
-                    "text": "Watch this traditional Sunmao joint assemble under pure friction."
+                    "text": "Watch these two pieces of wood lock together without nails or glue."
                 },
                 {
                     "start": 5.0,
                     "end": 12.0,
-                    "text": "Unlike modern metal fasteners that rust and loosen, a hand-cut mortise and tenon uses the wood's grain to clamp tighter over time."
+                    "text": "One piece has a hole cut inside, and the other piece has a matching wooden peg."
                 },
                 {
                     "start": 12.5,
                     "end": 19.5,
-                    "text": "Notice the internal keyways and precision shoulders. Every cut is carved with surgical hand-tool discipline..."
+                    "text": "When they slide together, the wood fits so tight that they clamp each other in place..."
                 },
                 {
                     "start": 24.5,
                     "end": 30.5,
-                    "text": "sliding together with zero play. That is centuries of heritage woodworking in a single joint."
+                    "text": "making a joint that will stay strong for hundreds of years. The beauty of real woodwork."
                 }
             ],
             "silence_window": {
                 "start": 20.0,
                 "end": 24.0,
-                "reason": "Climax pay-off: Solid wooden mallet tap & interlock ASMR"
+                "reason": "Climax pay-off: Wood mallet tap & acoustic seat ASMR"
             },
             "hud_overlays": [
                 {
                     "start": 1.0,
                     "end": 5.0,
-                    "title": "SUNMAO JOINERY",
-                    "specs": ["Structure: TRADITIONAL SUNMAO", "Heritage: MASTER JOINERY"]
+                    "title": "SUNMAO CRAFT",
+                    "specs": ["Origin: ANCIENT CHINA", "Nails: ZERO"]
                 },
                 {
                     "start": 6.0,
                     "end": 12.0,
-                    "title": "FIBER EXPANSION",
-                    "specs": ["Fastener: ZERO METAL / SCREWS", "Action: SELF-TIGHTENING"]
+                    "title": "PEG & SLOT",
+                    "specs": ["Cut: HAND CHISEL", "Type: MORTISE TENON"]
                 },
                 {
                     "start": 13.0,
-                    "end": 19.0,
-                    "title": "INTERNAL WEDGE",
-                    "specs": ["Chisel: HAND-CARVED MORTISE", "Interlock: MECHANICAL KEY"]
+                    "end": 19.5,
+                    "title": "TIGHT CLAMP",
+                    "specs": ["Hold: WOOD GRAIN", "Strength: ROCK SOLID"]
                 },
                 {
-                    "start": 24.5,
+                    "start": 25.0,
                     "end": 30.5,
-                    "title": "ZERO PLAY",
-                    "specs": ["Tolerance: 0.05mm FIT", "Grade: HERITAGE CRAFT"]
+                    "title": "FINISHED FIT",
+                    "specs": ["Life: GENERATIONS", "Seam: SEAMLESS"]
                 }
             ],
             "speed_ramps": [
-                {"start": 0.0, "end": 5.0, "speed": 1.0, "label": "Hook: Tenon approaches mortise"},
-                {"start": 5.0, "end": 12.0, "speed": 1.0, "label": "Keyway engagement"},
-                {"start": 12.0, "end": 19.5, "speed": 0.95, "label": "Precision alignment"},
-                {"start": 19.5, "end": 24.5, "speed": 1.0, "label": "Pure ASMR hammer tap payoff"},
-                {"start": 24.5, "end": 31.5, "speed": 1.0, "label": "Seamless locked joint"}
+                {"start": 0.0, "end": 5.0, "speed": 1.0, "label": "Joint overview"},
+                {"start": 5.0, "end": 12.5, "speed": 1.0, "label": "Alignment"},
+                {"start": 12.5, "end": 20.0, "speed": 0.95, "label": "Sliding home"},
+                {"start": 20.0, "end": 24.5, "speed": 1.0, "label": "Pure ASMR tap"},
+                {"start": 24.5, "end": 31.0, "speed": 1.0, "label": "Locked joint"}
             ],
             "music_mood": "temple_joint",
             "sub_niche": "Ancient Sunmao Joinery",
             "force_new_music": False
         }
 
-    def generate_corner_tenon_plan(self) -> Dict[str, Any]:
-        """Plan for corner mortise & tenon assemblies and frame joinery."""
-        return {
-            "title": "The Master Tenon Corner Assembly #Shorts",
-            "masthead_text": "MASTER TENON CORNER",
-            "target_duration": 31.5,
-            "narration_segments": [
-                {
-                    "start": 0.0,
-                    "end": 4.5,
-                    "text": "Watch this corner joint seat together without a single screw, nail, or drop of glue."
-                },
-                {
-                    "start": 5.0,
-                    "end": 11.5,
-                    "text": "Every surface of this mortise and tenon is hand-chiseled with zero room for error, aligning the structural timber square."
-                },
-                {
-                    "start": 12.0,
-                    "end": 19.0,
-                    "text": "Notice the internal locking channel. As the tenon seats into the mortise, the wood fibers compress..."
-                },
-                {
-                    "start": 24.0,
-                    "end": 30.5,
-                    "text": "locking both pieces into a single, unbreakable corner. That is master craftsmanship at work."
-                }
-            ],
-            "silence_window": {
-                "start": 19.5,
-                "end": 23.5,
-                "reason": "Climax pay-off: Solid wooden mallet tap & interlock ASMR"
-            },
-            "hud_overlays": [
-                {
-                    "start": 1.0,
-                    "end": 5.0,
-                    "title": "CORNER TENON",
-                    "specs": ["Joint: CORNER MORTISE & TENON", "Assembly: 100% TIMBER INTERLOCK"]
-                },
-                {
-                    "start": 6.0,
-                    "end": 11.5,
-                    "title": "90° ALIGNMENT",
-                    "specs": ["Fasteners: ZERO NAILS / GLUE", "Alignment: 90.0° SQUARE"]
-                },
-                {
-                    "start": 12.5,
-                    "end": 18.5,
-                    "title": "FIBER TENSION",
-                    "specs": ["Chisel: SURGICAL HAND FIT", "Tension: CELLULAR COMPRESSION"]
-                },
-                {
-                    "start": 24.0,
-                    "end": 30.0,
-                    "title": "HEIRLOOM LOCK",
-                    "specs": ["Tolerance: SUB-MILLIMETER FIT", "Grade: HEIRLOOM JOINERY"]
-                }
-            ],
-            "speed_ramps": [
-                {"start": 0.0, "end": 5.0, "speed": 1.0, "label": "Hook: Frame corner approach"},
-                {"start": 5.0, "end": 12.0, "speed": 1.0, "label": "Tenon seating"},
-                {"start": 12.0, "end": 19.5, "speed": 0.95, "label": "Precision alignment"},
-                {"start": 19.5, "end": 24.0, "speed": 1.0, "label": "Pure ASMR seating tap"},
-                {"start": 24.0, "end": 31.5, "speed": 1.0, "label": "Seamless locked corner"}
-            ],
-            "music_mood": "temple_joint",
-            "sub_niche": "Traditional Corner Joinery",
-            "force_new_music": False
-        }
-
     def generate_puzzle_lock_plan(self) -> Dict[str, Any]:
-        """Plan for Luban puzzle locks, secret sliders, and 3D dovetails (鲁班锁 / 机关)."""
+        """Plan for secret puzzle locks, Luban locks, and slider joints."""
         return {
-            "title": "The 3D Secret Interlocking Dovetail Lock #Shorts",
-            "masthead_text": "SECRET DOVETAIL LOCK",
-            "target_duration": 31.5,
-            "narration_segments": [
-                {
-                    "start": 0.0,
-                    "end": 4.5,
-                    "text": "At first glance, this solid wooden block looks impossible to open."
-                },
-                {
-                    "start": 5.0,
-                    "end": 12.0,
-                    "text": "Watch the craftsman rotate the piece. Hidden internal tracks allow the wooden segments to slide along an invisible vector."
-                },
-                {
-                    "start": 12.5,
-                    "end": 19.0,
-                    "text": "Each interlocking pin is carved to microscopic tolerances so the seams remain completely undetectable until moved..."
-                },
-                {
-                    "start": 24.0,
-                    "end": 30.5,
-                    "text": "revealing the secret interior lock. Pure mechanical genius carved entirely from timber."
-                }
-            ],
-            "silence_window": {
-                "start": 19.5,
-                "end": 23.5,
-                "reason": "Climax pay-off: Smooth sliding wood-on-wood click ASMR"
-            },
-            "hud_overlays": [
-                {
-                    "start": 1.0,
-                    "end": 5.0,
-                    "title": "SECRET LOCK",
-                    "specs": ["Geometry: 3D PUZZLE INTERLOCK", "Visual: SEAMLESS ILLUSION"]
-                },
-                {
-                    "start": 6.0,
-                    "end": 12.0,
-                    "title": "HIDDEN VECTOR",
-                    "specs": ["Glide Vector: INTERNAL 45.0°", "Wood: DENSE HARDWOOD"]
-                },
-                {
-                    "start": 12.5,
-                    "end": 18.5,
-                    "title": "SLIDING RAILS",
-                    "specs": ["Mechanism: CONCEALED TRACKS", "Clearance: 0.05mm"]
-                },
-                {
-                    "start": 24.0,
-                    "end": 30.0,
-                    "title": "SECRET REVEAL",
-                    "specs": ["Assembly: ZERO GAP REVEAL", "Grade: MASTER PUZZLE"]
-                }
-            ],
-            "speed_ramps": [
-                {"start": 0.0, "end": 5.0, "speed": 1.0, "label": "Hook: Inspecting block"},
-                {"start": 5.0, "end": 12.0, "speed": 1.0, "label": "Rotating segments"},
-                {"start": 12.0, "end": 19.5, "speed": 0.9, "label": "Sliding along vector"},
-                {"start": 19.5, "end": 24.0, "speed": 1.0, "label": "Pure ASMR sliding payoff"},
-                {"start": 24.0, "end": 31.5, "speed": 1.0, "label": "Open secret compartment"}
-            ],
-            "music_mood": "kumiko_lattice",
-            "sub_niche": "Mechanical Dovetail Lock",
-            "force_new_music": False
-        }
-
-    def generate_hand_plane_shaving_plan(self) -> Dict[str, Any]:
-        """Plan for hand plane tuning, razor shaving, and translucent ribbon ASMR."""
-        return {
-            "title": "The Satisfying Hand Plane Shaving #Shorts",
-            "masthead_text": "0.01mm PLANE SHAVING",
+            "title": "The Secret Wooden Puzzle Box #Shorts",
+            "masthead_text": "SECRET WOOD PUZZLE",
             "target_duration": 31.0,
             "narration_segments": [
                 {
                     "start": 0.0,
                     "end": 4.5,
-                    "text": "Watch what happens when a razor-sharp hand plane glides across solid hardwood."
+                    "text": "Can you guess how this wooden secret puzzle opens?"
                 },
                 {
                     "start": 5.0,
-                    "end": 11.5,
-                    "text": "The blade is tuned so finely it does not scrape—it shears cleanly through wood fibers at a microscopic angle."
+                    "end": 12.0,
+                    "text": "At first it looks like a solid block of wood with no seams. But push the first sliding piece..."
                 },
                 {
-                    "start": 12.0,
-                    "end": 18.5,
-                    "text": "Notice the continuous translucent ribbon peeling off the board, so thin you can read right through it..."
+                    "start": 12.5,
+                    "end": 19.0,
+                    "text": "and the hidden tracks inside begin to move, unlocking the next piece one by one..."
                 },
                 {
-                    "start": 23.5,
-                    "end": 29.5,
-                    "text": "leaving behind a glass-smooth mirror finish without using a single piece of sandpaper."
+                    "start": 24.0,
+                    "end": 30.5,
+                    "text": "until the whole puzzle opens right up. Pure wood magic with zero metal parts."
                 }
             ],
             "silence_window": {
-                "start": 19.0,
-                "end": 23.0,
-                "reason": "Climax pay-off: Pure acoustic hand plane wood slicing ASMR"
+                "start": 19.5,
+                "end": 23.5,
+                "reason": "Climax pay-off: Tactile sliding wood clicking ASMR"
             },
             "hud_overlays": [
                 {
                     "start": 1.0,
                     "end": 5.0,
-                    "title": "PLANE SETUP",
-                    "specs": ["Tool: HAND PLANE", "Sole: TRUED FLAT REFERENCE"]
+                    "title": "WOOD PUZZLE",
+                    "specs": ["Type: LUBAN LOCK", "Metal: ZERO"]
                 },
                 {
                     "start": 6.0,
-                    "end": 11.5,
-                    "title": "CELLULAR SHEAR",
-                    "specs": ["Bevel: RAZOR-SHARP EDGE", "Cut: ZERO FIBER CRUSH"]
+                    "end": 12.0,
+                    "title": "HIDDEN SLIDERS",
+                    "specs": ["Mechanism: WOOD TRACKS", "Fit: INVISIBLE"]
                 },
                 {
-                    "start": 12.5,
-                    "end": 18.5,
-                    "title": "TRANSLUCENT RIBBON",
-                    "specs": ["Shaving: 0.01mm RIBBON", "Light: 100% SEE-THROUGH"]
+                    "start": 13.0,
+                    "end": 19.0,
+                    "title": "STEP UNLOCK",
+                    "specs": ["Code: PHYSICAL KEYS", "Action: SMOOTH SLIDE"]
                 },
                 {
-                    "start": 23.5,
-                    "end": 29.5,
-                    "title": "MIRROR FINISH",
-                    "specs": ["Sandpaper: ZERO USED", "Finish: PURE CELLULAR POLISH"]
+                    "start": 24.5,
+                    "end": 30.5,
+                    "title": "BOX OPEN",
+                    "specs": ["Secret: REVEALED", "Craft: 100% TIMBER"]
                 }
             ],
             "speed_ramps": [
-                {"start": 0.0, "end": 5.0, "speed": 1.0, "label": "Hook: Blade touches board"},
-                {"start": 5.0, "end": 12.0, "speed": 1.0, "label": "Continuous shaving stroke"},
-                {"start": 12.0, "end": 19.0, "speed": 0.95, "label": "Ribbon floating up"},
-                {"start": 19.0, "end": 23.0, "speed": 1.0, "label": "Pure ASMR shaving sound"},
-                {"start": 23.0, "end": 31.0, "speed": 1.0, "label": "Mirror surface reveal"}
+                {"start": 0.0, "end": 5.0, "speed": 1.0, "label": "Solid block view"},
+                {"start": 5.0, "end": 12.5, "speed": 1.0, "label": "First slide"},
+                {"start": 12.5, "end": 19.5, "speed": 0.95, "label": "Track unlocking"},
+                {"start": 19.5, "end": 24.0, "speed": 1.0, "label": "Pure ASMR slide"},
+                {"start": 24.0, "end": 31.0, "speed": 1.0, "label": "Open reveal"}
             ],
             "music_mood": "chisel_asmr",
-            "sub_niche": "Hand Plane Craftsmanship",
+            "sub_niche": "Chinese Puzzle Box Joinery",
             "force_new_music": False
         }
 
-    def generate_dovetail_joint_plan(self) -> Dict[str, Any]:
-        """Plan for hand-cut dovetail box joints and cabinetmaker joinery."""
+    def generate_hand_plane_shaving_plan(self) -> Dict[str, Any]:
+        """Plan for hand plane shaving ASMR."""
         return {
-            "title": "The Precision Dovetail Box Joint #Shorts",
-            "masthead_text": "HAND-CUT DOVETAIL JOINT",
-            "target_duration": 31.5,
+            "title": "The Paper-Thin Wood Shaving Trick #Shorts",
+            "masthead_text": "RAZOR PLANE SHAVING",
+            "target_duration": 30.0,
             "narration_segments": [
                 {
                     "start": 0.0,
                     "end": 4.5,
-                    "text": "A hand-cut dovetail is the undisputed signature of a master cabinetmaker."
+                    "text": "Listen to this sharp hand plane glide across the wood."
                 },
                 {
                     "start": 5.0,
                     "end": 11.5,
-                    "text": "Each pin and tail is carved with a razor chisel to create interlocking mechanical wedges that cannot pull apart."
+                    "text": "The blade is so sharp it does not scratch or tear. It cuts thin wood ribbons like paper."
                 },
                 {
                     "start": 12.0,
                     "end": 18.5,
-                    "text": "Watch the two boards meet. The friction fit is so exact that the grain lines flow seamlessly around the corner..."
+                    "text": "See how the wood ribbon peels off in one piece, so clear you can see right through it..."
                 },
                 {
                     "start": 23.5,
-                    "end": 30.0,
-                    "text": "leaving zero visible gap along the entire seam. Handcrafted precision at its finest."
+                    "end": 29.5,
+                    "text": "leaving the wood smooth as glass without using any sandpaper at all."
                 }
             ],
             "silence_window": {
                 "start": 19.0,
                 "end": 23.0,
-                "reason": "Climax pay-off: Tactile wooden mallet seating ASMR"
+                "reason": "Climax pay-off: Pure acoustic plane hiss & wood shaving ASMR"
+            },
+            "hud_overlays": [
+                {
+                    "start": 1.0,
+                    "end": 5.0,
+                    "title": "HAND PLANE",
+                    "specs": ["Tool: WOOD PLANE", "Blade: RAZOR SHARP"]
+                },
+                {
+                    "start": 6.0,
+                    "end": 11.5,
+                    "title": "CLEAN SHAVE",
+                    "specs": ["Action: SMOOTH SLICE", "Tear: ZERO"]
+                },
+                {
+                    "start": 12.5,
+                    "end": 18.5,
+                    "title": "PAPER THIN",
+                    "specs": ["Thickness: SEE THROUGH", "Ribbon: FULL LENGTH"]
+                },
+                {
+                    "start": 24.0,
+                    "end": 29.5,
+                    "title": "GLASS SMOOTH",
+                    "specs": ["Sandpaper: ZERO USED", "Finish: PURE WOOD"]
+                }
+            ],
+            "speed_ramps": [
+                {"start": 0.0, "end": 5.0, "speed": 1.0, "label": "Plane contact"},
+                {"start": 5.0, "end": 12.0, "speed": 1.0, "label": "Long shaving stroke"},
+                {"start": 12.0, "end": 19.0, "speed": 0.95, "label": "Translucent ribbon"},
+                {"start": 19.0, "end": 23.5, "speed": 1.0, "label": "Pure ASMR plane hiss"},
+                {"start": 23.5, "end": 30.0, "speed": 1.0, "label": "Mirror wood finish"}
+            ],
+            "music_mood": "chisel_asmr",
+            "sub_niche": "Master Hand Plane ASMR",
+            "force_new_music": False
+        }
+
+    def generate_dovetail_joint_plan(self) -> Dict[str, Any]:
+        """Plan for classic hand-cut dovetail joinery."""
+        return {
+            "title": "The Perfect Hand-Cut Dovetail Joint #Shorts",
+            "masthead_text": "HAND-CUT DOVETAIL",
+            "target_duration": 30.5,
+            "narration_segments": [
+                {
+                    "start": 0.0,
+                    "end": 4.5,
+                    "text": "Look at how these wooden dovetail cuts fit together."
+                },
+                {
+                    "start": 5.0,
+                    "end": 11.5,
+                    "text": "Each wooden notch is shaped like a fan, so once they slide in, they can never pull apart."
+                },
+                {
+                    "start": 12.0,
+                    "end": 18.5,
+                    "text": "Watch the two boards meet. The fit is so tight you cannot even see the line where they join..."
+                },
+                {
+                    "start": 23.5,
+                    "end": 30.0,
+                    "text": "locking both sides together forever. Simple cuts that make the strongest boxes."
+                }
+            ],
+            "silence_window": {
+                "start": 19.0,
+                "end": 23.0,
+                "reason": "Climax pay-off: Wood mallet tapping pins into tails ASMR"
             },
             "hud_overlays": [
                 {
                     "start": 1.0,
                     "end": 5.0,
                     "title": "DOVETAIL JOINT",
-                    "specs": ["Joint: HAND-CUT PINS & TAILS", "Fastener: MECHANICAL WEDGE"]
+                    "specs": ["Joint: PINS & TAILS", "Cut: HAND CHISELED"]
                 },
                 {
                     "start": 6.0,
                     "end": 11.5,
-                    "title": "WEDGE GEOMETRY",
-                    "specs": ["Angle: 1:8 DOVETAIL SLOPE", "Lock: TENSILE RESISTANCE"]
+                    "title": "FAN SHAPE",
+                    "specs": ["Design: ANGLE WEDGES", "Pull: CANNOT SEPARATE"]
                 },
                 {
                     "start": 12.5,
                     "end": 18.5,
-                    "title": "GRAIN CONTINUITY",
-                    "specs": ["Alignment: CORNER GRAIN FLOW", "Clearance: 0.02mm FIT"]
+                    "title": "ZERO SEAM",
+                    "specs": ["Fit: TIGHT GRAIN", "Gap: ZERO"]
                 },
                 {
-                    "start": 23.5,
-                    "end": 29.5,
-                    "title": "ZERO-GAP SEAM",
-                    "specs": ["Tolerance: ZERO LIGHT LEAK", "Grade: MASTER CABINETRY"]
+                    "start": 24.0,
+                    "end": 30.0,
+                    "title": "SOLID BOX",
+                    "specs": ["Strength: LIFETIME", "Hardware: ZERO"]
                 }
             ],
             "speed_ramps": [
-                {"start": 0.0, "end": 5.0, "speed": 1.0, "label": "Hook: Dovetail alignment"},
-                {"start": 5.0, "end": 12.0, "speed": 1.0, "label": "Pins engaging tails"},
-                {"start": 12.0, "end": 19.0, "speed": 0.95, "label": "Pressing joint flush"},
-                {"start": 19.0, "end": 23.0, "speed": 1.0, "label": "Pure ASMR mallet tap"},
-                {"start": 23.0, "end": 31.5, "speed": 1.0, "label": "Seamless box corner reveal"}
+                {"start": 0.0, "end": 5.0, "speed": 1.0, "label": "Dovetail pins"},
+                {"start": 5.0, "end": 12.0, "speed": 1.0, "label": "Aligning wedge"},
+                {"start": 12.0, "end": 19.0, "speed": 0.95, "label": "Pins slide in"},
+                {"start": 19.0, "end": 23.5, "speed": 1.0, "label": "Pure ASMR tap"},
+                {"start": 23.5, "end": 30.5, "speed": 1.0, "label": "Solid locked corner"}
             ],
             "music_mood": "chisel_asmr",
             "sub_niche": "Handmade Dovetail Joinery",
             "force_new_music": False
         }
 
+    def generate_corner_tenon_plan(self) -> Dict[str, Any]:
+        """Plan for corner tenon and structural framing assembly."""
+        return {
+            "title": "The Master Wood Corner Assembly #Shorts",
+            "masthead_text": "CORNER TENON ASSEMBLY",
+            "target_duration": 31.0,
+            "narration_segments": [
+                {
+                    "start": 0.0,
+                    "end": 4.5,
+                    "text": "Watch this corner joint slide together without a single nail or screw."
+                },
+                {
+                    "start": 5.0,
+                    "end": 11.5,
+                    "text": "Every side of this joint is cut by hand to line up square and true."
+                },
+                {
+                    "start": 12.0,
+                    "end": 19.0,
+                    "text": "As the pieces slide into place, the wood presses together tight..."
+                },
+                {
+                    "start": 24.0,
+                    "end": 30.5,
+                    "text": "locking into a solid corner that will never pull apart. Simple, strong, and built to last."
+                }
+            ],
+            "silence_window": {
+                "start": 19.5,
+                "end": 23.5,
+                "reason": "Climax pay-off: Deep wood frame seating & mallet resonance ASMR"
+            },
+            "hud_overlays": [
+                {
+                    "start": 1.0,
+                    "end": 5.0,
+                    "title": "FRAME CORNER",
+                    "specs": ["Joint: 90 DEGREE SQUARE", "Hardware: ZERO"]
+                },
+                {
+                    "start": 6.0,
+                    "end": 11.5,
+                    "title": "HAND CUT",
+                    "specs": ["Method: CHISEL & SAW", "Angle: TRUE SQUARE"]
+                },
+                {
+                    "start": 12.5,
+                    "end": 19.0,
+                    "title": "TIGHT SLIDE",
+                    "specs": ["Fit: SNUG FIT", "Hold: WOOD COMPRESSION"]
+                },
+                {
+                    "start": 24.5,
+                    "end": 30.5,
+                    "title": "LOCKED FRAME",
+                    "specs": ["Durability: HEIRLOOM", "Strength: ROCK SOLID"]
+                }
+            ],
+            "speed_ramps": [
+                {"start": 0.0, "end": 5.0, "speed": 1.0, "label": "Corner view"},
+                {"start": 5.0, "end": 12.0, "speed": 1.0, "label": "Slow alignment"},
+                {"start": 12.0, "end": 19.5, "speed": 0.95, "label": "Sliding home"},
+                {"start": 19.5, "end": 24.0, "speed": 1.0, "label": "Pure ASMR mallet tap"},
+                {"start": 24.0, "end": 31.0, "speed": 1.0, "label": "Completed corner"}
+            ],
+            "music_mood": "temple_joint",
+            "sub_niche": "Traditional Timber Framing",
+            "force_new_music": False
+        }
+
+    def generate_dougong_plan(self) -> Dict[str, Any]:
+        """Plan for ancient Dougong temple bracket joinery."""
+        return {
+            "title": "The Temple Roof Bracket That Beat Earthquakes #Shorts",
+            "masthead_text": "ANCIENT DOUGONG BRACKET",
+            "target_duration": 34.0,
+            "narration_segments": [
+                {
+                    "start": 0.0,
+                    "end": 5.8,
+                    "text": "This wooden roof bracket is how ancient temples survived big earthquakes for a thousand years."
+                },
+                {
+                    "start": 6.2,
+                    "end": 14.0,
+                    "text": "Built with stacked wooden blocks, they hold up massive roofs without using a single nail or bolt."
+                },
+                {
+                    "start": 14.5,
+                    "end": 22.0,
+                    "text": "When the ground shakes, the wooden blocks bend and slide just enough to absorb the shock..."
+                },
+                {
+                    "start": 27.0,
+                    "end": 33.5,
+                    "text": "protecting the entire building from falling down. Genius building skills made only from wood."
+                }
+            ],
+            "silence_window": {
+                "start": 22.5,
+                "end": 26.5,
+                "reason": "Climax pay-off: Deep temple gong resonance & wooden interlocking ASMR"
+            },
+            "hud_overlays": [
+                {
+                    "start": 1.0,
+                    "end": 6.0,
+                    "title": "DOUGONG BRACKET",
+                    "specs": ["Origin: ANCIENT TEMPLE", "Fasteners: ZERO"]
+                },
+                {
+                    "start": 7.0,
+                    "end": 14.0,
+                    "title": "STACKED WOOD",
+                    "specs": ["Blocks: INTERLOCKING", "Load: MASSIVE ROOF"]
+                },
+                {
+                    "start": 15.0,
+                    "end": 22.0,
+                    "title": "EARTHQUAKE PROOF",
+                    "specs": ["Action: SHOCK ABSORB", "Flex: WOOD FRICTION"]
+                },
+                {
+                    "start": 27.0,
+                    "end": 33.5,
+                    "title": "STANDING STRONG",
+                    "specs": ["History: 1000+ YEARS", "Result: ZERO DAMAGE"]
+                }
+            ],
+            "speed_ramps": [
+                {"start": 0.0, "end": 6.0, "speed": 1.0, "label": "Temple bracket"},
+                {"start": 6.0, "end": 14.5, "speed": 1.0, "label": "Stacking blocks"},
+                {"start": 14.5, "end": 22.5, "speed": 0.95, "label": "Interlocking flex"},
+                {"start": 22.5, "end": 27.0, "speed": 1.0, "label": "Pure acoustic gong ASMR"},
+                {"start": 27.0, "end": 34.0, "speed": 1.0, "label": "Completed temple structure"}
+            ],
+            "music_mood": "temple_joint",
+            "sub_niche": "Ancient Chinese Architecture",
+            "force_new_music": False
+        }
+
+    def generate_end_grain_sharpness_plan(self) -> Dict[str, Any]:
+        """Plan for chisel sharpness end-grain cutting test."""
+        return {
+            "title": "The Razor Chisel End-Grain Test #Shorts",
+            "masthead_text": "CHISEL SHARPNESS TEST",
+            "target_duration": 33.5,
+            "narration_segments": [
+                {
+                    "start": 0.0,
+                    "end": 5.8,
+                    "text": "Cutting the end of a wood block is the hardest test for any sharp tool."
+                },
+                {
+                    "start": 6.2,
+                    "end": 14.0,
+                    "text": "If the blade was even a little bit dull, it would crush the wood and leave rough marks."
+                },
+                {
+                    "start": 14.5,
+                    "end": 22.0,
+                    "text": "Instead, look at this chisel slice straight through the wood like it was soft butter..."
+                },
+                {
+                    "start": 27.0,
+                    "end": 33.0,
+                    "text": "peeling off a paper-thin curl and leaving the surface smooth as glass. That is real sharpness."
+                }
+            ],
+            "silence_window": {
+                "start": 22.5,
+                "end": 26.5,
+                "reason": "Climax pay-off: Crisp end-grain shearing hiss ASMR"
+            },
+            "hud_overlays": [
+                {
+                    "start": 1.0,
+                    "end": 6.0,
+                    "title": "END GRAIN TEST",
+                    "specs": ["Hardness: MAXIMUM", "Test: RAZOR SHARP"]
+                },
+                {
+                    "start": 7.0,
+                    "end": 14.0,
+                    "title": "RAZOR BLADE",
+                    "specs": ["Steel: HAND FORGED", "Edge: ZERO DULL"]
+                },
+                {
+                    "start": 15.0,
+                    "end": 22.0,
+                    "title": "BUTTER CUT",
+                    "specs": ["Action: CLEAN SLICE", "Resistance: ZERO"]
+                },
+                {
+                    "start": 27.0,
+                    "end": 33.0,
+                    "title": "GLASS FINISH",
+                    "specs": ["Surface: MIRROR SMOOTH", "Quality: RAZOR EDGE"]
+                }
+            ],
+            "speed_ramps": [
+                {"start": 0.0, "end": 6.0, "speed": 1.0, "label": "Chisel approach"},
+                {"start": 6.0, "end": 14.5, "speed": 1.0, "label": "Entering end grain"},
+                {"start": 14.5, "end": 22.5, "speed": 0.95, "label": "Smooth shear"},
+                {"start": 22.5, "end": 26.5, "speed": 1.0, "label": "Pure ASMR slice hiss"},
+                {"start": 26.5, "end": 33.5, "speed": 1.0, "label": "Glass surface reveal"}
+            ],
+            "music_mood": "chisel_asmr",
+            "sub_niche": "Chisel Sharpness & Metallurgy",
+            "force_new_music": False
+        }
+
     def generate_table_leg_joint_plan(self) -> Dict[str, Any]:
         """Plan for 3-way table leg interlocking joinery."""
         return {
-            "title": "The No-Nails Table Leg Joint #Shorts",
+            "title": "The Three-Way Table Leg Joint #Shorts",
             "masthead_text": "3-WAY TABLE LEG JOINT",
             "target_duration": 31.5,
             "narration_segments": [
                 {
                     "start": 0.0,
                     "end": 4.5,
-                    "text": "This three-way interlocking joint is the secret to building furniture that lasts generations."
+                    "text": "This three-way wood joint is how strong tables are built without nails or screws."
                 },
                 {
                     "start": 5.0,
                     "end": 11.5,
-                    "text": "Two horizontal rails and one vertical leg meet at a single corner, locking together through hand-cut notches."
+                    "text": "Two rails and one upright leg all meet at the exact same corner, fitting like puzzle pieces."
                 },
                 {
                     "start": 12.0,
                     "end": 18.5,
-                    "text": "Watch how each timber locks the other in place. The downward weight of the table actually drives the joint tighter..."
+                    "text": "Watch how each piece locks the other in place. The heavier the table gets, the tighter it holds..."
                 },
                 {
                     "start": 23.5,
                     "end": 30.0,
-                    "text": "creating an unbreakable frame with zero wobble. True heirloom woodworking."
+                    "text": "making a rock-solid table that never shakes. Real woodworking that lasts forever."
                 }
             ],
             "silence_window": {
@@ -547,66 +828,66 @@ class ScriptDirector:
                 {
                     "start": 1.0,
                     "end": 5.0,
-                    "title": "3-WAY INTERLOCK",
-                    "specs": ["Structure: 3-AXIS CORNER", "Fasteners: ZERO HARDWARE"]
+                    "title": "TABLE CORNER",
+                    "specs": ["Pieces: 3-WAY INTERLOCK", "Nails: ZERO"]
                 },
                 {
                     "start": 6.0,
                     "end": 11.5,
-                    "title": "RAIL & LEG KEY",
-                    "specs": ["Rails: DUAL HORIZONTAL KEYS", "Leg: VERTICAL RECEIVER"]
+                    "title": "PUZZLE NOTCH",
+                    "specs": ["Cut: HAND CRAFTED", "Fit: MATCHING SLOTS"]
                 },
                 {
                     "start": 12.5,
                     "end": 18.5,
-                    "title": "SELF-LOCKING",
-                    "specs": ["Load: GRAVITY CLAMPING", "Action: ANTI-RACKING RIGIDITY"]
+                    "title": "WEIGHT LOCK",
+                    "specs": ["Load: TIGHTENS JOINT", "Wobble: ZERO"]
                 },
                 {
-                    "start": 23.5,
-                    "end": 29.5,
-                    "title": "ZERO WOBBLE",
-                    "specs": ["Stability: 100% SOLID", "Grade: HEIRLOOM FURNITURE"]
+                    "start": 24.0,
+                    "end": 30.0,
+                    "title": "SOLID TABLE",
+                    "specs": ["Strength: UNBREAKABLE", "Build: LIFETIME"]
                 }
             ],
             "speed_ramps": [
-                {"start": 0.0, "end": 5.0, "speed": 1.0, "label": "Hook: Table leg assembly"},
-                {"start": 5.0, "end": 12.0, "speed": 1.0, "label": "Rail slotting into leg"},
-                {"start": 12.0, "end": 19.0, "speed": 0.95, "label": "Dual rail engagement"},
-                {"start": 19.0, "end": 23.0, "speed": 1.0, "label": "Pure ASMR seating tap"},
-                {"start": 23.0, "end": 31.5, "speed": 1.0, "label": "Rock solid frame reveal"}
+                {"start": 0.0, "end": 5.0, "speed": 1.0, "label": "3 pieces view"},
+                {"start": 5.0, "end": 12.0, "speed": 1.0, "label": "Sliding together"},
+                {"start": 12.0, "end": 19.0, "speed": 0.95, "label": "Corner interlock"},
+                {"start": 19.0, "end": 23.5, "speed": 1.0, "label": "Pure ASMR tap"},
+                {"start": 23.5, "end": 31.5, "speed": 1.0, "label": "Solid table leg"}
             ],
             "music_mood": "temple_joint",
-            "sub_niche": "Heirloom Furniture Joinery",
+            "sub_niche": "Classical Chinese Furniture",
             "force_new_music": False
         }
 
     def generate_locking_mortise_dissection_plan(self) -> Dict[str, Any]:
-        """Plan for dissecting and taking apart hidden locking mortises and internal wedge joints."""
+        """Plan for hidden locking mortise joints."""
         return {
-            "title": "Dissecting the Hidden Locking Mortise #Shorts",
-            "masthead_text": "HIDDEN LOCKING MORTISE",
+            "title": "The Secret Hidden Wood Joint #Shorts",
+            "masthead_text": "HIDDEN LOCKING JOINT",
             "target_duration": 31.5,
             "narration_segments": [
                 {
                     "start": 0.0,
                     "end": 4.5,
-                    "text": "Let us take apart this hidden locking joint to reveal what is happening inside the timber."
+                    "text": "Let us open up this wooden joint to see what is hidden inside."
                 },
                 {
                     "start": 5.0,
                     "end": 11.5,
-                    "text": "From the outside, it looks like a simple wood block. But slide out this central wooden keyway..."
+                    "text": "From the outside it looks like a plain block of wood. But when you slide the center pin out..."
                 },
                 {
                     "start": 12.0,
                     "end": 18.5,
-                    "text": "and the internal mortise reveals an opposing wedge mechanism that expands inside the core..."
+                    "text": "you can see the inside cut has a secret lock that hooks both pieces together..."
                 },
                 {
                     "start": 23.5,
                     "end": 30.0,
-                    "text": "trapping the tenon so tightly it can never pull loose. Ingenious joinery hidden in plain sight."
+                    "text": "holding so tight it can never pull loose. A clever secret hidden right inside the wood."
                 }
             ],
             "silence_window": {
@@ -618,184 +899,42 @@ class ScriptDirector:
                 {
                     "start": 1.0,
                     "end": 5.0,
-                    "title": "JOINT DISSECTION",
-                    "specs": ["Inspection: INTERNAL ANATOMY", "Exterior: DECEPTIVELY SIMPLE"]
+                    "title": "HIDDEN JOINT",
+                    "specs": ["Look: PLAIN BLOCK", "Inside: SECRET LOCK"]
                 },
                 {
                     "start": 6.0,
                     "end": 11.5,
-                    "title": "CENTRAL KEYWAY",
-                    "specs": ["Release: SLIDING LOCK PIN", "Clearance: 0.05mm"]
+                    "title": "CENTER PIN",
+                    "specs": ["Key: WOODEN SLIDER", "Action: UNLOCK"]
                 },
                 {
                     "start": 12.5,
                     "end": 18.5,
-                    "title": "EXPANDING WEDGE",
-                    "specs": ["Core: INTERNAL OPPOSING WEDGE", "Lock: POSITIVE MECHANICAL TRAP"]
+                    "title": "INSIDE HOOK",
+                    "specs": ["Cut: SECRET NOTCH", "Hold: LOCKED TIGHT"]
                 },
                 {
-                    "start": 23.5,
-                    "end": 29.5,
-                    "title": "INGENIOUS DESIGN",
-                    "specs": ["Security: ZERO PULL-OUT", "Heritage: MASTER JOINERY"]
+                    "start": 24.0,
+                    "end": 30.0,
+                    "title": "INGENIOUS CRAFT",
+                    "specs": ["Metal: ZERO USED", "Craft: 100% TIMBER"]
                 }
             ],
             "speed_ramps": [
-                {"start": 0.0, "end": 5.0, "speed": 1.0, "label": "Hook: Disassembling joint"},
-                {"start": 5.0, "end": 12.0, "speed": 1.0, "label": "Sliding out locking key"},
-                {"start": 12.0, "end": 19.0, "speed": 0.95, "label": "Revealing internal wedge"},
-                {"start": 19.0, "end": 23.0, "speed": 1.0, "label": "Pure ASMR sliding sound"},
-                {"start": 23.0, "end": 31.5, "speed": 1.0, "label": "Internal mechanism showcase"}
-            ],
-            "music_mood": "temple_joint",
-            "sub_niche": "Concealed Mechanical Joinery",
-            "force_new_music": False
-        }
-
-    def generate_dougong_plan(self) -> Dict[str, Any]:
-        """Plan for Dougong cantilever temple brackets (斗拱)."""
-        return {
-            "title": "The Ancient Dougong Bracket: Earthquake-Proof Wood #Shorts",
-            "masthead_text": "EARTHQUAKE-PROOF DOUGONG",
-            "target_duration": 34.0,
-            "narration_segments": [
-                {
-                    "start": 0.0,
-                    "end": 5.8,
-                    "text": "This interlocking wooden bracket is the true secret behind ancient temples surviving magnitude eight earthquakes."
-                },
-                {
-                    "start": 6.2,
-                    "end": 14.0,
-                    "text": "Known as Dougong, these stepped cantilever blocks distribute massive roof weight through friction without a single nail or bolt."
-                },
-                {
-                    "start": 14.5,
-                    "end": 22.0,
-                    "text": "When seismic tremors shake the earth, the joints flex, absorb shock waves, and self-center automatically..."
-                },
-                {
-                    "start": 27.0,
-                    "end": 33.5,
-                    "text": "converting destructive kinetic energy into friction. Ancient architectural engineering at its finest."
-                }
-            ],
-            "silence_window": {
-                "start": 22.5,
-                "end": 26.5,
-                "reason": "Climax pay-off: Resonant wooden interlock ASMR"
-            },
-            "hud_overlays": [
-                {
-                    "start": 1.0,
-                    "end": 6.0,
-                    "title": "DOUGONG BRACKET",
-                    "specs": ["Structure: IMPERIAL CANTILEVER", "Function: SEISMIC SHOCK DISSIPATOR"]
-                },
-                {
-                    "start": 7.0,
-                    "end": 13.5,
-                    "title": "STEPPED CANTILEVER",
-                    "specs": ["Fasteners: ZERO NAILS / GLUE", "Load: 3D DISSIPATIVE TRANSFER"]
-                },
-                {
-                    "start": 15.0,
-                    "end": 21.5,
-                    "title": "SEISMIC DAMPING",
-                    "specs": ["Flex: CONTROLLED MICRO-PLAY", "Action: KINETIC ABSORPTION"]
-                },
-                {
-                    "start": 27.0,
-                    "end": 33.0,
-                    "title": "SELF-CENTERING",
-                    "specs": ["Interlock: FULL RECOVERY", "Grade: UNESCO MASTERWORK"]
-                }
-            ],
-            "speed_ramps": [
-                {"start": 0.0, "end": 6.0, "speed": 1.0, "label": "Hook: Complex bracket assembly"},
-                {"start": 6.0, "end": 14.0, "speed": 1.0, "label": "Stepped block placement"},
-                {"start": 14.0, "end": 22.5, "speed": 0.95, "label": "Tension: load test"},
-                {"start": 22.5, "end": 26.5, "speed": 1.0, "label": "Pure ASMR seating payoff"},
-                {"start": 26.5, "end": 34.0, "speed": 1.0, "label": "Earthquake proof structure"}
-            ],
-            "music_mood": "temple_joint",
-            "sub_niche": "Ancient Sandalwood Architecture",
-            "force_new_music": False
-        }
-
-    def generate_end_grain_sharpness_plan(self) -> Dict[str, Any]:
-        """Plan for chisel sharpness, razor plane, and end-grain slicing demonstrations."""
-        return {
-            "title": "The Ultimate 0.05mm Chisel Test: Slicing End Grain #Shorts",
-            "masthead_text": "THE ULTIMATE SHARPNESS TEST",
-            "target_duration": 33.5,
-            "narration_segments": [
-                {
-                    "start": 0.0,
-                    "end": 5.8,
-                    "text": "To a master carpenter, end grain is the ultimate and most brutal test of an edge."
-                },
-                {
-                    "start": 6.2,
-                    "end": 14.0,
-                    "text": "Notice those tight diagonal growth rings. If this hand-forged steel were even slightly dull, these vertical wood fibers would crush and splinter."
-                },
-                {
-                    "start": 14.5,
-                    "end": 22.0,
-                    "text": "Instead, watch the blade glide at a microscopic angle. It shears cleanly through individual cellulose walls..."
-                },
-                {
-                    "start": 27.0,
-                    "end": 33.0,
-                    "text": "peeling a translucent wooden ribbon so thin, light passes right through it. That is what true master sharpness looks like."
-                }
-            ],
-            "silence_window": {
-                "start": 22.5,
-                "end": 26.5,
-                "reason": "Climax pay-off: Pure acoustic end-grain slice Foley"
-            },
-            "hud_overlays": [
-                {
-                    "start": 1.0,
-                    "end": 6.0,
-                    "title": "END-GRAIN TEST",
-                    "specs": ["Surface: CROSS-SECTION", "Tolerance: 0.05mm SLICE"]
-                },
-                {
-                    "start": 7.0,
-                    "end": 13.5,
-                    "title": "CELLULAR SHEAR",
-                    "specs": ["Bevel: 28.0° RAZOR EDGE", "Grain: 16 RINGS / INCH"]
-                },
-                {
-                    "start": 15.0,
-                    "end": 21.5,
-                    "title": "TRANSLUCENT RIBBON",
-                    "specs": ["Fiber Status: ZERO CRUSH", "Shear: PURE CELLULOSE"]
-                },
-                {
-                    "start": 27.0,
-                    "end": 32.5,
-                    "title": "MICROSCOPIC POLISH",
-                    "specs": ["Uniformity: 100% PARALLEL", "Grade: MASTER FINISH"]
-                }
-            ],
-            "speed_ramps": [
-                {"start": 0.0, "end": 6.0, "speed": 1.0, "label": "Hook: Blade touches end-grain"},
-                {"start": 6.0, "end": 14.0, "speed": 1.0, "label": "Smooth peeling action"},
-                {"start": 14.0, "end": 22.5, "speed": 0.9, "label": "Tension build: continuous ribbon"},
-                {"start": 22.5, "end": 26.5, "speed": 1.0, "label": "Pure ASMR silence payoff"},
-                {"start": 26.5, "end": 33.5, "speed": 1.0, "label": "Translucent ribbon showcase"}
+                {"start": 0.0, "end": 5.0, "speed": 1.0, "label": "Solid block"},
+                {"start": 5.0, "end": 12.0, "speed": 1.0, "label": "Slide pin out"},
+                {"start": 12.0, "end": 19.0, "speed": 0.95, "label": "Inside secret"},
+                {"start": 19.0, "end": 23.5, "speed": 1.0, "label": "Pure ASMR slide"},
+                {"start": 23.5, "end": 31.5, "speed": 1.0, "label": "Revealed mechanism"}
             ],
             "music_mood": "chisel_asmr",
-            "sub_niche": "Japanese Chisel Metallurgy",
+            "sub_niche": "Traditional Woodworking",
             "force_new_music": False
         }
 
     def generate_dynamic_craft_plan(self, topic: str) -> Dict[str, Any]:
-        """Dynamic plan synthesizer for any custom woodworking topic."""
+        """Dynamic plan synthesizer for any custom woodworking topic using simple words."""
         clean_topic = topic.replace("#Shorts", "").strip()
         masthead = clean_topic.upper()
         if len(masthead) > 28:
@@ -809,22 +948,22 @@ class ScriptDirector:
                 {
                     "start": 0.0,
                     "end": 5.5,
-                    "text": f"In master woodworking, {clean_topic.lower()} requires unwavering patience and surgical discipline."
+                    "text": "In traditional woodworking, building by hand takes time and steady hands."
                 },
                 {
                     "start": 6.0,
                     "end": 14.0,
-                    "text": "Every cut and shaving responds to the natural density and grain direction of the timber. One slight slip ruins weeks of work."
+                    "text": "Every cut is made to follow the natural grain of the wood, with zero nails and zero screws."
                 },
                 {
                     "start": 14.5,
                     "end": 21.5,
-                    "text": "Watch closely as the craftsman guides the hand tool with feather-light pressure, aligning microscopic surfaces..."
+                    "text": "Watch closely as the woodworker fits the pieces together by hand, making sure every corner is flush..."
                 },
                 {
                     "start": 26.5,
                     "end": 31.8,
-                    "text": "revealing flawless tolerances that modern machines simply cannot match. That is master craftsmanship."
+                    "text": "giving you a clean, solid piece of woodwork that will last a lifetime. That is true craft."
                 }
             ],
             "silence_window": {
@@ -837,31 +976,31 @@ class ScriptDirector:
                     "start": 1.0,
                     "end": 6.0,
                     "title": "MASTER WORK",
-                    "specs": ["Craft: TRADITIONAL WOODCRAFT", "Patience: 100% MANUAL"]
+                    "specs": ["Craft: TRADITIONAL WOODCRAFT", "Method: 100% MANUAL"]
                 },
                 {
                     "start": 7.0,
                     "end": 13.5,
                     "title": "GRAIN DYNAMICS",
-                    "specs": ["Surface: HAND FINISHED", "Fiber: ZERO SPLINTER"]
+                    "specs": ["Surface: HAND FINISHED", "Nails: ZERO"]
                 },
                 {
                     "start": 14.5,
                     "end": 21.0,
-                    "title": "PRECISION FIT",
-                    "specs": ["Tolerance: SUB-MILLIMETER", "Alignment: PERFECT TRUE"]
+                    "title": "CLEAN FIT",
+                    "specs": ["Fit: FLUSH EDGES", "Seam: TIGHT"]
                 },
                 {
                     "start": 26.5,
                     "end": 31.5,
                     "title": "FINAL REVEAL",
-                    "specs": ["Finish: HAND TOOL MASTER", "Grade: HEIRLOOM QUALITY"]
+                    "specs": ["Quality: LIFETIME BUILD", "Grade: HEIRLOOM"]
                 }
             ],
             "speed_ramps": [
-                {"start": 0.0, "end": 6.0, "speed": 1.0, "label": "Hook: Opening craft"},
+                {"start": 0.0, "end": 6.0, "speed": 1.0, "label": "Opening craft"},
                 {"start": 6.0, "end": 14.0, "speed": 1.0, "label": "Detailed work"},
-                {"start": 14.0, "end": 22.0, "speed": 0.95, "label": "Critical alignment"},
+                {"start": 14.0, "end": 22.0, "speed": 0.95, "label": "Fitting together"},
                 {"start": 22.0, "end": 26.0, "speed": 1.0, "label": "Pure ASMR payoff"},
                 {"start": 26.0, "end": 32.0, "speed": 1.0, "label": "Finished reveal"}
             ],
@@ -870,70 +1009,79 @@ class ScriptDirector:
             "force_new_music": False
         }
 
-    def generate_short_plan(self, topic: str = "end_grain") -> Dict[str, Any]:
+    def generate_short_plan(self, topic: str = "end_grain", video_analysis: Dict[str, Any] = None) -> Dict[str, Any]:
         """
-        Dynamically selects or synthesizes a plan matching the specific video topic.
-        Never defaults to end-grain unless the topic specifically relates to chisel sharpness.
+        Dynamically selects or synthesizes a plan matching the specific video.
+        If video_analysis is provided from Gemini Vision, grounds narration
+        directly in what is actually visible on screen with simple words.
         """
+        # 0. Vision-grounded priority: If video analysis provided 4 simple script parts, use them!
+        if video_analysis and video_analysis.get("script_parts"):
+            return self.generate_vision_grounded_plan(topic, video_analysis)
+
         t = (topic or "").lower()
 
-        # 1. Dissecting hidden mortise / internal mechanism (Must be checked before generic lock)
+        # 1. Bed frame joint / corner post (checked first for bed/furniture assembly)
+        if any(w in t for w in ["bed", "bed frame", "corner assembly"]):
+            return self.generate_bed_frame_joint_plan()
+
+        # 2. Dissecting hidden mortise / internal mechanism
         if any(w in t for w in ["dissect", "hidden", "internal", "拆解"]):
             return self.generate_locking_mortise_dissection_plan()
 
-        # 2. Table leg joint (Must be checked before generic joints)
+        # 3. Table leg joint
         if any(w in t for w in ["table leg", "legjoint", "leg"]):
             return self.generate_table_leg_joint_plan()
 
-        # 3. Puzzle, secret lock, slider, magic joint
+        # 4. Puzzle, secret lock, slider, magic joint
         if any(w in t for w in ["puzzle", "lock", "鲁班锁", "secret", "slider", "magic", "impossible"]):
             return self.generate_puzzle_lock_plan()
 
-        # 4. Hand plane, shaving, kanna
+        # 5. Hand plane, shaving, kanna
         if any(w in t for w in ["plane", "shaving", "shave", "刨", "ribbon", "kanna"]):
             return self.generate_hand_plane_shaving_plan()
 
-        # 5. Dovetail box joint
+        # 6. Dovetail box joint
         if any(w in t for w in ["dovetail", "燕尾", "box joint"]):
             return self.generate_dovetail_joint_plan()
 
-        # 6. Master tenon corner assembly
-        if any(w in t for w in ["corner assembly", "master tenon", "corner"]):
+        # 7. Master tenon corner assembly
+        if any(w in t for w in ["master tenon", "corner"]):
             return self.generate_corner_tenon_plan()
 
-        # 7. Marking gauge / layout / measurement
+        # 8. Marking gauge / layout / measurement
         if any(w in t for w in ["marking", "gauge", "划线器", "layout", "pencil", "line"]):
             return self.generate_marking_gauge_plan()
 
-        # 8. Kumiko lattice
+        # 9. Kumiko lattice
         if any(w in t for w in ["kumiko", "lattice", "组子", "hexagonal", "grid"]):
             return self.generate_kumiko_plan()
 
-        # 9. Dougong, Architecture, Temple
+        # 10. Dougong, Architecture, Temple
         if any(w in t for w in ["dougong", "bracket", "斗拱", "temple", "earthquake", "pavilion", "shrine"]):
             return self.generate_dougong_plan()
 
-        # 10. Chisel sharpness, end grain
+        # 11. Chisel sharpness, end grain
         if any(w in t for w in ["end_grain", "chisel", "sharpness", "blade", "slice"]):
             return self.generate_end_grain_sharpness_plan()
 
-        # 11. Traditional Sunmao / Mortise & Tenon
+        # 12. Traditional Sunmao / Mortise & Tenon
         if any(w in t for w in ["sunmao", "mortise", "tenon", "榫卯", "joint", "interlock"]):
             return self.generate_sunmao_mortise_plan()
 
-        # 12. Generic dynamic fallback for any other craftsmanship topic
+        # 13. Generic dynamic fallback for any other craftsmanship topic
         return self.generate_dynamic_craft_plan(topic)
 
 
 if __name__ == "__main__":
     director = ScriptDirector()
     for test_topic in [
+        "The Zero-Nail Bed Frame Joint",
         "The Precision Marking Gauge Trick",
         "The Zero-Gap Kumiko Joint",
-        "The Hand-Cut Sunmao Assembly",
-        "The 3D Secret Dovetail Puzzle",
-        "The Dougong Temple Bracket",
-        "The 0.05mm Chisel End-Grain Test"
+        "The 3-Way Table Leg Joint"
     ]:
         p = director.generate_short_plan(test_topic)
-        print(f"[{test_topic}] -> Title: {p['title']} | Masthead: {p['masthead_text']} | Mood: {p['music_mood']}")
+        print(f"[{test_topic}] -> Title: {p['title']} | Masthead: {p['masthead_text']}")
+        for s in p['narration_segments']:
+            print(f"   [{s['start']}-{s['end']}s] {s['text']}")

@@ -1,10 +1,10 @@
 """
 Golden US Timezone Daily Scheduler for TimberCraft Automation
 Enforces strict anti-bot cadence:
-- Slot 1 (US Afternoon Peak): 2:00 PM EDT (11:30 PM IST)
-- Slot 2 (US Prime Evening Peak): 8:00 PM EDT (5:30 AM IST)
+- Slot 1 (US Afternoon Peak): 3:00 PM EDT (12:30 AM IST next day)
+- Slot 2 (US Prime Evening Peak): 7:00 PM EDT (4:30 AM IST next day)
 - Anti-Bot Jitter: Automated random +1 to +10 minute delay
-- Strict 6-hour gap between uploads
+- Strict 4-hour gap between uploads
 """
 
 import time
@@ -18,10 +18,10 @@ from queue_manager import QueueManager
 from config import AUDITED_ACCOUNTS
 
 # Golden Slots in EDT (Eastern Daylight Time / US New York)
-SLOT_1_EDT_HOUR = 14  # 2:00 PM EDT
+SLOT_1_EDT_HOUR = 15  # 3:00 PM EDT
 SLOT_1_EDT_MIN = 0
 
-SLOT_2_EDT_HOUR = 20  # 8:00 PM EDT
+SLOT_2_EDT_HOUR = 19  # 7:00 PM EDT
 SLOT_2_EDT_MIN = 0
 
 TZ_EDT = zoneinfo.ZoneInfo("America/New_York")
@@ -56,15 +56,15 @@ class DailyScheduler:
 
         if now_edt < slot1:
             target = slot1 + timedelta(minutes=jitter_min)
-            return target, "Slot 1 (US Afternoon Peak - 2:00 PM EDT)", jitter_min
+            return target, "Slot 1 (US Afternoon Peak - 3:00 PM EDT)", jitter_min
         elif now_edt < slot2:
             target = slot2 + timedelta(minutes=jitter_min)
-            return target, "Slot 2 (US Prime Evening Peak - 8:00 PM EDT)", jitter_min
+            return target, "Slot 2 (US Prime Evening Peak - 7:00 PM EDT)", jitter_min
         else:
             # Tomorrow Slot 1
             tomorrow = today + timedelta(days=1)
             target = datetime(tomorrow.year, tomorrow.month, tomorrow.day, SLOT_1_EDT_HOUR, SLOT_1_EDT_MIN, tzinfo=TZ_EDT) + timedelta(minutes=jitter_min)
-            return target, "Slot 1 (Tomorrow Afternoon Peak - 2:00 PM EDT)", jitter_min
+            return target, "Slot 1 (Tomorrow Afternoon Peak - 3:00 PM EDT)", jitter_min
 
     def print_status(self):
         now_edt, now_ist = self.get_current_times()

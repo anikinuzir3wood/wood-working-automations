@@ -7,3 +7,4 @@ pynacl>=1.5.0
 Pillow>=10.0.0
 tzdata
 aiohttp>=3.9.0
+google-generativeai>=0.8.0

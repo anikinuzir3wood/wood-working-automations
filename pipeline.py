@@ -20,6 +20,7 @@ from config import (
     OPTIMAL_DURATION
 )
 from downloader import download_stream, probe_video
+from video_analyzer import analyze_video_content
 from director import ScriptDirector
 from audio_engine import AudioEngine
 from video_engine import VideoEngine
@@ -52,8 +53,11 @@ class TimberCraftPipeline:
         info = probe_video(raw_video_path)
         print(f"[1/5] Raw Video Probed: {info['width']}x{info['height']}, {info['duration']:.1f}s, Codec: {info['codec']}")
 
+        # 1b. Analyze Visual Content (Frame extraction & Vision Grounding)
+        video_analysis = analyze_video_content(str(raw_video_path))
+
         # 2. Generate Director Script & Human Touch Directives
-        plan = custom_plan or self.director.generate_short_plan(topic=video_title)
+        plan = custom_plan or self.director.generate_short_plan(topic=video_title, video_analysis=video_analysis)
         # Merge any extra flags (e.g. has_foreign_captions) into plan
         if extra_plan_flags:
             plan.update(extra_plan_flags)

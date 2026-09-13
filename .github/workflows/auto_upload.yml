@@ -1,10 +1,10 @@
 name: TimberCraft Auto-Upload Pipeline
 
 on:
-  # Cron Schedule: 2 PM EDT (18:00 UTC) & 8 PM EDT (00:00 UTC)
+  # Cron Schedule: 3 PM EDT (19:00 UTC) & 7 PM EDT (23:00 UTC)
   schedule:
-    - cron: '0 18 * * *'   # Slot 1: 2:00 PM EDT daily (11:30 PM IST)
-    - cron: '0 0 * * *'    # Slot 2: 8:00 PM EDT daily (5:30 AM IST)
+    - cron: '0 19 * * *'   # Slot 1: 3:00 PM EDT daily (12:30 AM IST next day)
+    - cron: '0 23 * * *'   # Slot 2: 7:00 PM EDT daily (4:30 AM IST next day)
 
   # Manual trigger from GitHub Actions tab
   workflow_dispatch:
@@ -117,6 +117,7 @@ jobs:
           GITHUB_ACTIONS: 'true'
           DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
           SKIP_WAIT: ${{ github.event.inputs.skip_wait || 'false' }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           CMD_FLAGS="--run-next --ci-mode"
           if [ "$DRY_RUN" = "true" ]; then
@@ -144,6 +145,14 @@ jobs:
             git push origin master
             echo "[+] Queue and history successfully committed to cloud repo."
           fi
+
+      # 10b. Auto-Persist Refreshed YouTube Token to Secrets (Zero Expiration)
+      - name: Persist Refreshed Credentials
+        if: always()
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: |
+          python sync_token_secret.py || true
 
       # 11. Clean up sensitive credentials & temporary renders
       - name: Cleanup Sensitive Artifacts
