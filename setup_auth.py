@@ -60,6 +60,11 @@ def authenticate_google():
             with open(BASE_DIR / "scratch" / "auth_url.txt", "w", encoding="utf-8") as f:
                 f.write(url)
             print(f"\n[AUTH_URL_READY] {url}\n", flush=True)
+            import webbrowser
+            try:
+                webbrowser.open(url)
+            except Exception:
+                pass
             return f"Please visit this URL to authorize: {url}"
 
     flow = InstalledAppFlow.from_client_secrets_file(str(CLIENT_SECRETS_FILE), SCOPES)
