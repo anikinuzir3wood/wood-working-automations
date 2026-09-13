@@ -14,7 +14,7 @@
 
 2. **Publishing Frequency (Strict Anti-Spam Cadence):**
    * **Exactly 2 Shorts Per Day** (No spamming; quality & high retention over volume).
-   * **Strict 6-Hour Gap** between uploads so videos never cannibalize each other's algorithm traffic.
+   * **Strict 4-Hour Gap** between uploads so videos never cannibalize each other's algorithm traffic.
 
 3. **Golden US Timezone Schedule (Eastern Time EDT - 48% US Population):**
    * **Slot 1 (US Afternoon Peak):** `3:00 PM EDT` *(Indian Time: 12:30 AM IST next day)*
