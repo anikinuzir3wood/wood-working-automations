@@ -10,7 +10,7 @@ Always maintain strict separation between the user's automation projects. NEVER 
 - **YouTube Channel**: TimberCraft Archive / Anikin Uzir
 - **Google Cloud Project**: `timbercraft-archive` (Project Number: `642561120312`)
 - **OAuth Client ID**: `642561120312-0irhu5s5ckofct4t41r7fb2co7qk8ctk.apps.googleusercontent.com`
-- **GitHub Repository**: `thecraftorastudio-byte/wood-working-automations`
+- **GitHub Repository**: `anikinuzir3wood/wood-working-automations`
 
 ### Channel 2: Avian Architects (Wildlife Documentary)
 - **Directory**: `c:\Antigravity Test Folder\Avian Architects Automation`

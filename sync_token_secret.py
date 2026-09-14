@@ -18,7 +18,7 @@ if sys.platform == "win32":
         pass
 
 
-def sync_token_to_secret(repo_owner: str = "thecraftorastudio-byte", repo_name: str = "wood-working-automations"):
+def sync_token_to_secret(repo_owner: str = "anikinuzir3wood", repo_name: str = "wood-working-automations"):
     token_path = Path(__file__).resolve().parent / "token.json"
     if not token_path.exists():
         print("[*] No token.json found to sync.")

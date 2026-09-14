@@ -22,9 +22,9 @@ SCOPES = [
     "https://www.googleapis.com/auth/youtube"
 ]
 
-GITHUB_OWNER = "thecraftorastudio-byte"
+GITHUB_OWNER = "anikinuzir3wood"
 GITHUB_REPO = "wood-working-automations"
-GITHUB_TOKEN = "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"
+GITHUB_TOKEN = os.getenv("GH_PAT", "")
 
 
 def authenticate_new_channel():
