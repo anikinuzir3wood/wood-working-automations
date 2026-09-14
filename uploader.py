@@ -217,7 +217,10 @@ class YouTubeUploader:
                 print(f"[!] Thumbnail API upload notice: {e}")
                 print("[*] Note: Mobile Shorts will still display the baked-in Masthead frame from timeline!")
 
-        print(f"[+] Video is now LIVE & PUBLIC: https://www.youtube.com/shorts/{video_id}")
+        if keep_unlisted:
+            print(f"[+] Video is uploaded and strictly UNLISTED: https://www.youtube.com/shorts/{video_id}")
+        else:
+            print(f"[+] Video is now LIVE & PUBLIC: https://www.youtube.com/shorts/{video_id}")
 
         # Step 5: Post Pinned Comment
         if pinned_comment:

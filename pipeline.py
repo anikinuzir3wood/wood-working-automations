@@ -55,6 +55,14 @@ class TimberCraftPipeline:
 
         # 1b. Analyze Visual Content (Frame extraction & Vision Grounding)
         video_analysis = analyze_video_content(str(raw_video_path))
+        if video_analysis.get("reject", False):
+            reason = video_analysis.get("reject_reason", "Rejected by visual analysis")
+            print(f"\n[!] VIDEO REJECTED: {reason}")
+            raise ValueError(f"Content Rejected: {reason}")
+
+        if video_analysis.get("has_foreign_captions", False):
+            extra_plan_flags = extra_plan_flags or {}
+            extra_plan_flags["has_foreign_captions"] = True
 
         # 2. Generate Director Script & Human Touch Directives
         plan = custom_plan or self.director.generate_short_plan(topic=video_title, video_analysis=video_analysis)

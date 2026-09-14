@@ -99,7 +99,21 @@ class TimberCraftAutopilot:
             extra_plan_flags["has_foreign_captions"] = True
             print("[*] Source flagged with foreign captions — blur + English overlay will be applied.")
 
-        final_video = self.pipeline.run(raw_source, video_title=title_theme, extra_plan_flags=extra_plan_flags)
+        try:
+            final_video = self.pipeline.run(raw_source, video_title=title_theme, extra_plan_flags=extra_plan_flags)
+        except ValueError as ve:
+            print(f"[!] Pipeline rejected video: {ve}")
+            # Mark in history as rejected so it won't be retried
+            self.qm.mark_processed(
+                item_id=item_id,
+                account=account,
+                output_file="REJECTED",
+                title=title_theme,
+                youtube_video_id=None,
+                raw_source_path=raw_source
+            )
+            print("[*] Automatically advancing to the next item in queue...")
+            return self.process_next_in_queue(skip_upload_wait=skip_upload_wait, keep_unlisted=keep_unlisted)
         meta_file = final_video.with_name(final_video.stem + "_metadata.json")
 
         with open(meta_file, "r", encoding="utf-8") as f:

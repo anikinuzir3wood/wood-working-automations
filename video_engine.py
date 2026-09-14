@@ -285,20 +285,29 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 
         # Video Filter Chain
         # Loop raw video, crop 8%, scale, hflip, grade, add masthead banner
-        # Foreign Caption Blur: If source has foreign subtitles, blur bottom 15% before our overlays
-        caption_blur_filter = ""
+        # Video Filter Chain
+        # Foreign Caption Blur: If source has foreign subtitles, blur bottom zone before overlays
+        vf_parts = []
         if plan.get("has_foreign_captions", False):
-            caption_blur_filter = (
-                f"split[main][blur_src];"
-                f"[blur_src]crop=in_w:in_h*0.15:0:in_h*0.85,boxblur=25:25[blurred];"
-                f"[main][blurred]overlay=0:H*0.85,"
+            print("[*] Foreign caption blur enabled: blurring subtitle zone (y=1360 to 1640)")
+            vf_parts.append(
+                f"[0:v]crop=in_w*{CROP_FACTOR}:in_h*{CROP_FACTOR},scale={VIDEO_WIDTH}:{VIDEO_HEIGHT},hflip[flipped]"
             )
-            print("[*] Foreign caption blur enabled (bottom 15% zone)")
+            vf_parts.append(
+                f"[flipped]split[base_vid][blur_src]"
+            )
+            vf_parts.append(
+                f"[blur_src]crop={VIDEO_WIDTH}:280:0:1360,boxblur=25:25[blurred_zone]"
+            )
+            vf_parts.append(
+                f"[base_vid][blurred_zone]overlay=0:1360,{color_grade}[graded]"
+            )
+        else:
+            vf_parts.append(
+                f"[0:v]crop=in_w*{CROP_FACTOR}:in_h*{CROP_FACTOR},scale={VIDEO_WIDTH}:{VIDEO_HEIGHT},hflip,{color_grade}[graded]"
+            )
 
-        vf_parts = [
-            f"[0:v]crop=in_w*{CROP_FACTOR}:in_h*{CROP_FACTOR},scale={VIDEO_WIDTH}:{VIDEO_HEIGHT},hflip,{caption_blur_filter}{color_grade}[graded]",
-            f"[graded][2:v]overlay=0:0[base]"
-        ]
+        vf_parts.append(f"[graded][2:v]overlay=0:0[base]")
 
         current_layer = "[base]"
         for i, (st, en, _) in enumerate(overlay_files):
