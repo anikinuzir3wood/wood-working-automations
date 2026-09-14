@@ -1,1 +1,52 @@
-[]
+[
+  {
+    "item_id": "6a9dfa20000000002902e0ad",
+    "account": "wood_soul",
+    "source_url": "https://www.rednote.com/discovery/item/6a9dfa20000000002902e0ad?xsec_token=AB2_tSkrm3KISmX6FOQi-9aYSCtYjbT0horVwCAmjQQ2A=&xsec_source=pc_feed",
+    "title_theme": "木工",
+    "direct_stream_url": "http://sns-v27.rednotecdn.com/stream/1/110/258/01ea9dfa207a024501037001a079195787_258.mp4",
+    "local_raw_path": null,
+    "status": "PENDING",
+    "added_at": "2026-09-14T22:10:22.795870"
+  },
+  {
+    "item_id": "6a9df0ee0000000012035d9e",
+    "account": "wood_soul",
+    "source_url": "https://www.rednote.com/discovery/item/6a9df0ee0000000012035d9e?xsec_token=AB2_tSkrm3KISmX6FOQi-9aSjDW3pxSivRAzbnDL7Dh5U=&xsec_source=pc_feed",
+    "title_theme": "#木工工具[话题]# #木工[话题]#",
+    "direct_stream_url": "http://sns-v27.rednotecdn.com/stream/1/110/258/01ea9df0ee7a464501037001a078f54dc2_258.mp4",
+    "local_raw_path": null,
+    "status": "PENDING",
+    "added_at": "2026-09-14T22:11:24.763476"
+  },
+  {
+    "item_id": "68ee600c00000000040130fa",
+    "account": "amazing_inventors",
+    "source_url": "https://www.rednote.com/discovery/item/68ee600c00000000040130fa?xsec_token=ABdBmwb1_dkOtd39n57MWlkscYvj_yYKJTbgzD3MEXI7g=&xsec_source=pc_user",
+    "title_theme": "木工艺，太帅了！",
+    "direct_stream_url": "http://sns-v27.rednotecdn.com/stream/1/110/258/01e8ee600be7f9fa0103700199e327bd02_258.mp4",
+    "local_raw_path": null,
+    "status": "PENDING",
+    "added_at": "2026-09-14T22:14:32.300485"
+  },
+  {
+    "item_id": "67c58d78000000002901c421",
+    "account": "wooden_man",
+    "source_url": "",
+    "title_theme": "木质家具的精细工艺，榫卯结构的魅力所在",
+    "direct_stream_url": "http://sns-v27.rednotecdn.com/stream/1/110/258/01e7c58d785632d601037001955bb14e3f_258.mp4",
+    "local_raw_path": null,
+    "status": "PENDING",
+    "added_at": "2026-09-14T22:30:57.465039"
+  },
+  {
+    "item_id": "68c42145000000001c004b2c",
+    "account": "amazing_inventors",
+    "source_url": "",
+    "title_theme": "木工艺，太帅了！",
+    "direct_stream_url": "http://sns-v27.rednotecdn.com/stream/1/110/258/01e8c42110071f6001037001993e234935_258.mp4",
+    "local_raw_path": null,
+    "status": "PENDING",
+    "added_at": "2026-09-14T22:31:14.292883"
+  }
+]

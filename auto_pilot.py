@@ -137,6 +137,24 @@ class TimberCraftAutopilot:
             raw_source_path=raw_source
         )
 
+        # 5. Archive Raw Source in Google Drive 'Uploaded' folder
+        try:
+            from drive_manager import GoogleDriveManager
+            dm = GoogleDriveManager()
+            if dm.service:
+                archived = dm.move_to_uploaded_archive(f"{item_id}.mp4")
+                if archived:
+                    print(f"[+] Archived '{item_id}.mp4' to Google Drive 'Uploaded' folder.")
+        except Exception as de:
+            print(f"[*] Drive archival notice: {de}")
+
+        # 6. Safety Stock Watchdog: Alert / harvest if buffer falls below 6 videos (3 days)
+        queue_remaining = len(self.qm.list_queue())
+        print(f"[*] Active Queue Remaining: {queue_remaining} videos.")
+        if queue_remaining < 6:
+            print(f"[!] NOTICE: Stock buffer is below 6 videos (3-day safety threshold)!")
+            print(f"    Harvester daemon will replenish stock from vetted creator accounts.")
+
         print("\n" + "=" * 80)
         print(f"[+] AUTOPILOT ITEM COMPLETED SUCCESSFULLY: {title_theme}")
         print("=" * 80 + "\n")

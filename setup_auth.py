@@ -6,6 +6,7 @@ One-Click YouTube OAuth Setup & GitHub Secret Sync for TimberCraft Automation
 4. Automatically uploads encrypted YOUTUBE_TOKEN_JSON secret to GitHub repository
 """
 
+import os
 import sys
 import json
 import base64
@@ -25,7 +26,8 @@ TOKEN_FILE = BASE_DIR / "token.json"
 
 SCOPES = [
     "https://www.googleapis.com/auth/youtube.upload",
-    "https://www.googleapis.com/auth/youtube"
+    "https://www.googleapis.com/auth/youtube",
+    "https://www.googleapis.com/auth/drive"
 ]
 
 GITHUB_OWNER = "anikinuzir3wood"
@@ -92,12 +94,12 @@ def authenticate_google():
                 print(f"\n[!] DANGER: You authenticated '{title}' (Avian Architects) instead of TimberCraft!")
                 print("[!] Aborting token save to prevent cross-account contamination.")
                 sys.exit(1)
-            if "timbercraft" not in title.lower():
-                print(f"\n[!] WRONG CHANNEL SELECTED: '{title}' (Personal Channel)!")
-                print("[!] You must select 'TimberCraft Archive' (Brand Account) from the list.")
+            if not any(k in title.lower() for k in ["timbercraft", "anikin uzir"]):
+                print(f"\n[!] WRONG CHANNEL SELECTED: '{title}'!")
+                print("[!] You must select 'TimberCraft Archive / Anikin Uzir' from the list.")
                 print("[!] Aborting to prevent saving credentials for the wrong channel.")
                 sys.exit(1)
-            print(f"[+] SUCCESS! Verified YouTube Brand Channel: '{title}'!")
+            print(f"[+] SUCCESS! Verified YouTube Channel: '{title}'!")
         else:
             print("[!] Warning: No channel found.")
             sys.exit(1)

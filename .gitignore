@@ -9,6 +9,13 @@ client_secrets.json
 ai33_config.json
 .env
 
+# Raw downloaded source videos & media
+assets/raw_sources/
+*.jpeg
+*.jpg
+*.png
+.vscode/
+
 # System files
 *.pyc
 .DS_Store

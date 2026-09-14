@@ -64,6 +64,12 @@ MIN_DURATION = 30.0
 MAX_DURATION = 38.0
 OPTIMAL_DURATION = 34.0
 
+# Google Drive Buffer & Archive Configuration
+DRIVE_PARENT_FOLDER_ID = "1kl4GK0BsNJU6cOaDZUwM29l0jF-NRQj7"    # "YouTube Videos"
+DRIVE_UPLOADED_FOLDER_ID = "15kewG_QMYHG59U-i336Ic4Q-1GMdI8RH"  # "Uploaded"
+MIN_STOCK_THRESHOLD_VIDEOS = 6                                  # Minimum 3-day buffer (2 uploads/day)
+TARGET_STOCK_BUFFER_VIDEOS = 60                                 # Up to 1-month buffer
+
 # Vetted Rednote (Xiaohongshu) Creator Accounts (Clean domestic footage, zero strikes)
 AUDITED_ACCOUNTS = {
     "wood_soul": {
@@ -83,5 +89,47 @@ AUDITED_ACCOUNTS = {
         "rednote_id": "485001334",
         "profile_url": "https://www.rednote.com/user/profile/5e60f69400000000010028b4",
         "style": "Dovetail puzzles, secret interlocking sliders"
+    },
+    "luban_craftsman": {
+        "name": "鲁班工匠",
+        "rednote_id": "941088219",
+        "profile_url": "https://www.rednote.com/user/profile/5f9d10e000000000010051ba",
+        "style": "Traditional Chinese architecture & Dougong temple brackets"
+    },
+    "sunmao_master": {
+        "name": "榫卯大师",
+        "rednote_id": "382910447",
+        "profile_url": "https://www.rednote.com/user/profile/5d41c88100000000120155b9",
+        "style": "Ancient locking tenons & friction furniture assembly"
+    },
+    "artisan_wood_lab": {
+        "name": "手作木工坊",
+        "rednote_id": "519283740",
+        "profile_url": "https://www.rednote.com/user/profile/627f7a190000000021020721",
+        "style": "Kumiko geometric lattice & precision hand-planing"
+    },
+    "heritage_joiner": {
+        "name": "匠心传承",
+        "rednote_id": "820194723",
+        "profile_url": "https://www.rednote.com/user/profile/5e3b6aa80000000001006e23",
+        "style": "Micro-chisel carving, rosewood mortise joints"
+    },
+    "zen_wood_asmr": {
+        "name": "静心木工",
+        "rednote_id": "671049281",
+        "profile_url": "https://www.rednote.com/user/profile/631e8bb00000000012030f2c",
+        "style": "No-talking, pure tool acoustic ASMR, plane shavings"
+    },
+    "classical_furniture": {
+        "name": "古典家具榫卯",
+        "rednote_id": "192847261",
+        "profile_url": "https://www.rednote.com/user/profile/5f04a8b20000000001002df3",
+        "style": "Traditional bed frame & chair corner joinery"
+    },
+    "woodcraft_decoded": {
+        "name": "木艺解密",
+        "rednote_id": "304918274",
+        "profile_url": "https://www.rednote.com/user/profile/6198f791000000001002ec7d",
+        "style": "Dissecting invisible sliding puzzle joints"
     }
 }

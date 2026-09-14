@@ -186,10 +186,12 @@ def analyze_video_content(video_path: str) -> Dict[str, Any]:
         # Check for rejection trigger: HUGE uneditable Chinese text
         if analysis.get("has_huge_chinese_text", False):
             analysis["reject"] = True
+            analysis["rejected"] = True
             analysis["reject_reason"] = "Rejected: Video contains huge uneditable Chinese text covering the screen."
             print(f"[!] REJECTION TRIGGER: {analysis['reject_reason']}")
         else:
             analysis["reject"] = False
+            analysis["rejected"] = False
 
         # Cleanup analysis frames
         for fp in frame_paths:
