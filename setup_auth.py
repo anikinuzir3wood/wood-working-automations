@@ -99,17 +99,19 @@ def authenticate_google():
         res = yt.channels().list(part="snippet", mine=True).execute()
         items = res.get("items", [])
         if items:
+            channel_id = items[0]["id"]
             title = items[0]["snippet"]["title"]
             if "avian" in title.lower():
                 print(f"\n[!] DANGER: You authenticated '{title}' (Avian Architects) instead of TimberCraft!")
                 print("[!] Aborting token save to prevent cross-account contamination.")
                 sys.exit(1)
-            if not any(k in title.lower() for k in ["timbercraft", "anikin uzir"]):
-                print(f"\n[!] WRONG CHANNEL SELECTED: '{title}'!")
-                print("[!] You must select 'TimberCraft Archive / Anikin Uzir' from the list.")
+            if "timbercraft" not in title.lower() and channel_id != "UC1UWiLB8zxqMvbzGFP2bljA":
+                print(f"\n[!] WRONG CHANNEL SELECTED: '{title}' (ID: {channel_id})!")
+                print("[!] You selected the personal profile 'Anikin Uzir' instead of the Brand Channel 'TimberCraft Archive'.")
+                print("[!] When Google displays 'Choose an account or a brand account', you MUST click 'TimberCraft Archive'!")
                 print("[!] Aborting to prevent saving credentials for the wrong channel.")
                 sys.exit(1)
-            print(f"[+] SUCCESS! Verified YouTube Channel: '{title}'!")
+            print(f"[+] SUCCESS! Verified YouTube Channel: '{title}' (ID: {channel_id})!")
         else:
             print("[!] Warning: No channel found.")
             sys.exit(1)
