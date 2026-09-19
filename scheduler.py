@@ -10,9 +10,17 @@ Enforces strict anti-bot cadence:
 import time
 import random
 import argparse
+import sys
 from datetime import datetime, timedelta
 import zoneinfo
 from typing import Tuple
+
+# UTF-8 console output
+if sys.stdout.encoding != 'utf-8':
+    try:
+        sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+    except Exception:
+        pass
 
 from queue_manager import QueueManager
 from config import AUDITED_ACCOUNTS
