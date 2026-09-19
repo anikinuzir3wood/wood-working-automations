@@ -44,11 +44,35 @@ if not GITHUB_TOKEN:
                     break
 
 
+import http.server
+
+class OAuthCallbackHandler(http.server.BaseHTTPRequestHandler):
+    def do_GET(self):
+        if "code=" in self.path:
+            self.server.auth_response_url = f"http://localhost:8088{self.path}"
+            self.send_response(200)
+            self.send_header("Content-type", "text/html; charset=utf-8")
+            self.end_headers()
+            html = """<html><body style="font-family: sans-serif; text-align: center; padding-top: 50px;">
+                <h1 style="color: #2e7d32;">Authentication Successful!</h1>
+                <p>TimberCraft Archive has been connected successfully. You may close this window.</p>
+            </body></html>"""
+            self.wfile.write(html.encode("utf-8"))
+        else:
+            self.send_response(200)
+            self.send_header("Content-type", "text/plain")
+            self.end_headers()
+            self.wfile.write(b"Waiting for authorization code...")
+
+    def log_message(self, format, *args):
+        pass
+
+
 def authenticate_google():
     print("\n" + "=" * 75)
     print("  TIMBERCRAFT YOUTUBE OAUTH AUTHENTICATION")
     print("  Target Email   : anikinuzir3@gmail.com")
-    print("  Target Channel : TimberCraft Archive / Anikin Uzir")
+    print("  Target Channel : TimberCraft Archive")
     print("  GCP Project    : timbercraft-archive (642561120312)")
     print("  " + "-" * 71)
     print("  REMINDER: DO NOT USE zeniusindividual@gmail.com (Avian Architects)!")
@@ -61,31 +85,35 @@ def authenticate_google():
     from google_auth_oauthlib.flow import InstalledAppFlow
     from googleapiclient.discovery import build
 
-    print("[*] Starting local OAuth browser flow...")
-    print("[*] Select account: anikinuzir3@gmail.com (TimberCraft Archive)")
+    print("[*] Starting local OAuth flow for TimberCraft Archive...")
     
-    class URLWriter:
-        def format(self, **kwargs):
-            url = kwargs.get('url', '')
-            (BASE_DIR / "scratch").mkdir(exist_ok=True)
-            with open(BASE_DIR / "scratch" / "auth_url.txt", "w", encoding="utf-8") as f:
-                f.write(url)
-            print(f"\n[AUTH_URL_READY] {url}\n", flush=True)
-            import webbrowser
-            try:
-                webbrowser.open(url)
-            except Exception:
-                pass
-            return f"Please visit this URL to authorize: {url}"
-
-    flow = InstalledAppFlow.from_client_secrets_file(str(CLIENT_SECRETS_FILE), SCOPES)
-    creds = flow.run_local_server(
-        port=8088,
-        open_browser=False,
-        authorization_prompt_message=URLWriter(),
-        prompt="consent",
-        access_type="offline"
+    flow = InstalledAppFlow.from_client_secrets_file(
+        str(CLIENT_SECRETS_FILE),
+        SCOPES,
+        redirect_uri="http://localhost:8088/"
     )
+    auth_url, _ = flow.authorization_url(prompt="consent", access_type="offline")
+
+    (BASE_DIR / "scratch").mkdir(exist_ok=True)
+    with open(BASE_DIR / "scratch" / "auth_url.txt", "w", encoding="utf-8") as f:
+        f.write(auth_url)
+    print(f"\n[AUTH_URL_READY] {auth_url}\n", flush=True)
+
+    import webbrowser
+    try:
+        webbrowser.open(auth_url)
+    except Exception:
+        pass
+
+    server = http.server.HTTPServer(("localhost", 8088), OAuthCallbackHandler)
+    server.auth_response_url = None
+    print("[*] Waiting for OAuth callback on http://localhost:8088/ ...")
+    while not server.auth_response_url:
+        server.handle_request()
+    server.server_close()
+
+    flow.fetch_token(authorization_response=server.auth_response_url)
+    creds = flow.credentials
 
     token_json_str = creds.to_json()
     with open(TOKEN_FILE, "w", encoding="utf-8") as f:
