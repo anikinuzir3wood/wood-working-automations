@@ -13,6 +13,9 @@ import base64
 import urllib.request
 from pathlib import Path
 
+# Allow local HTTP redirect for OAuth 2 callback
+os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+
 # Ensure UTF-8 output
 if sys.stdout.encoding != 'utf-8':
     try:
