@@ -32,7 +32,17 @@ SCOPES = [
 
 GITHUB_OWNER = "anikinuzir3wood"
 GITHUB_REPO = "wood-working-automations"
+
+# Ensure GITHUB_TOKEN is loaded from env or .env file
 GITHUB_TOKEN = os.getenv("GH_PAT", "")
+if not GITHUB_TOKEN:
+    env_file = BASE_DIR / ".env"
+    if env_file.exists():
+        with open(env_file, "r", encoding="utf-8") as f:
+            for line in f:
+                if line.startswith("GH_PAT="):
+                    GITHUB_TOKEN = line.split("=", 1)[1].strip()
+                    break
 
 
 def authenticate_google():

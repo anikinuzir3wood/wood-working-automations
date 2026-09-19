@@ -26,7 +26,15 @@ def sync_token_to_secret(repo_owner: str = "anikinuzir3wood", repo_name: str = "
 
     gh_token = os.getenv("GH_PAT") or os.getenv("GITHUB_TOKEN")
     if not gh_token:
-        print("[*] GH_PAT not configured in environment — skipping automated secret sync.")
+        env_file = Path(__file__).resolve().parent / ".env"
+        if env_file.exists():
+            with open(env_file, "r", encoding="utf-8") as f:
+                for line in f:
+                    if line.startswith("GH_PAT="):
+                        gh_token = line.split("=", 1)[1].strip()
+                        break
+    if not gh_token:
+        print("[*] GH_PAT not configured in environment or .env — skipping automated secret sync.")
         return
 
     try:
