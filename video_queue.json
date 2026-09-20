@@ -76,5 +76,98 @@
         "Look at that! It fits together perfectly and looks great. What a cool way to keep your small things safe."
       ]
     }
+  },
+  {
+    "item_id": "6aafe62e0000000029010892",
+    "account": "wood_soul",
+    "source_url": "https://www.rednote.com/user/profile/6494eaf9000000002a035dce/6aafe62e0000000029010892?xsec_token=AB4dj7LH1ZTEz_2MqzrI05RdRgbj1iGSO8Jb5v3tk9FeI=&xsec_source=pc_user",
+    "title_theme": "The Master Carpenter's Interlocking Arrow Puzzle Joint #Shorts",
+    "masthead_text": "INTERLOCKING ARROW PUZZ...",
+    "direct_stream_url": "http://sns-v11.rednotecdn.com/stream/79/110/258/01eaafe62e5d23b24f037001a0bf1b8073_258.mp4",
+    "local_raw_path": null,
+    "status": "PENDING",
+    "added_at": "2026-09-20T19:57:49.312431",
+    "video_analysis": {
+      "script_parts": [
+        "Watch how this plain piece of wood is about to become a mind-bending puzzle.",
+        "The maker uses a fast-moving, tiny saw blade to cut right along the black lines. Moving the wood around those sharp corners takes a really steady hand.",
+        "The blade smoothly slices through the wood, separating it into two matching arrow shapes.",
+        "Just like that, the two pieces slide apart and lock back together perfectly. How cool is that?"
+      ],
+      "has_huge_chinese_text": false,
+      "has_foreign_captions": false,
+      "subtitle_region": "NONE",
+      "reject": false,
+      "reject_reason": "",
+      "object": "Interlocking Arrow Puzzle Joint",
+      "actions": "A woodworker carefully guides a wooden board through a reciprocating saw blade to cut along a drawn double-arrow outline",
+      "reveal": "Two perfectly matching, interlocking wooden arrow pieces that slide together",
+      "model_used": "gemini-3.5-flash",
+      "rejected": false,
+      "clean_title": "The Master Carpenter's Interlocking Arrow Puzzle Joint #Shorts",
+      "masthead_text": "INTERLOCKING ARROW PUZZ..."
+    }
+  },
+  {
+    "item_id": "6a49d1f70000000021017d5c",
+    "account": "steel_machine",
+    "source_url": "https://www.rednote.com/search_result/6a49d1f70000000021017d5c?xsec_token=ABGU1uKjJi32x3lG1qmFoEz4ssT0ytq7JrnKWILBZH_QY=&xsec_source=",
+    "title_theme": "The Master Carpenter's Traditional Wood Joints #Shorts",
+    "masthead_text": "TRADITIONAL WOOD JOINTS",
+    "direct_stream_url": "http://sns-v11.rednotecdn.com/stream/1/110/258/01ea49d1ea0a96a0010370019f305c9318_258.mp4",
+    "local_raw_path": null,
+    "status": "PENDING",
+    "added_at": "2026-09-20T19:58:08.236459",
+    "video_analysis": {
+      "script_parts": [
+        "Look at how these beautiful wood joints slide together without a single metal nail!",
+        "The maker cuts amazing fan-shaped shapes into the wood and carefully pushes the matching pieces together.",
+        "Every angle is cut perfectly so the dark and light pieces lock tight, sometimes using just a small wooden pin to hold them.",
+        "In the end, you get a super clean, smooth corner that is incredibly strong and looks like a work of art!"
+      ],
+      "has_huge_chinese_text": false,
+      "has_foreign_captions": false,
+      "subtitle_region": "NONE",
+      "reject": false,
+      "reject_reason": "",
+      "object": "Traditional Wood Joints",
+      "actions": "Intricate fan-shaped and geometric wood pieces are pushed and slid together to form perfect, tight-fitting corner joints.",
+      "reveal": "Flawlessly fitted, strong wooden joints that hold together without any metal screws or nails.",
+      "model_used": "gemini-3.5-flash",
+      "rejected": false,
+      "clean_title": "The Master Carpenter's Traditional Wood Joints #Shorts",
+      "masthead_text": "TRADITIONAL WOOD JOINTS"
+    }
+  },
+  {
+    "item_id": "693aa0cb0000000019025426",
+    "account": "wood_craft",
+    "source_url": "https://www.rednote.com/search_result/693aa0cb0000000019025426?xsec_token=AB-gJ8ZYfVlP5BIjFZAhcu87wLvvlU293c7yluqLObcSQ=&xsec_source=",
+    "title_theme": "The Master Carpenter's Wooden Goblet #Shorts",
+    "masthead_text": "WOODEN GOBLET",
+    "direct_stream_url": "http://sns-v11.rednotecdn.com/stream/1/110/258/01e93aa0a9641cd3010370019b0d050781_258.mp4",
+    "local_raw_path": null,
+    "status": "PENDING",
+    "added_at": "2026-09-20T19:58:26.893251",
+    "video_analysis": {
+      "script_parts": [
+        "Watch how a rough block of wood with bark turns into a beautiful goblet!",
+        "First, we spin the block on a lathe. A sharp metal tool carves out the inside of the cup, sending wood chips everywhere.",
+        "Next, we carefully shape the outside. We cut away the wood to make a super thin and elegant stem.",
+        "Look at that! The goblet is finished, perfectly smooth, and ready to be held."
+      ],
+      "has_huge_chinese_text": false,
+      "has_foreign_captions": false,
+      "subtitle_region": "NONE",
+      "reject": false,
+      "reject_reason": "",
+      "object": "Wooden Goblet",
+      "actions": "Mounting a rough wood block on a lathe, hollowing out the inside of the cup, shaping the outer bowl and thin stem with turning tools, and cleaning up the base",
+      "reveal": "A smooth, beautifully crafted wooden goblet held in the hand",
+      "model_used": "gemini-3.5-flash",
+      "rejected": false,
+      "clean_title": "The Master Carpenter's Wooden Goblet #Shorts",
+      "masthead_text": "WOODEN GOBLET"
+    }
   }
 ]
