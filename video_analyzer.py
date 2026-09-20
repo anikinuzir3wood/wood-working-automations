@@ -156,12 +156,12 @@ def analyze_video_content(video_path: str) -> Dict[str, Any]:
 
         # Model hierarchy (with automatic fallback across active models)
         candidate_models = [
-            "gemini-2.5-flash",
             "gemini-3.5-flash",
-            "gemini-3.1-flash-lite",
+            "gemini-flash-latest",
             "gemini-3.6-flash",
             "gemini-3.7-flash",
-            "gemini-flash-lite-latest"
+            "gemini-flash-lite-latest",
+            "gemini-2.5-flash",
         ]
         response = None
         used_model = None
