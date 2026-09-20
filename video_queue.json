@@ -1,31 +1,5 @@
 [
   {
-    "item_id": "68ee600c00000000040130fa",
-    "account": "amazing_inventors",
-    "source_url": "https://www.rednote.com/discovery/item/68ee600c00000000040130fa?xsec_token=ABdBmwb1_dkOtd39n57MWlkscYvj_yYKJTbgzD3MEXI7g=&xsec_source=pc_user",
-    "title_theme": "The Hidden Wooden Hinge Ring Box #Shorts",
-    "masthead_text": "WOODEN HINGE RING BOX",
-    "direct_stream_url": "http://sns-v27.rednotecdn.com/stream/1/110/258/01e8ee600be7f9fa0103700199e327bd02_258.mp4",
-    "local_raw_path": null,
-    "status": "PENDING",
-    "added_at": "2026-09-14T22:14:32.300485",
-    "video_analysis": {
-      "object": "Wooden Ring Box with a Wooden Hinge",
-      "actions": "Cutting a precise slot, routing the hollow pockets, inserting a tiny wooden hinge pin, and testing the pivot joint",
-      "reveal": "A completed wooden ring box with a smooth-operating wooden hinge and magnetic clasp",
-      "has_huge_chinese_text": false,
-      "has_foreign_captions": false,
-      "subtitle_region": "NONE",
-      "reject": false,
-      "script_parts": [
-        "Check out this amazing wooden box with a completely hidden wooden hinge!",
-        "To build it, we cut out a slot and use a hand router to hollow out the inside.",
-        "Next, we push a small wooden pin into the slot to create a smooth pivot point.",
-        "Open it up, and you have a beautiful ring holder that snaps shut with a tiny magnet!"
-      ]
-    }
-  },
-  {
     "item_id": "67c58d78000000002901c421",
     "account": "wooden_man",
     "source_url": "",
