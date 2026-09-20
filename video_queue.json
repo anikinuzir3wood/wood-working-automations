@@ -3,30 +3,78 @@
     "item_id": "68ee600c00000000040130fa",
     "account": "amazing_inventors",
     "source_url": "https://www.rednote.com/discovery/item/68ee600c00000000040130fa?xsec_token=ABdBmwb1_dkOtd39n57MWlkscYvj_yYKJTbgzD3MEXI7g=&xsec_source=pc_user",
-    "title_theme": "木工艺，太帅了！",
+    "title_theme": "The Hidden Wooden Hinge Ring Box #Shorts",
+    "masthead_text": "WOODEN HINGE RING BOX",
     "direct_stream_url": "http://sns-v27.rednotecdn.com/stream/1/110/258/01e8ee600be7f9fa0103700199e327bd02_258.mp4",
     "local_raw_path": null,
     "status": "PENDING",
-    "added_at": "2026-09-14T22:14:32.300485"
+    "added_at": "2026-09-14T22:14:32.300485",
+    "video_analysis": {
+      "object": "Wooden Ring Box with a Wooden Hinge",
+      "actions": "Cutting a precise slot, routing the hollow pockets, inserting a tiny wooden hinge pin, and testing the pivot joint",
+      "reveal": "A completed wooden ring box with a smooth-operating wooden hinge and magnetic clasp",
+      "has_huge_chinese_text": false,
+      "has_foreign_captions": false,
+      "subtitle_region": "NONE",
+      "reject": false,
+      "script_parts": [
+        "Check out this amazing wooden box with a completely hidden wooden hinge!",
+        "To build it, we cut out a slot and use a hand router to hollow out the inside.",
+        "Next, we push a small wooden pin into the slot to create a smooth pivot point.",
+        "Open it up, and you have a beautiful ring holder that snaps shut with a tiny magnet!"
+      ]
+    }
   },
   {
     "item_id": "67c58d78000000002901c421",
     "account": "wooden_man",
     "source_url": "",
-    "title_theme": "木质家具的精细工艺，榫卯结构的魅力所在",
+    "title_theme": "The Zero-Nail 3-Way Table Leg Joint #Shorts",
+    "masthead_text": "3-WAY TABLE LEG JOINT",
     "direct_stream_url": "http://sns-v27.rednotecdn.com/stream/1/110/258/01e7c58d785632d601037001955bb14e3f_258.mp4",
     "local_raw_path": null,
     "status": "PENDING",
-    "added_at": "2026-09-14T22:30:57.465039"
+    "added_at": "2026-09-14T22:30:57.465039",
+    "video_analysis": {
+      "object": "Three-Way Table Leg Joint",
+      "actions": "Cutting precise grooves with a saw, shaping interlocking blocks, using a sharp chisel to clean the wood, and fitting the pieces together",
+      "reveal": "A perfectly interlocking, seamless three-way wooden corner joint",
+      "has_huge_chinese_text": false,
+      "has_foreign_captions": false,
+      "subtitle_region": "NONE",
+      "reject": false,
+      "script_parts": [
+        "Watch how three pieces of wood lock together to make a super strong corner without any nails.",
+        "First, we make precise cuts with a saw and use a sharp chisel to clean out the tight spaces.",
+        "Each piece gets its own special notches so they can slide perfectly into each other.",
+        "Look at how cleanly they slide together to form an incredibly strong and beautiful corner!"
+      ]
+    }
   },
   {
     "item_id": "68c42145000000001c004b2c",
     "account": "amazing_inventors",
     "source_url": "",
-    "title_theme": "木工艺，太帅了！",
+    "title_theme": "Hand-Crafting a Round Wooden Box #Shorts",
+    "masthead_text": "ROUND WOODEN CONTAINER",
     "direct_stream_url": "http://sns-v27.rednotecdn.com/stream/1/110/258/01e8c42110071f6001037001993e234935_258.mp4",
     "local_raw_path": null,
     "status": "PENDING",
-    "added_at": "2026-09-14T22:31:14.292883"
+    "added_at": "2026-09-14T22:31:14.292883",
+    "video_analysis": {
+      "object": "Wooden Cylinder Container",
+      "actions": "A pencil marks a circle on the wood, a drill bit removes inner material, a router smooths the edge, and the two parts are joined.",
+      "reveal": "A finished, round wooden box that opens and closes perfectly.",
+      "has_huge_chinese_text": false,
+      "has_foreign_captions": false,
+      "subtitle_region": "NONE",
+      "reject": false,
+      "script_parts": [
+        "Watch how we turn a simple block of wood into a perfect little box.",
+        "First, we draw a circle on the top. Then, we use a sharp drill to hollow out the middle of the wood.",
+        "We use a special tool to make the edges flat and smooth so the two pieces slide together just right.",
+        "Look at that! It fits together perfectly and looks great. What a cool way to keep your small things safe."
+      ]
+    }
   }
 ]

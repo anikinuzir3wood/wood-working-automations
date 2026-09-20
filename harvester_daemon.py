@@ -11,6 +11,7 @@ TimberCraft Autonomous Harvester Daemon
 import sys
 import json
 import time
+import re
 import urllib.request
 from pathlib import Path
 from typing import Dict, Any, List, Optional
@@ -160,14 +161,35 @@ class HarvesterDaemon:
             print(f"[*] Backing up raw video to Google Drive 'YouTube Videos' buffer...")
             drive_file_id = self.dm.upload_to_buffer(local_path, filename=f"{item_id}.mp4")
 
-        # 6. Add to Queue
+        # 6. Add to Queue with Clean English Title and Embedded Analysis
         account_slug = "wood_soul" if "木魂" in author else ("wooden_man" if "木头人" in author else "amazing_inventors")
+        
+        # Build clean English title and masthead
+        obj_name = analysis.get("object", "")
+        clean_obj = re.sub(r'[\u4e00-\u9fff]+', '', obj_name).strip() if obj_name else ""
+        
+        clean_title = re.sub(r'\[.*?\]', '', title)
+        clean_title = re.sub(r'[\u4e00-\u9fff]+', '', clean_title).strip()
+        if len(clean_title) < 5 or not any(c.isalpha() for c in clean_title):
+            if clean_obj:
+                clean_title = f"The Hand-Crafted {clean_obj} #Shorts"
+            else:
+                clean_title = "Traditional Handmade Joinery Craft #Shorts"
+        elif not clean_title.endswith("#Shorts"):
+            clean_title = f"{clean_title} #Shorts"
+
+        masthead = (clean_obj or "TRADITIONAL WOODCRAFT").upper()
+        if len(masthead) > 26:
+            masthead = masthead[:23] + "..."
+
         added = self.qm.add_to_queue(
             item_id=item_id,
             account=account_slug,
             source_url=candidate.get("note_url", ""),
-            title_theme=title,
-            direct_stream_url=stream_url
+            title_theme=clean_title,
+            direct_stream_url=stream_url,
+            video_analysis=analysis,
+            masthead_text=masthead
         )
 
         if added:

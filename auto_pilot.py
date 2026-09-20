@@ -95,12 +95,18 @@ class TimberCraftAutopilot:
         # 2. Execute Pipeline Render
         # Pass foreign captions flag so video engine can blur foreign subs
         extra_plan_flags = {}
-        if item.get("has_foreign_captions"):
+        video_analysis = item.get("video_analysis")
+        if item.get("has_foreign_captions") or (video_analysis and video_analysis.get("has_foreign_captions")):
             extra_plan_flags["has_foreign_captions"] = True
             print("[*] Source flagged with foreign captions — blur + English overlay will be applied.")
 
         try:
-            final_video = self.pipeline.run(raw_source, video_title=title_theme, extra_plan_flags=extra_plan_flags)
+            final_video = self.pipeline.run(
+                raw_source,
+                video_title=title_theme,
+                extra_plan_flags=extra_plan_flags,
+                video_analysis=video_analysis
+            )
         except ValueError as ve:
             print(f"[!] Pipeline rejected video: {ve}")
             # Mark in history as rejected so it won't be retried

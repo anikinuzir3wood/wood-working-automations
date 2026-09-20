@@ -41,7 +41,8 @@ class TimberCraftPipeline:
         raw_video_path: Path,
         video_title: str = "The Impossible Joint",
         custom_plan: dict = None,
-        extra_plan_flags: dict = None
+        extra_plan_flags: dict = None,
+        video_analysis: dict = None
     ) -> Path:
         """Executes the full automated transformation on a raw video."""
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -53,8 +54,12 @@ class TimberCraftPipeline:
         info = probe_video(raw_video_path)
         print(f"[1/5] Raw Video Probed: {info['width']}x{info['height']}, {info['duration']:.1f}s, Codec: {info['codec']}")
 
-        # 1b. Analyze Visual Content (Frame extraction & Vision Grounding)
-        video_analysis = analyze_video_content(str(raw_video_path))
+        # 1b. Analyze Visual Content (Prioritize pre-computed queue analysis, fallback to live vision)
+        if not video_analysis or not video_analysis.get("script_parts"):
+            video_analysis = analyze_video_content(str(raw_video_path))
+        else:
+            print(f"[+] Using Pre-Computed Grounded Visual Analysis for '{video_analysis.get('object', 'Woodcraft')}'")
+
         if video_analysis.get("reject", False):
             reason = video_analysis.get("reject_reason", "Rejected by visual analysis")
             print(f"\n[!] VIDEO REJECTED: {reason}")
@@ -113,7 +118,7 @@ class TimberCraftPipeline:
         self.video_engine.generate_high_ctr_thumbnail(raw_video_path, plan, thumb_path)
 
         # 5. Generate SEO & YouTube Metadata
-        meta_package = self.metadata_engine.generate_metadata(video_title)
+        meta_package = self.metadata_engine.generate_metadata(plan.get("title", video_title), video_analysis=video_analysis)
         meta_file = self.output / f"TimberCraft_{timestamp}_metadata.json"
         with open(meta_file, "w", encoding="utf-8") as f:
             json.dump(meta_package, f, indent=2, ensure_ascii=False)

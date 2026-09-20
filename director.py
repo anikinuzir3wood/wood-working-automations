@@ -12,24 +12,52 @@ from typing import Dict, Any, List
 import re
 
 
+def sanitize_english_text(text: str, fallback: str = "Traditional Woodcraft") -> str:
+    """Removes all Chinese/CJK characters, Chinese social tags, and cleans whitespace."""
+    if not text:
+        return fallback
+    # Strip bracketed tags like [话题], [标签], [视频], etc.
+    cleaned = re.sub(r'\[.*?\]', '', text)
+    # Strip all Chinese/CJK characters
+    cleaned = re.sub(r'[\u4e00-\u9fff]+', '', cleaned)
+    # Clean hashtags and whitespace
+    cleaned = re.sub(r'#\s*#', '#', cleaned)
+    cleaned = re.sub(r'\s+', ' ', cleaned).strip()
+    if len(cleaned) < 3 or not any(c.isalpha() for c in cleaned):
+        return fallback
+    return cleaned
+
+
 class ScriptDirector:
     def __init__(self):
         pass
 
     def generate_vision_grounded_plan(self, topic: str, analysis: Dict[str, Any]) -> Dict[str, Any]:
         """Builds a customized short plan directly from Gemini Vision frame analysis."""
-        clean_topic = topic.replace("#Shorts", "").strip()
-        obj = analysis.get("object", clean_topic)
-        masthead = obj.upper()
-        if len(masthead) > 28:
-            masthead = masthead[:25] + "..."
+        raw_obj = analysis.get("object", "")
+        clean_obj = sanitize_english_text(raw_obj, fallback="Traditional Woodcraft")
+        
+        raw_clean_topic = topic.replace("#Shorts", "").strip()
+        clean_topic = sanitize_english_text(raw_clean_topic, fallback=clean_obj)
+        if clean_topic.lower() in ["traditional woodcraft", "master craftsmanship", "shorts"] and clean_obj:
+            clean_topic = f"The Hand-Crafted {clean_obj}"
+
+        masthead = clean_obj.upper()
+        if len(masthead) > 26:
+            masthead = masthead[:23] + "..."
 
         parts = analysis.get("script_parts", [])
         if len(parts) < 4:
             return self.generate_dynamic_craft_plan(topic)
 
+        final_title = f"{clean_topic} #Shorts" if not clean_topic.endswith("#Shorts") else clean_topic
+
+        hud_spec_0 = clean_obj.upper()
+        if len(hud_spec_0) > 20:
+            hud_spec_0 = hud_spec_0[:17] + "..."
+
         return {
-            "title": f"The Zero-Nail {obj} #Shorts" if "Shorts" not in clean_topic else clean_topic,
+            "title": final_title,
             "masthead_text": masthead,
             "target_duration": 32.0,
             "narration_segments": [
@@ -935,10 +963,11 @@ class ScriptDirector:
 
     def generate_dynamic_craft_plan(self, topic: str) -> Dict[str, Any]:
         """Dynamic plan synthesizer for any custom woodworking topic using simple words."""
-        clean_topic = topic.replace("#Shorts", "").strip()
+        raw_clean = topic.replace("#Shorts", "").strip()
+        clean_topic = sanitize_english_text(raw_clean, fallback="Traditional Woodcraft")
         masthead = clean_topic.upper()
-        if len(masthead) > 28:
-            masthead = masthead[:25] + "..."
+        if len(masthead) > 26:
+            masthead = masthead[:23] + "..."
 
         return {
             "title": f"{clean_topic} #Shorts",

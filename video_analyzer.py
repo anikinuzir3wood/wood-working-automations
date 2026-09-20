@@ -156,10 +156,11 @@ def analyze_video_content(video_path: str) -> Dict[str, Any]:
 
         # Model hierarchy (with automatic fallback across active models)
         candidate_models = [
-            "gemini-3.7-flash",
+            "gemini-2.5-flash",
             "gemini-3.5-flash",
-            "gemini-3.6-flash",
             "gemini-3.1-flash-lite",
+            "gemini-3.6-flash",
+            "gemini-3.7-flash",
             "gemini-flash-lite-latest"
         ]
         response = None
@@ -173,6 +174,7 @@ def analyze_video_content(video_path: str) -> Dict[str, Any]:
                     used_model = m_name
                     break
             except Exception as e:
+                print(f"[*] Gemini Vision model {m_name} notice: {e}")
                 continue
 
         if not response or not response.text:

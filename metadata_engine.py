@@ -4,20 +4,88 @@ Generates US Tier-1 curiosity titles, structured descriptions, specifications, a
 tailored to the specific craftsmanship technique.
 """
 
-from typing import Dict, Any, List
+import re
+from typing import Dict, Any, List, Optional
+
+
+def sanitize_english_text(text: str, fallback: str = "Traditional Woodcraft") -> str:
+    """Removes all Chinese/CJK characters, Chinese social tags, and cleans whitespace."""
+    if not text:
+        return fallback
+    # Strip bracketed tags like [话题], [标签], [视频], etc.
+    cleaned = re.sub(r'\[.*?\]', '', text)
+    # Strip all Chinese/CJK characters
+    cleaned = re.sub(r'[\u4e00-\u9fff]+', '', cleaned)
+    # Clean hashtags and whitespace
+    cleaned = re.sub(r'#\s*#', '#', cleaned)
+    cleaned = re.sub(r'\s+', ' ', cleaned).strip()
+    if len(cleaned) < 3 or not any(c.isalpha() for c in cleaned):
+        return fallback
+    return cleaned
 
 
 class MetadataEngine:
     def __init__(self):
         pass
 
-    def generate_metadata(self, title_theme: str = "Traditional Woodcraft") -> Dict[str, Any]:
+    def generate_metadata(
+        self,
+        title_theme: str = "Traditional Woodcraft",
+        video_analysis: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Any]:
         """Generate complete upload-ready metadata package tailored to the specific topic."""
-        t = (title_theme or "").lower()
+        clean_theme = sanitize_english_text(title_theme, fallback="Traditional Woodcraft")
+        t = clean_theme.lower()
+
+        obj = ""
+        actions = ""
+        reveal = ""
+        if video_analysis:
+            obj = sanitize_english_text(video_analysis.get("object", ""), fallback="")
+            actions = sanitize_english_text(video_analysis.get("actions", ""), fallback="")
+            reveal = sanitize_english_text(video_analysis.get("reveal", ""), fallback="")
+
+        # Vision-Grounded Priority: If visual analysis provided specific object/actions, use them directly!
+        if obj and (actions or reveal):
+            clean = clean_theme.replace("#Shorts", "").strip()
+            if not clean or clean.lower() in ["traditional woodcraft", "master craftsmanship"]:
+                clean = f"The Hand-Crafted {obj}"
+            
+            title = f"{clean} #Shorts" if not clean.endswith("#Shorts") else clean
+            action_text = f"{actions}. " if actions else ""
+            reveal_text = f"{reveal}. " if reveal else ""
+            description = (
+                f"Master craftsmanship breakdown: Exploring the techniques and fine tolerances behind {obj.lower()}.\n\n"
+                f"{action_text}{reveal_text}\n\n"
+                "In traditional timber craft, every cut, shaving, and joint responds directly to the natural density and grain direction "
+                "of the wood. Guided entirely by hand tools and disciplined muscle memory, master carpenters achieve fits that modern machines "
+                "struggle to replicate.\n\n"
+                "Craftsmanship Specifications:\n"
+                f"• Focus Technique: {obj}\n"
+                "• Method: 100% Traditional Hand Tools & Joinery\n"
+                "• Tolerance: Sub-millimeter Heirloom Precision\n"
+                "• Fasteners: 100% Interlocking Solid Timber (Zero Hardware / Glue)\n\n"
+                "Subscribe to TimberCraft for daily master woodworking, antique restoration, and joinery showcases.\n\n"
+                f"#{obj.replace(' ', '')} #Woodworking #Craftsmanship #HandTools #Carpentry #Woodwork #Artisan #Satisfying #Shorts"
+            )
+            tags = [
+                obj.lower(), "woodworking", "master carpenter", "hand tools", "traditional woodwork",
+                "wood craftsmanship", "satisfying wood", "timbercraft", "wood joinery",
+                "artisan woodcraft", "shorts"
+            ]
+            pinned_comment = f"What do you think of this {obj.lower()} technique? Let us know in the comments 👇"
+            return {
+                "title": title,
+                "description": description,
+                "tags": tags,
+                "pinned_comment": pinned_comment
+            }
+
+        base_theme = clean_theme.replace("#Shorts", "").strip()
 
         # 1. Dissecting hidden mortise / internal mechanism
         if any(w in t for w in ["dissect", "hidden", "internal", "拆解"]):
-            title = f"{title_theme}: Secret Internal Lock #Shorts"
+            title = f"{base_theme}: Secret Internal Lock #Shorts"
             description = (
                 "Taking apart a hidden locking mortise to reveal what happens inside the timber.\n\n"
                 "From the outside, it appears to be a solid block of wood. But sliding out the central wooden keyway "
@@ -41,7 +109,7 @@ class MetadataEngine:
 
         # 2. Table leg joint
         elif any(w in t for w in ["table leg", "legjoint", "leg"]):
-            title = f"{title_theme}: 3-Way Zero-Wobble Lock #Shorts"
+            title = f"{base_theme}: 3-Way Zero-Wobble Lock #Shorts"
             description = (
                 "This three-way interlocking corner joint is the secret to building heirloom furniture that lasts generations.\n\n"
                 "Two horizontal apron rails and one vertical leg intersect at a single junction, locking together through hand-cut "
@@ -65,7 +133,7 @@ class MetadataEngine:
 
         # 3. Puzzle, Dovetail, Lock
         elif any(w in t for w in ["puzzle", "lock", "鲁班锁", "secret", "slider", "magic", "impossible"]):
-            title = f"{title_theme}: The Impossible 3D Joint #Shorts"
+            title = f"{base_theme}: The Impossible 3D Joint #Shorts"
             description = (
                 "From the outside, this interlocking wooden joint appears physically impossible to assemble or dismantle.\n\n"
                 "With diagonal dovetail pins showing on all four faces, geometry suggests the components must collide and bind instantly. "
@@ -89,7 +157,7 @@ class MetadataEngine:
 
         # 4. Hand plane shaving / razor plane
         elif any(w in t for w in ["plane", "shaving", "shave", "刨", "ribbon", "kanna"]):
-            title = f"{title_theme}: 0.01mm Translucent Ribbon #Shorts"
+            title = f"{base_theme}: 0.01mm Translucent Ribbon #Shorts"
             description = (
                 "Watch what happens when a razor-sharp hand plane glides across solid hardwood.\n\n"
                 "The blade is tuned with such precision that it does not scrape—it shears cleanly through vertical cellulose fibers "
@@ -113,7 +181,7 @@ class MetadataEngine:
 
         # 5. Dovetail box joint
         elif any(w in t for w in ["dovetail", "燕尾", "box joint"]):
-            title = f"{title_theme}: Zero-Gap Hand-Cut Joint #Shorts"
+            title = f"{base_theme}: Zero-Gap Hand-Cut Joint #Shorts"
             description = (
                 "A hand-cut dovetail joint is the undisputed signature of a master cabinetmaker.\n\n"
                 "Each pin and tail is laid out by hand and carved with a razor chisel to create interlocking mechanical wedges "
@@ -137,7 +205,7 @@ class MetadataEngine:
 
         # 6. Master tenon corner assembly
         elif any(w in t for w in ["corner assembly", "master tenon", "corner"]):
-            title = f"{title_theme}: 90° Precision Frame Lock #Shorts"
+            title = f"{base_theme}: 90° Precision Frame Lock #Shorts"
             description = (
                 "Watch this corner frame joint seat together without a single screw, nail, or drop of glue.\n\n"
                 "Every surface of this mortise and tenon is hand-chiseled with zero room for error, aligning the structural "
@@ -161,7 +229,7 @@ class MetadataEngine:
 
         # 7. Marking gauge / layout precision
         elif any(w in t for w in ["marking", "gauge", "划线器", "layout", "pencil", "line"]):
-            title = f"{title_theme}: The 0.1mm Layout Secret #Shorts"
+            title = f"{base_theme}: The 0.1mm Layout Secret #Shorts"
             description = (
                 "Before a single chisel or hand saw touches the timber, a master carpenter wins the battle with layout.\n\n"
                 "Unlike a soft graphite pencil that rubs off and creates a fuzzy, inaccurate line, a precision marking gauge "
@@ -185,7 +253,7 @@ class MetadataEngine:
 
         # 8. Kumiko lattice
         elif any(w in t for w in ["kumiko", "lattice", "组子", "hexagonal", "grid"]):
-            title = f"{title_theme}: Zero-Gap Friction Lock #Shorts"
+            title = f"{base_theme}: Zero-Gap Friction Lock #Shorts"
             description = (
                 "In traditional Japanese Kumiko, dozens of delicate wooden slats lock together without a single nail or drop of glue.\n\n"
                 "Every single component is beveled on custom wooden guide blocks, shaved to exact 60-degree angles using a razor-sharp "
@@ -209,7 +277,7 @@ class MetadataEngine:
 
         # 9. Dougong, Architecture, Temple
         elif any(w in t for w in ["dougong", "bracket", "斗拱", "temple", "earthquake", "pavilion", "shrine"]):
-            title = f"{title_theme}: Earthquake-Proof Ancient Architecture #Shorts"
+            title = f"{base_theme}: Earthquake-Proof Ancient Architecture #Shorts"
             description = (
                 "How did ancient wooden pagodas survive magnitude 8.0 earthquakes for over a thousand years without collapsing?\n\n"
                 "The answer is Dougong: an ingenious stepped cantilever bracket system. Instead of fighting seismic ground energy with rigid "
@@ -232,7 +300,7 @@ class MetadataEngine:
 
         # 10. Chisel sharpness, end grain
         elif any(w in t for w in ["end_grain", "chisel", "sharpness", "blade", "slice"]):
-            title = f"{title_theme}: Slicing End Grain #Shorts"
+            title = f"{base_theme}: Slicing End Grain #Shorts"
             description = (
                 "To any master woodworker, end-grain is the ultimate and most unforgiving test of an edge.\n\n"
                 "Unlike face grain, end-grain consists of microscopic vertical cellulose tubes bundled together like drinking straws. "
@@ -255,7 +323,7 @@ class MetadataEngine:
 
         # 11. Traditional Sunmao / Mortise & Tenon
         elif any(w in t for w in ["sunmao", "mortise", "tenon", "榫卯", "joint", "interlock"]):
-            title = f"{title_theme}: Ancient Self-Locking Joinery #Shorts"
+            title = f"{base_theme}: Ancient Self-Locking Joinery #Shorts"
             description = (
                 "Traditional Sunmao joinery has kept thousand-year-old timber structures standing through centuries of natural elements.\n\n"
                 "Unlike modern metal fasteners that rust and loosen as timber breathes, a classical mortise and tenon joint harnesses the natural "
@@ -276,29 +344,57 @@ class MetadataEngine:
             ]
             pinned_comment = "Stronger than modern screws through pure friction. What do you think of traditional Sunmao? 👇"
 
-        # 12. Generic dynamic fallback for any other craftsmanship topic
+        # 12. Vision-grounded or Generic dynamic fallback
         else:
-            clean = title_theme.replace("#Shorts", "").strip()
-            title = f"{clean} #Shorts"
-            description = (
-                f"Master craftsmanship breakdown: Exploring the techniques and fine tolerances behind {clean.lower()}.\n\n"
-                "In traditional timber craft, every cut, shaving, and joint responds directly to the natural density and grain direction "
-                "of the wood. Guided entirely by hand tools and disciplined muscle memory, master carpenters achieve fits that modern machines "
-                "struggle to replicate.\n\n"
-                "Craftsmanship Specifications:\n"
-                f"• Focus Technique: {clean}\n"
-                "• Method: 100% Traditional Hand Tools & Joinery\n"
-                "• Tolerance: Sub-millimeter Heirloom Precision\n"
-                "• Finish: Pure Hand-Planed & Chiseled Surface\n\n"
-                "Subscribe to TimberCraft for daily master woodworking, antique restoration, and joinery showcases.\n\n"
-                "#Woodworking #Craftsmanship #HandTools #Carpentry #Woodwork #Artisan #Satisfying #Shorts"
-            )
-            tags = [
-                "woodworking", "master carpenter", "hand tools", "traditional woodwork",
-                "wood craftsmanship", "satisfying wood", "timbercraft", "wood joinery",
-                "artisan woodcraft", "shorts"
-            ]
-            pinned_comment = f"What do you think of this master technique? Let us know in the comments 👇"
+            clean = clean_theme.replace("#Shorts", "").strip()
+            if not clean or clean.lower() in ["traditional woodcraft", "master craftsmanship"]:
+                clean = f"The Hand-Crafted {obj}" if obj else "Traditional Woodcraft"
+            
+            title = f"{clean} #Shorts" if not clean.endswith("#Shorts") else clean
+
+            if obj and (actions or reveal):
+                action_text = f"{actions}. " if actions else ""
+                reveal_text = f"{reveal}. " if reveal else ""
+                description = (
+                    f"Master craftsmanship breakdown: Exploring the techniques and fine tolerances behind {obj.lower()}.\n\n"
+                    f"{action_text}{reveal_text}\n\n"
+                    "In traditional timber craft, every cut, shaving, and joint responds directly to the natural density and grain direction "
+                    "of the wood. Guided entirely by hand tools and disciplined muscle memory, master carpenters achieve fits that modern machines "
+                    "struggle to replicate.\n\n"
+                    "Craftsmanship Specifications:\n"
+                    f"• Focus Technique: {obj}\n"
+                    "• Method: 100% Traditional Hand Tools & Joinery\n"
+                    "• Tolerance: Sub-millimeter Heirloom Precision\n"
+                    "• Fasteners: 100% Interlocking Solid Timber (Zero Hardware / Glue)\n\n"
+                    "Subscribe to TimberCraft for daily master woodworking, antique restoration, and joinery showcases.\n\n"
+                    f"#{obj.replace(' ', '')} #Woodworking #Craftsmanship #HandTools #Carpentry #Woodwork #Artisan #Satisfying #Shorts"
+                )
+                tags = [
+                    obj.lower(), "woodworking", "master carpenter", "hand tools", "traditional woodwork",
+                    "wood craftsmanship", "satisfying wood", "timbercraft", "wood joinery",
+                    "artisan woodcraft", "shorts"
+                ]
+                pinned_comment = f"What do you think of this {obj.lower()} technique? Let us know in the comments 👇"
+            else:
+                description = (
+                    f"Master craftsmanship breakdown: Exploring the techniques and fine tolerances behind {clean.lower()}.\n\n"
+                    "In traditional timber craft, every cut, shaving, and joint responds directly to the natural density and grain direction "
+                    "of the wood. Guided entirely by hand tools and disciplined muscle memory, master carpenters achieve fits that modern machines "
+                    "struggle to replicate.\n\n"
+                    "Craftsmanship Specifications:\n"
+                    f"• Focus Technique: {clean}\n"
+                    "• Method: 100% Traditional Hand Tools & Joinery\n"
+                    "• Tolerance: Sub-millimeter Heirloom Precision\n"
+                    "• Finish: Pure Hand-Planed & Chiseled Surface\n\n"
+                    "Subscribe to TimberCraft for daily master woodworking, antique restoration, and joinery showcases.\n\n"
+                    "#Woodworking #Craftsmanship #HandTools #Carpentry #Woodwork #Artisan #Satisfying #Shorts"
+                )
+                tags = [
+                    "woodworking", "master carpenter", "hand tools", "traditional woodwork",
+                    "wood craftsmanship", "satisfying wood", "timbercraft", "wood joinery",
+                    "artisan woodcraft", "shorts"
+                ]
+                pinned_comment = f"What do you think of this master technique? Let us know in the comments 👇"
 
         return {
             "title": title,

@@ -121,7 +121,9 @@ class QueueManager:
         source_url: str,
         title_theme: str,
         direct_stream_url: Optional[str] = None,
-        local_raw_path: Optional[str] = None
+        local_raw_path: Optional[str] = None,
+        video_analysis: Optional[Dict[str, Any]] = None,
+        masthead_text: Optional[str] = None
     ) -> bool:
         """Adds a new item to queue if not already processed."""
         if self.is_processed(item_id):
@@ -139,10 +141,12 @@ class QueueManager:
             "account": account,
             "source_url": source_url,
             "title_theme": title_theme,
+            "masthead_text": masthead_text,
             "direct_stream_url": direct_stream_url,
             "local_raw_path": local_raw_path,
             "status": "PENDING",
-            "added_at": datetime.now().isoformat()
+            "added_at": datetime.now().isoformat(),
+            "video_analysis": video_analysis
         }
         queue.append(new_entry)
         self._save_json(self.queue_file, queue)
