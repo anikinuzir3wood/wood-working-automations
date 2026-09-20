@@ -29,7 +29,8 @@ TOKEN_FILE = BASE_DIR / "token.json"
 
 SCOPES = [
     "https://www.googleapis.com/auth/youtube.upload",
-    "https://www.googleapis.com/auth/youtube"
+    "https://www.googleapis.com/auth/youtube",
+    "https://www.googleapis.com/auth/drive"
 ]
 
 GITHUB_OWNER = "anikinuzir3wood"
@@ -76,7 +77,7 @@ def authenticate_google():
     print("  TIMBERCRAFT YOUTUBE OAUTH AUTHENTICATION")
     print("  Target Email   : anikinuzir3@gmail.com")
     print("  Target Channel : TimberCraft Archive")
-    print("  GCP Project    : timbercraft-archive (642561120312)")
+    print("  GCP Project    : timbercraft-studio (1051808411017)")
     print("  " + "-" * 71)
     print("  REMINDER: DO NOT USE zeniusindividual@gmail.com (Avian Architects)!")
     print("=" * 75)
