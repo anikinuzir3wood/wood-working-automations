@@ -169,5 +169,160 @@
       "clean_title": "The Master Carpenter's Wooden Goblet #Shorts",
       "masthead_text": "WOODEN GOBLET"
     }
+  },
+  {
+    "item_id": "6aafecee000000002602049a",
+    "account": "wood_soul",
+    "source_url": "https://www.rednote.com/discovery/item/6aafecee000000002602049a?xsec_token=AB4dj7LH1ZTEz_2MqzrI05RbNmvL514Noc3zPoYXPZVSs=&xsec_source=pc_user",
+    "title_theme": "The Master Carpenter's Wedged Fan Joint #Shorts",
+    "masthead_text": "WEDGED FAN JOINT",
+    "direct_stream_url": "http://sns-v11.rednotecdn.com/stream/79/110/258/01eaafeced5d98f24f037001a0bf35daaf_258.mp4",
+    "local_raw_path": null,
+    "status": "PENDING",
+    "added_at": "2026-09-20T20:23:14.637163",
+    "video_analysis": {
+      "script_parts": [
+        "Look at this amazing way to lock two pieces of wood together without using a single nail.",
+        "First, they cut the end of the post into thin, flexible fingers and slot it right into the middle of the beam.",
+        "Next, they slide thin, dark wooden wedges into every single one of those gaps to push the fingers outward.",
+        "A few taps with a hammer drives the wedges deep, locking everything in place for a super strong and beautiful finish!"
+      ],
+      "has_huge_chinese_text": false,
+      "has_foreign_captions": false,
+      "subtitle_region": "NONE",
+      "reject": false,
+      "reject_reason": "",
+      "object": "Wedged Fan Joint",
+      "actions": "A vertical wooden piece with multiple thin fingers is slotted into a horizontal beam, then dark wooden wedges are inserted into the slots and hammered down to expand the joint.",
+      "reveal": "A highly secure, flared fan joint locked tightly in place by contrasting wooden wedges.",
+      "model_used": "gemini-3.5-flash",
+      "rejected": false,
+      "clean_title": "The Master Carpenter's Wedged Fan Joint #Shorts",
+      "masthead_text": "WEDGED FAN JOINT"
+    }
+  },
+  {
+    "item_id": "6aafe0ab000000002700961b",
+    "account": "wood_soul",
+    "source_url": "https://www.rednote.com/discovery/item/6aafe0ab000000002700961b?xsec_token=AB4dj7LH1ZTEz_2MqzrI05RUJxVcjbzLl80E5960Sfnxw=&xsec_source=pc_user",
+    "title_theme": "The Master Carpenter's Stepped Wood Joint Cutout #Shorts",
+    "masthead_text": "STEPPED WOOD JOINT CUTOUT",
+    "direct_stream_url": "http://sns-v11.rednotecdn.com/stream/79/110/258/01eaafe0aa5eb3014f037001a0bf0619e3_258.mp4",
+    "local_raw_path": null,
+    "status": "PENDING",
+    "added_at": "2026-09-20T20:23:37.114048",
+    "video_analysis": {
+      "script_parts": [
+        "Watch how easily this simple homemade saw cuts perfect steps into wood!",
+        "The craftsman slowly guides the wooden board along the dark lines, letting the fast-moving blade do all the hard work.",
+        "He carefully turns the wood at a sharp corner to make the next clean cut.",
+        "And just like that, the pieces slide apart, leaving behind a super clean, stepped edge!"
+      ],
+      "has_huge_chinese_text": false,
+      "has_foreign_captions": false,
+      "subtitle_region": "NONE",
+      "reject": false,
+      "reject_reason": "",
+      "object": "Stepped Wood Joint Cutout",
+      "actions": "A craftsman guides a wooden board through a table-mounted scroll saw to cut along marked lines, making sharp turns to create a stepped shape.",
+      "reveal": "A cleanly cut stepped edge on a wooden board with the cut-out pieces removed.",
+      "model_used": "gemini-3.5-flash",
+      "rejected": false,
+      "clean_title": "The Master Carpenter's Stepped Wood Joint Cutout #Shorts",
+      "masthead_text": "STEPPED WOOD JOINT CUTOUT"
+    }
+  },
+  {
+    "item_id": "69ca5973000000001b001a1e",
+    "account": "craftsman",
+    "source_url": "https://www.rednote.com/discovery/item/69ca5973000000001b001a1e?xsec_token=AB0IgJ6XSdXpG9SH9uf7Zt-UOsVeHGQ76bihaZr4KF0WM=&xsec_source=",
+    "title_theme": "The Master Carpenter's Diagonal Brace Joint #Shorts",
+    "masthead_text": "DIAGONAL BRACE JOINT",
+    "direct_stream_url": "http://sns-v11.rednotecdn.com/stream/1/110/258/01e9ca597052a246010370019d3e6db9ad_258.mp4",
+    "local_raw_path": null,
+    "status": "PENDING",
+    "added_at": "2026-09-20T20:24:06.735271",
+    "video_analysis": {
+      "script_parts": [
+        "Ever wonder how to make a diagonal wood brace fit perfectly flush?",
+        "First, slide the diagonal board right into the notch. Use a ruler and pencil to mark a straight vertical line.",
+        "Next, line up your square with the angle of the cut to draw a second line, showing exactly which corner needs to go.",
+        "Just like that, you have the perfect lines marked out for a clean, professional joint!"
+      ],
+      "has_huge_chinese_text": false,
+      "has_foreign_captions": false,
+      "subtitle_region": "NONE",
+      "reject": false,
+      "reject_reason": "",
+      "object": "Diagonal Brace Joint",
+      "actions": "Placing a diagonal wood piece into a triangular notch, then using a combination square and pencil to mark the exact lines for a flush cut",
+      "reveal": "A perfectly marked line on the diagonal wood piece showing where to cut for a flush fit",
+      "model_used": "gemini-3.5-flash",
+      "rejected": false,
+      "clean_title": "The Master Carpenter's Diagonal Brace Joint #Shorts",
+      "masthead_text": "DIAGONAL BRACE JOINT"
+    }
+  },
+  {
+    "item_id": "69d8d1ed000000002200f8bc",
+    "account": "wood_art",
+    "source_url": "https://www.rednote.com/discovery/item/69d8d1ed000000002200f8bc?xsec_token=ABZpZy4EY1eYA0vdgV6R_-4XeyRKUrTc92F-ywuz7vcN8=&xsec_source=",
+    "title_theme": "The Master Carpenter's Hand-Carved Wooden Shell Dish #Shorts",
+    "masthead_text": "HAND-CARVED WOODEN SHEL...",
+    "direct_stream_url": "http://sns-v11.rednotecdn.com/stream/79/110/258/01e9d8d1b357b5de4f0370019d76f44574_258.mp4",
+    "local_raw_path": null,
+    "status": "PENDING",
+    "added_at": "2026-09-20T20:24:48.744101",
+    "video_analysis": {
+      "script_parts": [
+        "Watch how this master crafter turns a block of wood into a beautiful shell-shaped tray!",
+        "He uses a curved hand chisel to carve out the smooth, deep pockets one by one.",
+        "Next, he shaves the outer edges, sending perfect curls of wood peeling away.",
+        "With a razor-sharp carving knife, he slices the thinnest shavings to make every detail absolutely perfect!"
+      ],
+      "has_huge_chinese_text": false,
+      "has_foreign_captions": false,
+      "subtitle_region": "NONE",
+      "reject": false,
+      "reject_reason": "",
+      "object": "Hand-Carved Wooden Shell Dish",
+      "actions": "Carving deep scallop shapes with a gouge, slicing fine curves on a round block to make clean spirals, and test-shaving a block with a razor-sharp carving knife",
+      "reveal": "A beautifully detailed, multi-compartment shell tray carved entirely by hand",
+      "model_used": "gemini-3.5-flash",
+      "rejected": false,
+      "clean_title": "The Master Carpenter's Hand-Carved Wooden Shell Dish #Shorts",
+      "masthead_text": "HAND-CARVED WOODEN SHEL..."
+    }
+  },
+  {
+    "item_id": "69c0858f000000001d01bfeb",
+    "account": "wood_soul",
+    "source_url": "https://www.rednote.com/discovery/item/69c0858f000000001d01bfeb?xsec_token=ABStKhgaKfgUeRClq_RqQACFYTvN2rC0PFBqgL_-LomHM=&xsec_source=",
+    "title_theme": "The Master Carpenter's Zigzag Diagonal Joint #Shorts",
+    "masthead_text": "ZIGZAG DIAGONAL JOINT",
+    "direct_stream_url": "http://sns-v11.rednotecdn.com/stream/79/110/258/01e9c0858a58ea324f0370019d1809dc04_258.mp4",
+    "local_raw_path": null,
+    "status": "PENDING",
+    "added_at": "2026-09-20T20:25:10.986206",
+    "video_analysis": {
+      "script_parts": [
+        "Ever wonder how to connect wood at an angle without using a single nail?",
+        "You start by aligning the two pieces and marking straight guidelines with a metal ruler and a red pen.",
+        "Then, you map out the matching zigzag teeth on the diagonal piece so it fits the post perfectly.",
+        "After cutting, the pieces lock together to create a super strong joint that looks like a puzzle."
+      ],
+      "has_huge_chinese_text": false,
+      "has_foreign_captions": false,
+      "subtitle_region": "NONE",
+      "reject": false,
+      "reject_reason": "",
+      "object": "Zigzag Diagonal Joint",
+      "actions": "Measuring and marking alignment lines on a diagonal wood piece with a ruler and red pen to match a zigzag cutout on a vertical post.",
+      "reveal": "A perfectly fitting, interlocking zigzag joint.",
+      "model_used": "gemini-3.5-flash",
+      "rejected": false,
+      "clean_title": "The Master Carpenter's Zigzag Diagonal Joint #Shorts",
+      "masthead_text": "ZIGZAG DIAGONAL JOINT"
+    }
   }
 ]
