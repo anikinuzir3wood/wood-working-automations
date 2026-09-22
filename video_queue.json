@@ -1,36 +1,5 @@
 [
   {
-    "item_id": "693aa0cb0000000019025426",
-    "account": "wood_craft",
-    "source_url": "https://www.rednote.com/search_result/693aa0cb0000000019025426?xsec_token=AB-gJ8ZYfVlP5BIjFZAhcu87wLvvlU293c7yluqLObcSQ=&xsec_source=",
-    "title_theme": "The Master Carpenter's Wooden Goblet #Shorts",
-    "masthead_text": "WOODEN GOBLET",
-    "direct_stream_url": "http://sns-v11.rednotecdn.com/stream/1/110/258/01e93aa0a9641cd3010370019b0d050781_258.mp4",
-    "local_raw_path": null,
-    "status": "PENDING",
-    "added_at": "2026-09-20T19:58:26.893251",
-    "video_analysis": {
-      "script_parts": [
-        "Watch how a rough block of wood with bark turns into a beautiful goblet!",
-        "First, we spin the block on a lathe. A sharp metal tool carves out the inside of the cup, sending wood chips everywhere.",
-        "Next, we carefully shape the outside. We cut away the wood to make a super thin and elegant stem.",
-        "Look at that! The goblet is finished, perfectly smooth, and ready to be held."
-      ],
-      "has_huge_chinese_text": false,
-      "has_foreign_captions": false,
-      "subtitle_region": "NONE",
-      "reject": false,
-      "reject_reason": "",
-      "object": "Wooden Goblet",
-      "actions": "Mounting a rough wood block on a lathe, hollowing out the inside of the cup, shaping the outer bowl and thin stem with turning tools, and cleaning up the base",
-      "reveal": "A smooth, beautifully crafted wooden goblet held in the hand",
-      "model_used": "gemini-3.5-flash",
-      "rejected": false,
-      "clean_title": "The Master Carpenter's Wooden Goblet #Shorts",
-      "masthead_text": "WOODEN GOBLET"
-    }
-  },
-  {
     "item_id": "6aafecee000000002602049a",
     "account": "wood_soul",
     "source_url": "https://www.rednote.com/discovery/item/6aafecee000000002602049a?xsec_token=AB4dj7LH1ZTEz_2MqzrI05RbNmvL514Noc3zPoYXPZVSs=&xsec_source=pc_user",
