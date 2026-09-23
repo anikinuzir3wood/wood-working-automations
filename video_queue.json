@@ -1,36 +1,5 @@
 [
   {
-    "item_id": "6aafecee000000002602049a",
-    "account": "wood_soul",
-    "source_url": "https://www.rednote.com/discovery/item/6aafecee000000002602049a?xsec_token=AB4dj7LH1ZTEz_2MqzrI05RbNmvL514Noc3zPoYXPZVSs=&xsec_source=pc_user",
-    "title_theme": "The Master Carpenter's Wedged Fan Joint #Shorts",
-    "masthead_text": "WEDGED FAN JOINT",
-    "direct_stream_url": "http://sns-v11.rednotecdn.com/stream/79/110/258/01eaafeced5d98f24f037001a0bf35daaf_258.mp4",
-    "local_raw_path": null,
-    "status": "PENDING",
-    "added_at": "2026-09-20T20:23:14.637163",
-    "video_analysis": {
-      "script_parts": [
-        "Look at this amazing way to lock two pieces of wood together without using a single nail.",
-        "First, they cut the end of the post into thin, flexible fingers and slot it right into the middle of the beam.",
-        "Next, they slide thin, dark wooden wedges into every single one of those gaps to push the fingers outward.",
-        "A few taps with a hammer drives the wedges deep, locking everything in place for a super strong and beautiful finish!"
-      ],
-      "has_huge_chinese_text": false,
-      "has_foreign_captions": false,
-      "subtitle_region": "NONE",
-      "reject": false,
-      "reject_reason": "",
-      "object": "Wedged Fan Joint",
-      "actions": "A vertical wooden piece with multiple thin fingers is slotted into a horizontal beam, then dark wooden wedges are inserted into the slots and hammered down to expand the joint.",
-      "reveal": "A highly secure, flared fan joint locked tightly in place by contrasting wooden wedges.",
-      "model_used": "gemini-3.5-flash",
-      "rejected": false,
-      "clean_title": "The Master Carpenter's Wedged Fan Joint #Shorts",
-      "masthead_text": "WEDGED FAN JOINT"
-    }
-  },
-  {
     "item_id": "6aafe0ab000000002700961b",
     "account": "wood_soul",
     "source_url": "https://www.rednote.com/discovery/item/6aafe0ab000000002700961b?xsec_token=AB4dj7LH1ZTEz_2MqzrI05RUJxVcjbzLl80E5960Sfnxw=&xsec_source=pc_user",
