@@ -1,36 +1,5 @@
 [
   {
-    "item_id": "6aafe0ab000000002700961b",
-    "account": "wood_soul",
-    "source_url": "https://www.rednote.com/discovery/item/6aafe0ab000000002700961b?xsec_token=AB4dj7LH1ZTEz_2MqzrI05RUJxVcjbzLl80E5960Sfnxw=&xsec_source=pc_user",
-    "title_theme": "The Master Carpenter's Stepped Wood Joint Cutout #Shorts",
-    "masthead_text": "STEPPED WOOD JOINT CUTOUT",
-    "direct_stream_url": "http://sns-v11.rednotecdn.com/stream/79/110/258/01eaafe0aa5eb3014f037001a0bf0619e3_258.mp4",
-    "local_raw_path": null,
-    "status": "PENDING",
-    "added_at": "2026-09-20T20:23:37.114048",
-    "video_analysis": {
-      "script_parts": [
-        "Watch how easily this simple homemade saw cuts perfect steps into wood!",
-        "The craftsman slowly guides the wooden board along the dark lines, letting the fast-moving blade do all the hard work.",
-        "He carefully turns the wood at a sharp corner to make the next clean cut.",
-        "And just like that, the pieces slide apart, leaving behind a super clean, stepped edge!"
-      ],
-      "has_huge_chinese_text": false,
-      "has_foreign_captions": false,
-      "subtitle_region": "NONE",
-      "reject": false,
-      "reject_reason": "",
-      "object": "Stepped Wood Joint Cutout",
-      "actions": "A craftsman guides a wooden board through a table-mounted scroll saw to cut along marked lines, making sharp turns to create a stepped shape.",
-      "reveal": "A cleanly cut stepped edge on a wooden board with the cut-out pieces removed.",
-      "model_used": "gemini-3.5-flash",
-      "rejected": false,
-      "clean_title": "The Master Carpenter's Stepped Wood Joint Cutout #Shorts",
-      "masthead_text": "STEPPED WOOD JOINT CUTOUT"
-    }
-  },
-  {
     "item_id": "69ca5973000000001b001a1e",
     "account": "craftsman",
     "source_url": "https://www.rednote.com/discovery/item/69ca5973000000001b001a1e?xsec_token=AB0IgJ6XSdXpG9SH9uf7Zt-UOsVeHGQ76bihaZr4KF0WM=&xsec_source=",
