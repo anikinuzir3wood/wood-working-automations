@@ -1,36 +1,5 @@
 [
   {
-    "item_id": "69d8d1ed000000002200f8bc",
-    "account": "wood_art",
-    "source_url": "https://www.rednote.com/discovery/item/69d8d1ed000000002200f8bc?xsec_token=ABZpZy4EY1eYA0vdgV6R_-4XeyRKUrTc92F-ywuz7vcN8=&xsec_source=",
-    "title_theme": "The Master Carpenter's Hand-Carved Wooden Shell Dish #Shorts",
-    "masthead_text": "HAND-CARVED WOODEN SHEL...",
-    "direct_stream_url": "http://sns-v11.rednotecdn.com/stream/79/110/258/01e9d8d1b357b5de4f0370019d76f44574_258.mp4",
-    "local_raw_path": null,
-    "status": "PENDING",
-    "added_at": "2026-09-20T20:24:48.744101",
-    "video_analysis": {
-      "script_parts": [
-        "Watch how this master crafter turns a block of wood into a beautiful shell-shaped tray!",
-        "He uses a curved hand chisel to carve out the smooth, deep pockets one by one.",
-        "Next, he shaves the outer edges, sending perfect curls of wood peeling away.",
-        "With a razor-sharp carving knife, he slices the thinnest shavings to make every detail absolutely perfect!"
-      ],
-      "has_huge_chinese_text": false,
-      "has_foreign_captions": false,
-      "subtitle_region": "NONE",
-      "reject": false,
-      "reject_reason": "",
-      "object": "Hand-Carved Wooden Shell Dish",
-      "actions": "Carving deep scallop shapes with a gouge, slicing fine curves on a round block to make clean spirals, and test-shaving a block with a razor-sharp carving knife",
-      "reveal": "A beautifully detailed, multi-compartment shell tray carved entirely by hand",
-      "model_used": "gemini-3.5-flash",
-      "rejected": false,
-      "clean_title": "The Master Carpenter's Hand-Carved Wooden Shell Dish #Shorts",
-      "masthead_text": "HAND-CARVED WOODEN SHEL..."
-    }
-  },
-  {
     "item_id": "69c0858f000000001d01bfeb",
     "account": "wood_soul",
     "source_url": "https://www.rednote.com/discovery/item/69c0858f000000001d01bfeb?xsec_token=ABStKhgaKfgUeRClq_RqQACFYTvN2rC0PFBqgL_-LomHM=&xsec_source=",
