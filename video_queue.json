@@ -1,36 +1,5 @@
 [
   {
-    "item_id": "69ca5973000000001b001a1e",
-    "account": "craftsman",
-    "source_url": "https://www.rednote.com/discovery/item/69ca5973000000001b001a1e?xsec_token=AB0IgJ6XSdXpG9SH9uf7Zt-UOsVeHGQ76bihaZr4KF0WM=&xsec_source=",
-    "title_theme": "The Master Carpenter's Diagonal Brace Joint #Shorts",
-    "masthead_text": "DIAGONAL BRACE JOINT",
-    "direct_stream_url": "http://sns-v11.rednotecdn.com/stream/1/110/258/01e9ca597052a246010370019d3e6db9ad_258.mp4",
-    "local_raw_path": null,
-    "status": "PENDING",
-    "added_at": "2026-09-20T20:24:06.735271",
-    "video_analysis": {
-      "script_parts": [
-        "Ever wonder how to make a diagonal wood brace fit perfectly flush?",
-        "First, slide the diagonal board right into the notch. Use a ruler and pencil to mark a straight vertical line.",
-        "Next, line up your square with the angle of the cut to draw a second line, showing exactly which corner needs to go.",
-        "Just like that, you have the perfect lines marked out for a clean, professional joint!"
-      ],
-      "has_huge_chinese_text": false,
-      "has_foreign_captions": false,
-      "subtitle_region": "NONE",
-      "reject": false,
-      "reject_reason": "",
-      "object": "Diagonal Brace Joint",
-      "actions": "Placing a diagonal wood piece into a triangular notch, then using a combination square and pencil to mark the exact lines for a flush cut",
-      "reveal": "A perfectly marked line on the diagonal wood piece showing where to cut for a flush fit",
-      "model_used": "gemini-3.5-flash",
-      "rejected": false,
-      "clean_title": "The Master Carpenter's Diagonal Brace Joint #Shorts",
-      "masthead_text": "DIAGONAL BRACE JOINT"
-    }
-  },
-  {
     "item_id": "69d8d1ed000000002200f8bc",
     "account": "wood_art",
     "source_url": "https://www.rednote.com/discovery/item/69d8d1ed000000002200f8bc?xsec_token=ABZpZy4EY1eYA0vdgV6R_-4XeyRKUrTc92F-ywuz7vcN8=&xsec_source=",
