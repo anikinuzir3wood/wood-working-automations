@@ -26,7 +26,8 @@
     "6aafecee000000002602049a",
     "6aafe0ab000000002700961b",
     "69ca5973000000001b001a1e",
-    "69d8d1ed000000002200f8bc"
+    "69d8d1ed000000002200f8bc",
+    "69c0858f000000001d01bfeb"
   ],
   "history": [
     {
@@ -295,6 +296,16 @@
       "raw_hash": "94899777bdbf3f48fd34bd8308a77057f7d88c35c97d58701c2f18038929689a",
       "processed_at": "2026-09-24T23:16:10.586344",
       "status": "COMPLETED"
+    },
+    {
+      "item_id": "69c0858f000000001d01bfeb",
+      "account": "wood_soul",
+      "title": "The Master Carpenter's Zigzag Diagonal Joint #Shorts",
+      "output_file": "/home/runner/work/wood-working-automations/wood-working-automations/output/TimberCraft_20260925_190507.mp4",
+      "youtube_id": "btqhZz7tVmw",
+      "raw_hash": "590f0b6c29c12174a3203a3c403f2f58e0e4bea76fa3990f33919bb7bb2edf44",
+      "processed_at": "2026-09-25T19:10:19.072729",
+      "status": "COMPLETED"
     }
   ],
   "processed_hashes": [
@@ -322,6 +333,7 @@
     "b1ec302f49d4def32f1f051bcc0fcfbfa5ec0d459a953a257fa67bca1b703917",
     "f2db41fc046c2b596945d065cd265d269dd9a34428b9c56564a470c7ffe6c162",
     "60f78f2bcc210692decb45abb152bd8c504247d421d5fff9f1d67ba6c15d163d",
-    "94899777bdbf3f48fd34bd8308a77057f7d88c35c97d58701c2f18038929689a"
+    "94899777bdbf3f48fd34bd8308a77057f7d88c35c97d58701c2f18038929689a",
+    "590f0b6c29c12174a3203a3c403f2f58e0e4bea76fa3990f33919bb7bb2edf44"
   ]
 }
