@@ -76,10 +76,14 @@ jobs:
           YOUTUBE_TOKEN: ${{ secrets.YOUTUBE_TOKEN_JSON }}
           CLIENT_SECRETS: ${{ secrets.YOUTUBE_CLIENT_SECRETS }}
           AI33_CONFIG: ${{ secrets.AI33_CONFIG_JSON }}
+          GDRIVE_TOKEN: ${{ secrets.GDRIVE_TOKEN_JSON }}
         run: |
           echo "$YOUTUBE_TOKEN" > token.json
           echo "$CLIENT_SECRETS" > client_secrets.json
           echo "$AI33_CONFIG" > ai33_config.json
+          if [ -n "$GDRIVE_TOKEN" ]; then
+            echo "$GDRIVE_TOKEN" > gdrive_token.json
+          fi
           echo "[+] Credentials configured securely."
 
       # 6. Ensure Required Directories Exist

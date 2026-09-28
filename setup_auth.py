@@ -29,8 +29,7 @@ TOKEN_FILE = BASE_DIR / "token.json"
 
 SCOPES = [
     "https://www.googleapis.com/auth/youtube.upload",
-    "https://www.googleapis.com/auth/youtube",
-    "https://www.googleapis.com/auth/drive"
+    "https://www.googleapis.com/auth/youtube"
 ]
 
 GITHUB_OWNER = "anikinuzir3wood"
@@ -53,20 +52,55 @@ import http.server
 class OAuthCallbackHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
         if "code=" in self.path:
-            self.server.auth_response_url = f"http://localhost:8088{self.path}"
-            self.send_response(200)
-            self.send_header("Content-type", "text/html; charset=utf-8")
-            self.end_headers()
-            html = """<html><body style="font-family: sans-serif; text-align: center; padding-top: 50px;">
-                <h1 style="color: #2e7d32;">Authentication Successful!</h1>
-                <p>TimberCraft Archive has been connected successfully. You may close this window.</p>
-            </body></html>"""
-            self.wfile.write(html.encode("utf-8"))
+            full_url = f"http://localhost:8088{self.path}"
+            try:
+                flow = self.server.flow
+                flow.fetch_token(authorization_response=full_url)
+                creds = flow.credentials
+
+                from googleapiclient.discovery import build
+                yt = build("youtube", "v3", credentials=creds)
+                res = yt.channels().list(part="snippet", mine=True).execute()
+                items = res.get("items", [])
+                if not items:
+                    raise ValueError("No YouTube channel found on this account.")
+
+                channel_id = items[0]["id"]
+                title = items[0]["snippet"]["title"]
+
+                if channel_id == "UC1UWiLB8zxqMvbzGFP2bljA" or "timbercraft" in title.lower():
+                    self.server.verified_creds = creds
+                    self.server.channel_title = title
+                    self.server.channel_id = channel_id
+                    self.send_response(200)
+                    self.send_header("Content-type", "text/html; charset=utf-8")
+                    self.end_headers()
+                    html = f"""<html><body style="font-family: sans-serif; text-align: center; padding-top: 50px;">
+                        <h1 style="color: #2e7d32; font-size: 32px;">&#10004; Authentication Successful!</h1>
+                        <h2 style="color: #1b5e20;">Channel: {title}</h2>
+                        <p style="font-size: 18px;">TimberCraft Archive has been connected. You may close this window.</p>
+                    </body></html>"""
+                    self.wfile.write(html.encode("utf-8"))
+                else:
+                    print(f"\n[!] WRONG CHANNEL: Selected '{title}' ({channel_id}). Waiting for TimberCraft Archive...")
+                    self.send_response(200)
+                    self.send_header("Content-type", "text/html; charset=utf-8")
+                    self.end_headers()
+                    html = f"""<html><body style="font-family: sans-serif; text-align: center; padding-top: 50px;">
+                        <h1 style="color: #d32f2f; font-size: 32px;">&#10006; Wrong Channel: {title}</h1>
+                        <p style="font-size: 18px; color: #555;">You selected personal channel '<b>{title}</b>'.</p>
+                        <p style="font-size: 18px; font-weight: bold;">Please click the OAuth link again and choose <u>TimberCraft Archive</u>.</p>
+                    </body></html>"""
+                    self.wfile.write(html.encode("utf-8"))
+            except Exception as e:
+                print(f"[!] Error handling OAuth response: {e}")
+                self.send_response(400)
+                self.end_headers()
         else:
             self.send_response(200)
             self.send_header("Content-type", "text/plain")
             self.end_headers()
-            self.wfile.write(b"Waiting for authorization code...")
+            self.wfile.write(b"Waiting for authorization...")
 
     def log_message(self, format, *args):
         pass
@@ -87,7 +121,6 @@ def authenticate_google():
         sys.exit(1)
 
     from google_auth_oauthlib.flow import InstalledAppFlow
-    from googleapiclient.discovery import build
 
     print("[*] Starting local OAuth flow for TimberCraft Archive...")
     
@@ -103,51 +136,26 @@ def authenticate_google():
         f.write(auth_url)
     print(f"\n[AUTH_URL_READY] {auth_url}\n", flush=True)
 
-    import webbrowser
-    try:
-        webbrowser.open(auth_url)
-    except Exception:
-        pass
-
     server = http.server.HTTPServer(("localhost", 8088), OAuthCallbackHandler)
-    server.auth_response_url = None
+    server.flow = flow
+    server.verified_creds = None
+    server.channel_title = None
+    server.channel_id = None
     print("[*] Waiting for OAuth callback on http://localhost:8088/ ...")
-    while not server.auth_response_url:
+    while not server.verified_creds:
         server.handle_request()
     server.server_close()
 
-    flow.fetch_token(authorization_response=server.auth_response_url)
-    creds = flow.credentials
+    creds = server.verified_creds
+    title = server.channel_title
+    channel_id = server.channel_id
+
+    print(f"[+] SUCCESS! Verified YouTube Channel: '{title}' (ID: {channel_id})")
 
     token_json_str = creds.to_json()
     with open(TOKEN_FILE, "w", encoding="utf-8") as f:
         f.write(token_json_str)
     print(f"[+] Saved fresh credentials locally to {TOKEN_FILE}")
-
-    # Verify access with YouTube API
-    try:
-        yt = build("youtube", "v3", credentials=creds)
-        res = yt.channels().list(part="snippet", mine=True).execute()
-        items = res.get("items", [])
-        if items:
-            channel_id = items[0]["id"]
-            title = items[0]["snippet"]["title"]
-            if "avian" in title.lower():
-                print(f"\n[!] DANGER: You authenticated '{title}' (Avian Architects) instead of TimberCraft!")
-                print("[!] Aborting token save to prevent cross-account contamination.")
-                sys.exit(1)
-            if "timbercraft" not in title.lower() and channel_id != "UC1UWiLB8zxqMvbzGFP2bljA":
-                print(f"\n[!] WRONG CHANNEL SELECTED: '{title}' (ID: {channel_id})!")
-                print("[!] You selected the personal profile 'Anikin Uzir' instead of the Brand Channel 'TimberCraft Archive'.")
-                print("[!] When Google displays 'Choose an account or a brand account', you MUST click 'TimberCraft Archive'!")
-                print("[!] Aborting to prevent saving credentials for the wrong channel.")
-                sys.exit(1)
-            print(f"[+] SUCCESS! Verified YouTube Channel: '{title}' (ID: {channel_id})!")
-        else:
-            print("[!] Warning: No channel found.")
-            sys.exit(1)
-    except Exception as e:
-        print(f"[!] Warning during channel verification: {e}")
 
     return token_json_str
 

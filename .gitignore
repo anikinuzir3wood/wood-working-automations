@@ -5,6 +5,7 @@ __pycache__/
 
 # Secrets - stored in GitHub Actions Secrets, NEVER in repo
 token.json
+gdrive_token.json
 client_secrets.json
 ai33_config.json
 .env

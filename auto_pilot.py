@@ -38,8 +38,17 @@ class TimberCraftAutopilot:
     def process_next_in_queue(self, skip_upload_wait: bool = False, keep_unlisted: bool = False) -> bool:
         """Pulls the next pending video from queue, renders it, and executes pre-flight upload."""
         item = self.qm.get_next_pending()
+        if not item or len(self.qm.list_queue()) < 3:
+            print("[*] Queue runway low or empty! Triggering autonomous Google Drive buffer sync...")
+            try:
+                from drive_replenisher import sync_drive_buffer_to_queue
+                sync_drive_buffer_to_queue()
+                item = self.qm.get_next_pending()
+            except Exception as e:
+                print(f"[!] Drive replenishment notice: {e}")
+
         if not item:
-            print("[!] Queue is empty! No pending videos to process.")
+            print("[!] Queue is empty! No pending videos to process in queue or Drive buffer.")
             return False
 
         item_id = item["item_id"]
@@ -76,6 +85,30 @@ class TimberCraftAutopilot:
                     raw_source = cand
             except Exception as e:
                 print(f"[!] Direct stream download failed for {item_id}: {e}")
+
+        # Check D: Download directly from Google Drive buffer if drive_file_id is provided
+        drive_file_id = item.get("drive_file_id") or (item.get("video_analysis") and item["video_analysis"].get("drive_file_id"))
+        if not raw_source and drive_file_id:
+            cand = SCRATCH_DIR / f"raw_drive_{drive_file_id}.mp4"
+            if cand.exists() and cand.stat().st_size > 50000:
+                raw_source = cand
+            else:
+                try:
+                    from drive_replenisher import get_drive_service
+                    from googleapiclient.http import MediaIoBaseDownload
+                    drive = get_drive_service()
+                    print(f"[*] Downloading raw video from Google Drive (ID: {drive_file_id})...")
+                    req = drive.files().get_media(fileId=drive_file_id)
+                    with open(cand, "wb") as f:
+                        downloader = MediaIoBaseDownload(f, req)
+                        done = False
+                        while not done:
+                            status, done = downloader.next_chunk()
+                    if cand.exists() and cand.stat().st_size > 50000:
+                        raw_source = cand
+                        print(f"[+] Successfully downloaded from Drive: {cand.name} ({cand.stat().st_size / (1024*1024):.2f} MB)")
+                except Exception as e:
+                    print(f"[!] Error downloading from Google Drive: {e}")
 
         # Strict Verification: NEVER fall back to a generic file
         if not raw_source or not raw_source.exists():
@@ -145,12 +178,21 @@ class TimberCraftAutopilot:
 
         # 5. Archive Raw Source in Google Drive 'Uploaded' folder
         try:
-            from drive_manager import GoogleDriveManager
-            dm = GoogleDriveManager()
-            if dm.service:
-                archived = dm.move_to_uploaded_archive(f"{item_id}.mp4")
-                if archived:
-                    print(f"[+] Archived '{item_id}.mp4' to Google Drive 'Uploaded' folder.")
+            if drive_file_id:
+                from drive_replenisher import get_drive_service, move_file_to_uploaded, get_or_create_uploaded_subfolder
+                from config import DRIVE_PARENT_FOLDER_ID
+                drive = get_drive_service()
+                uploaded_fid = get_or_create_uploaded_subfolder(drive, DRIVE_PARENT_FOLDER_ID)
+                moved = move_file_to_uploaded(drive, drive_file_id, DRIVE_PARENT_FOLDER_ID, uploaded_fid)
+                if moved:
+                    print(f"[+] Successfully moved raw video {drive_file_id} to Google Drive 'Uploaded' folder.")
+            else:
+                from drive_manager import GoogleDriveManager
+                dm = GoogleDriveManager()
+                if dm.service:
+                    archived = dm.move_to_uploaded_archive(f"{item_id}.mp4")
+                    if archived:
+                        print(f"[+] Archived '{item_id}.mp4' to Google Drive 'Uploaded' folder.")
         except Exception as de:
             print(f"[*] Drive archival notice: {de}")
 

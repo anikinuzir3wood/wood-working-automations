@@ -1,4 +1,4 @@
-"""
+﻿"""
 Google Drive Buffer & Archive Manager for TimberCraft Automation
 ===============================================================
 Manages:
@@ -27,6 +27,7 @@ from config import (
 )
 
 TOKEN_FILE = BASE_DIR / "token.json"
+GDRIVE_TOKEN_FILE = BASE_DIR / "gdrive_token.json"
 CLIENT_SECRETS_FILE = BASE_DIR / "client_secrets.json"
 
 SCOPES = [
@@ -45,7 +46,8 @@ class GoogleDriveManager:
 
     def _init_service(self):
         """Initializes Google Drive API service using token.json."""
-        if not TOKEN_FILE.exists():
+        active_token = GDRIVE_TOKEN_FILE if GDRIVE_TOKEN_FILE.exists() else TOKEN_FILE
+        if not active_token.exists():
             print("[!] Warning: token.json not found — Drive Manager operating in local fallback mode.")
             return
 
@@ -54,11 +56,11 @@ class GoogleDriveManager:
             from google.auth.transport.requests import Request
             from googleapiclient.discovery import build
 
-            creds = Credentials.from_authorized_user_file(str(TOKEN_FILE), SCOPES)
+            creds = Credentials.from_authorized_user_file(str(active_token), SCOPES)
             if creds and creds.expired and creds.refresh_token:
                 try:
                     creds.refresh(Request())
-                    with open(TOKEN_FILE, "w", encoding="utf-8") as f:
+                    with open(active_token, "w", encoding="utf-8") as f:
                         f.write(creds.to_json())
                 except Exception as e:
                     print(f"[*] Token refresh notice: {e}")
@@ -180,3 +182,4 @@ if __name__ == "__main__":
             print(f"  - {f['name']} (ID: {f['id']})")
     else:
         print("[!] Drive service not active. Run setup_auth.py with Drive scope.")
+
