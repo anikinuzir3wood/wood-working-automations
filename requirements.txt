@@ -8,3 +8,4 @@ Pillow>=10.0.0
 tzdata
 aiohttp>=3.9.0
 google-generativeai>=0.8.0
+yt-dlp>=2026.8.19

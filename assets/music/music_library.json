@@ -1,25 +1,88 @@
 {
   "tracks": [
     {
-      "filename": "woodworking_zen_pizzicato.wav",
+      "filename": "zen_japanese_woodcraft.mp3",
       "mood": "chisel_asmr",
-      "title": "Zen Pizzicato Chisel Bed",
-      "reuse_count": 35,
-      "source": "local_acoustic_studio"
+      "title": "Zen Japanese Woodcraft (Acoustic Guitar & Bamboo Flute)",
+      "reuse_count": 0,
+      "source": "ai33_suno_studio"
     },
     {
-      "filename": "ancient_temple_marimba.wav",
+      "filename": "zen_craftsman_meditation.mp3",
+      "mood": "chisel_asmr",
+      "title": "Zen Craftsman Meditation (Calm Fingerstyle Acoustic)",
+      "reuse_count": 0,
+      "source": "ai33_suno_studio"
+    },
+    {
+      "filename": "ancient_joinery_marimba_cello.mp3",
       "mood": "temple_joint",
-      "title": "Ancient Temple Resonance",
-      "reuse_count": 5,
-      "source": "local_acoustic_studio"
+      "title": "Ancient Temple Joinery (Wooden Marimba & Cello Resonance)",
+      "reuse_count": 0,
+      "source": "ai33_suno_studio"
     },
     {
-      "filename": "kumiko_acoustic_drone.wav",
+      "filename": "kumiko_lattice_acoustic.mp3",
       "mood": "kumiko_lattice",
-      "title": "Kumiko Harmonic Lattice Drone",
-      "reuse_count": 4,
-      "source": "local_acoustic_studio"
+      "title": "Kumiko Precision Lattice (Acoustic Guitar & Pizzicato Cello)",
+      "reuse_count": 0,
+      "source": "ai33_suno_studio"
+    },
+    {
+      "filename": "eastern_thought_acoustic.mp3",
+      "mood": "temple_joint",
+      "title": "Eastern Thought (Asian Flute & Traditional Strings)",
+      "reuse_count": 0,
+      "source": "open_digital_library_incompetech"
+    },
+    {
+      "filename": "meditation_impromptu_acoustic.mp3",
+      "mood": "chisel_asmr",
+      "title": "Meditation Impromptu (Calm Acoustic Bed)",
+      "reuse_count": 0,
+      "source": "open_digital_library_incompetech"
+    },
+    {
+      "filename": "autumn_day_fingerstyle.mp3",
+      "mood": "kumiko_lattice",
+      "title": "Autumn Day (Warm Fingerstyle Acoustic Guitar)",
+      "reuse_count": 0,
+      "source": "open_digital_library_incompetech"
+    },
+    {
+      "filename": "book_the_rental.mp3",
+      "mood": "chisel_asmr",
+      "title": "Book The Rental (Bamboo Flute & Acoustic Strings)",
+      "reuse_count": 0,
+      "source": "youtube_audio_library"
+    },
+    {
+      "filename": "wandering_solitude.mp3",
+      "mood": "chisel_asmr",
+      "title": "Wandering Solitude (Quiet Meditative Acoustic)",
+      "reuse_count": 0,
+      "source": "youtube_audio_library"
+    },
+    {
+      "filename": "acoustic_breeze.mp3",
+      "mood": "chisel_asmr",
+      "title": "Acoustic Breeze (Organic Wood Fingerpicking)",
+      "reuse_count": 0,
+      "source": "bensound_royalty_free"
+    },
+    {
+      "filename": "sunny_days.mp3",
+      "mood": "kumiko_lattice",
+      "title": "Sunny Days (Warm Acoustic Chill)",
+      "reuse_count": 0,
+      "source": "youtube_audio_library"
+    },
+    {
+      "filename": "curious_critters.mp3",
+      "mood": "temple_joint",
+      "title": "Curious Critters (Soft Wooden Marimba)",
+      "reuse_count": 0,
+      "source": "youtube_audio_library"
     }
   ]
 }

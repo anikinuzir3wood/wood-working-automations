@@ -75,87 +75,30 @@ class MusicManager:
             json.dump(self.catalog, f, indent=2, ensure_ascii=False)
 
     def _init_library(self):
-        """Pre-seeds the music library with 3 high-quality, non-intrusive acoustic woodworking tracks."""
-        track_1 = self.music_dir / "woodworking_zen_pizzicato.wav"
-        track_2 = self.music_dir / "ancient_temple_marimba.wav"
-        track_3 = self.music_dir / "kumiko_acoustic_drone.wav"
-
-        # 1. Chisel & End Grain Slicing (Delicate Marimba + Pizzicato Plucks)
-        if not track_1.exists():
-            print("[*] Seeding Music Library: woodworking_zen_pizzicato.wav...")
-            synth_1 = (
-                "aevalsrc='0.05*sin(2*PI*174.61*t)*exp(-0.7*mod(t,2)) + "
-                "0.04*sin(2*PI*261.63*t)*exp(-1.1*mod(t,1.5)) + "
-                "0.03*sin(2*PI*329.63*t)*exp(-1.4*mod(t,1)) + "
-                "0.02*sin(2*PI*523.25*t)*exp(-2.2*mod(t,0.5))':s=44100:d=45"
-            )
-            cmd = [
-                "ffmpeg", "-y", "-f", "lavfi", "-i", synth_1,
-                "-af", "lowpass=f=2400,highpass=f=100,volume=-8dB",
-                str(track_1)
-            ]
-            subprocess.run(cmd, capture_output=True)
-
-        # 2. Heavy Architectural Joinery / Sandalwood Lock (Deep Resonant Wooden Marimba)
-        if not track_2.exists():
-            print("[*] Seeding Music Library: ancient_temple_marimba.wav...")
-            synth_2 = (
-                "aevalsrc='0.06*sin(2*PI*130.81*t)*exp(-0.6*mod(t,3)) + "
-                "0.04*sin(2*PI*196.00*t)*exp(-0.9*mod(t,2)) + "
-                "0.03*sin(2*PI*293.66*t)*exp(-1.3*mod(t,1.5))':s=44100:d=45"
-            )
-            cmd = [
-                "ffmpeg", "-y", "-f", "lavfi", "-i", synth_2,
-                "-af", "lowpass=f=2000,highpass=f=80,volume=-8dB",
-                str(track_2)
-            ]
-            subprocess.run(cmd, capture_output=True)
-
-        # 3. Geometric Kumiko Lattice / Secret Dovetail (Harmonic Wooden Drone & Soft Plucks)
-        if not track_3.exists():
-            print("[*] Seeding Music Library: kumiko_acoustic_drone.wav...")
-            synth_3 = (
-                "aevalsrc='0.04*sin(2*PI*146.83*t)*exp(-0.5*mod(t,4)) + "
-                "0.03*sin(2*PI*220.00*t)*exp(-0.8*mod(t,2.5)) + "
-                "0.02*sin(2*PI*369.99*t)*exp(-1.2*mod(t,1.8)) + "
-                "0.015*sin(2*PI*440.00*t)*exp(-1.8*mod(t,1.0))':s=44100:d=45"
-            )
-            cmd = [
-                "ffmpeg", "-y", "-f", "lavfi", "-i", synth_3,
-                "-af", "lowpass=f=2200,highpass=f=90,volume=-8dB",
-                str(track_3)
-            ]
-            subprocess.run(cmd, capture_output=True)
-
-        # Sync files into catalog if missing
+        """Scans the music directory and registers high-quality acoustic woodworking tracks in catalog."""
         existing_filenames = {t["filename"] for t in self.catalog.get("tracks", [])}
-        preseeds = [
-            {
-                "filename": "woodworking_zen_pizzicato.wav",
-                "mood": "chisel_asmr",
-                "title": "Zen Pizzicato Chisel Bed",
-                "reuse_count": 0,
-                "source": "local_acoustic_studio"
-            },
-            {
-                "filename": "ancient_temple_marimba.wav",
-                "mood": "temple_joint",
-                "title": "Ancient Temple Resonance",
-                "reuse_count": 0,
-                "source": "local_acoustic_studio"
-            },
-            {
-                "filename": "kumiko_acoustic_drone.wav",
-                "mood": "kumiko_lattice",
-                "title": "Kumiko Harmonic Lattice Drone",
-                "reuse_count": 0,
-                "source": "local_acoustic_studio"
-            }
-        ]
+        
+        # Scan for existing audio files in music_dir
+        for audio_file in self.music_dir.iterdir():
+            if audio_file.suffix.lower() in [".mp3", ".wav", ".m4a", ".aac"] and audio_file.name not in existing_filenames:
+                fname = audio_file.name.lower()
+                mood = "chisel_asmr"
+                title = audio_file.stem.replace("_", " ").title()
+                
+                if "temple" in fname or "marimba" in fname or "joint" in fname:
+                    mood = "temple_joint"
+                elif "kumiko" in fname or "lattice" in fname or "dovetail" in fname:
+                    mood = "kumiko_lattice"
+                elif "meditation" in fname or "zen" in fname:
+                    mood = "chisel_asmr"
 
-        for p in preseeds:
-            if p["filename"] not in existing_filenames and (self.music_dir / p["filename"]).exists():
-                self.catalog["tracks"].append(p)
+                self.catalog["tracks"].append({
+                    "filename": audio_file.name,
+                    "mood": mood,
+                    "title": title,
+                    "reuse_count": 0,
+                    "source": "ai33_suno_studio"
+                })
 
         self._save_catalog()
 
@@ -265,7 +208,13 @@ class MusicManager:
                         t_resp = requests.get(f"{base_url}/v1/task/{task_id}", headers=headers, timeout=10)
                         if t_resp.status_code == 200:
                             t_data = t_resp.json()
-                            audio_url = t_data.get("audio_url") or t_data.get("data", {}).get("audio_url")
+                            meta = t_data.get("metadata", {})
+                            audio_url = meta.get("audio_url")
+                            if not audio_url and meta.get("all_audio_urls"):
+                                audio_url = meta["all_audio_urls"][0]
+                            if not audio_url:
+                                audio_url = t_data.get("audio_url") or t_data.get("data", {}).get("audio_url")
+
                             if audio_url:
                                 timestamp = int(time.time())
                                 filename = f"ai33_{mood}_{timestamp}.mp3"
