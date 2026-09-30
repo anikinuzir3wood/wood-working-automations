@@ -1,4 +1,4 @@
-﻿"""
+"""
 Google Drive Buffer & Archive Manager for TimberCraft Automation
 ===============================================================
 Manages:
@@ -56,7 +56,7 @@ class GoogleDriveManager:
             from google.auth.transport.requests import Request
             from googleapiclient.discovery import build
 
-            creds = Credentials.from_authorized_user_file(str(active_token), SCOPES)
+            creds = Credentials.from_authorized_user_file(str(active_token))
             if creds and creds.expired and creds.refresh_token:
                 try:
                     creds.refresh(Request())

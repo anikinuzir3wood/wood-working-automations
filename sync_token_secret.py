@@ -53,6 +53,25 @@ def sync_token_to_secret(repo_owner: str = "anikinuzir3wood", repo_name: str = "
         print("[!] token.json is empty — aborting sync.")
         return
 
+    # Verify token is actually valid or refreshable before syncing
+    try:
+        from google.oauth2.credentials import Credentials
+        from google.auth.transport.requests import Request
+        creds = Credentials.from_authorized_user_file(str(token_path))
+        if creds.expired and creds.refresh_token:
+            print("[*] Token expired; attempting refresh before syncing...")
+            creds.refresh(Request())
+            token_str = creds.to_json()
+            with open(token_path, "w", encoding="utf-8") as f:
+                f.write(token_str)
+            print("[+] Token refreshed successfully prior to sync.")
+        elif not creds.valid:
+            print("[!] Token is invalid. Aborting sync to prevent storing invalid token.")
+            return
+    except Exception as e:
+        print(f"[!] Token verification/refresh failed ({e}). Aborting secret sync to preserve existing secret.")
+        return
+
     # 1. Fetch Repository Public Key
     key_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/actions/secrets/public-key"
     req_key = urllib.request.Request(key_url, headers={
