@@ -235,13 +235,18 @@ if __name__ == "__main__":
     autopilot = TimberCraftAutopilot(dry_run=args.dry_run)
 
     if args.run_next:
+        pending_item = autopilot.qm.get_next_pending()
+        if not pending_item:
+            print("[*] video_queue.json is empty. No pending items to process.")
+            sys.exit(0)
+
         success = autopilot.process_next_in_queue(
             skip_upload_wait=args.skip_wait,
             keep_unlisted=args.keep_unlisted
         )
         if not success:
-            print("[!] Processing returned False or Queue was empty.")
-            sys.exit(0)  # Don't fail CI if queue is simply empty
+            print(f"[!] Processing failed for item {pending_item.get('item_id')}.")
+            sys.exit(1)
         sys.exit(0)
     else:
         autopilot.run_status()

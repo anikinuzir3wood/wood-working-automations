@@ -162,5 +162,5 @@ jobs:
       - name: Cleanup Sensitive Artifacts
         if: always()
         run: |
-          rm -f token.json client_secrets.json ai33_config.json
+          rm -f token.json client_secrets.json ai33_config.json gdrive_token.json
           rm -rf scratch/*

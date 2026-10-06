@@ -138,14 +138,18 @@ def upload_secret_to_github(secret_name: str, secret_value: str):
 
 
 def authenticate_drive():
-    print("\n" + "=" * 75)
-    print("  TIMBERCRAFT GOOGLE DRIVE OAUTH AUTHENTICATION")
-    print("  Target Email   : anikinuzir3@gmail.com")
-    print("  Folder ID      : 1kl4GK0BsNJU6cOaDZUwM29l0jF-NRQj7 ('YouTube Videos')")
-    print("  GCP Project    : timbercraft-studio (1051808411017)")
-    print("  " + "-" * 71)
-    print("  REMINDER: Authenticate with anikinuzir3@gmail.com to access Drive buffer!")
-    print("=" * 75)
+    print("\n" + "=" * 80)
+    print("  🔴 CRITICAL ACCOUNT VERIFICATION: TIMBERCRAFT ARCHIVE 🔴")
+    print("  " + "-" * 76)
+    print("  Channel Name    : TimberCraft Archive / Anikin Uzir")
+    print("  Expected Email  : anikinuzir3@gmail.com")
+    print("  Google Cloud    : timbercraft-studio (Project #1051808411017)")
+    print("  Drive Folder    : 1kl4GK0BsNJU6cOaDZUwM29l0jF-NRQj7 ('YouTube Videos')")
+    print("  GitHub Repo     : anikinuzir3wood/wood-working-automations")
+    print("  " + "-" * 76)
+    print("  ⚠️ WARNING: DO NOT AUTHENTICATE WITH zeniusindividual@gmail.com!")
+    print("  Only log in with: anikinuzir3@gmail.com")
+    print("=" * 80 + "\n")
 
     if not CLIENT_SECRETS_FILE.exists():
         print(f"[!] Error: {CLIENT_SECRETS_FILE} not found!")
