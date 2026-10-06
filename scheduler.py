@@ -2,7 +2,7 @@
 Daily Cadence Scheduler for TimberCraft Automation
 Enforces strict anti-bot cadence:
 - Slot 1: 05:30 AM IST (8:00 PM EDT prev day / 00:00 UTC)
-- Slot 2: 04:30 PM IST (7:00 AM EDT / 11:00 UTC)
+- Slot 2: 09:30 PM IST (12:00 PM EDT / 16:00 UTC)
 - Anti-Bot Jitter: Automated random +1 to +10 minute delay
 """
 
@@ -28,7 +28,7 @@ from config import AUDITED_ACCOUNTS
 SLOT_1_IST_HOUR = 5   # 05:30 AM IST (8:00 PM EDT prev day / 00:00 UTC)
 SLOT_1_IST_MIN = 30
 
-SLOT_2_IST_HOUR = 16  # 04:30 PM IST (7:00 AM EDT / 11:00 UTC)
+SLOT_2_IST_HOUR = 21  # 09:30 PM IST (12:00 PM EDT / 16:00 UTC)
 SLOT_2_IST_MIN = 30
 
 TZ_EDT = zoneinfo.ZoneInfo("America/New_York")
@@ -56,7 +56,7 @@ class DailyScheduler:
 
         # Slot 1 today (05:30 AM IST)
         slot1 = datetime(today.year, today.month, today.day, SLOT_1_IST_HOUR, SLOT_1_IST_MIN, tzinfo=TZ_IST)
-        # Slot 2 today (04:30 PM IST)
+        # Slot 2 today (09:30 PM IST)
         slot2 = datetime(today.year, today.month, today.day, SLOT_2_IST_HOUR, SLOT_2_IST_MIN, tzinfo=TZ_IST)
 
         jitter_min = random.randint(1, 10)
@@ -66,7 +66,7 @@ class DailyScheduler:
             return target, "Slot 1 (Morning - 05:30 AM IST)", jitter_min
         elif now_ist < slot2:
             target = slot2 + timedelta(minutes=jitter_min)
-            return target, "Slot 2 (Evening - 04:30 PM IST)", jitter_min
+            return target, "Slot 2 (Night - 09:30 PM IST)", jitter_min
         else:
             # Tomorrow Slot 1
             tomorrow = today + timedelta(days=1)
