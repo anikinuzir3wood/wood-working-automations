@@ -1,10 +1,10 @@
 name: TimberCraft Auto-Upload Pipeline
 
 on:
-  # Cron Schedule: 3 PM EDT (19:00 UTC) & 7 PM EDT (23:00 UTC)
+  # Cron Schedule: 05:30 AM IST (00:00 UTC) & 04:30 PM IST (11:00 UTC)
   schedule:
-    - cron: '0 19 * * *'   # Slot 1: 3:00 PM EDT daily (12:30 AM IST next day)
-    - cron: '0 23 * * *'   # Slot 2: 7:00 PM EDT daily (4:30 AM IST next day)
+    - cron: '0 0 * * *'    # Slot 1: 05:30 AM IST daily (8:00 PM EDT prev day / 00:00 UTC)
+    - cron: '0 11 * * *'   # Slot 2: 04:30 PM IST daily (7:00 AM EDT / 11:00 UTC)
 
   # Manual trigger from GitHub Actions tab
   workflow_dispatch:

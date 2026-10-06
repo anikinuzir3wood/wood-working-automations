@@ -1,10 +1,9 @@
 """
-Golden US Timezone Daily Scheduler for TimberCraft Automation
+Daily Cadence Scheduler for TimberCraft Automation
 Enforces strict anti-bot cadence:
-- Slot 1 (US Afternoon Peak): 3:00 PM EDT (12:30 AM IST next day)
-- Slot 2 (US Prime Evening Peak): 7:00 PM EDT (4:30 AM IST next day)
+- Slot 1: 05:30 AM IST (8:00 PM EDT prev day / 00:00 UTC)
+- Slot 2: 04:30 PM IST (7:00 AM EDT / 11:00 UTC)
 - Anti-Bot Jitter: Automated random +1 to +10 minute delay
-- Strict 4-hour gap between uploads
 """
 
 import time
@@ -25,12 +24,12 @@ if sys.stdout.encoding != 'utf-8':
 from queue_manager import QueueManager
 from config import AUDITED_ACCOUNTS
 
-# Golden Slots in EDT (Eastern Daylight Time / US New York)
-SLOT_1_EDT_HOUR = 15  # 3:00 PM EDT
-SLOT_1_EDT_MIN = 0
+# Daily Slots in IST (India Standard Time)
+SLOT_1_IST_HOUR = 5   # 05:30 AM IST (8:00 PM EDT prev day / 00:00 UTC)
+SLOT_1_IST_MIN = 30
 
-SLOT_2_EDT_HOUR = 19  # 7:00 PM EDT
-SLOT_2_EDT_MIN = 0
+SLOT_2_IST_HOUR = 16  # 04:30 PM IST (7:00 AM EDT / 11:00 UTC)
+SLOT_2_IST_MIN = 30
 
 TZ_EDT = zoneinfo.ZoneInfo("America/New_York")
 TZ_IST = zoneinfo.ZoneInfo("Asia/Kolkata")
@@ -50,35 +49,35 @@ class DailyScheduler:
     def get_next_upload_slot(self) -> Tuple[datetime, str, int]:
         """
         Calculates next upload slot (Slot 1 or Slot 2) with 1-10 min random anti-bot jitter.
-        Returns: (target_time_edt, slot_name, jitter_minutes)
+        Returns: (target_time_ist, slot_name, jitter_minutes)
         """
-        now_edt, _ = self.get_current_times()
-        today = now_edt.date()
+        _, now_ist = self.get_current_times()
+        today = now_ist.date()
 
-        # Slot 1 today
-        slot1 = datetime(today.year, today.month, today.day, SLOT_1_EDT_HOUR, SLOT_1_EDT_MIN, tzinfo=TZ_EDT)
-        # Slot 2 today
-        slot2 = datetime(today.year, today.month, today.day, SLOT_2_EDT_HOUR, SLOT_2_EDT_MIN, tzinfo=TZ_EDT)
+        # Slot 1 today (05:30 AM IST)
+        slot1 = datetime(today.year, today.month, today.day, SLOT_1_IST_HOUR, SLOT_1_IST_MIN, tzinfo=TZ_IST)
+        # Slot 2 today (04:30 PM IST)
+        slot2 = datetime(today.year, today.month, today.day, SLOT_2_IST_HOUR, SLOT_2_IST_MIN, tzinfo=TZ_IST)
 
         jitter_min = random.randint(1, 10)
 
-        if now_edt < slot1:
+        if now_ist < slot1:
             target = slot1 + timedelta(minutes=jitter_min)
-            return target, "Slot 1 (US Afternoon Peak - 3:00 PM EDT)", jitter_min
-        elif now_edt < slot2:
+            return target, "Slot 1 (Morning - 05:30 AM IST)", jitter_min
+        elif now_ist < slot2:
             target = slot2 + timedelta(minutes=jitter_min)
-            return target, "Slot 2 (US Prime Evening Peak - 7:00 PM EDT)", jitter_min
+            return target, "Slot 2 (Evening - 04:30 PM IST)", jitter_min
         else:
             # Tomorrow Slot 1
             tomorrow = today + timedelta(days=1)
-            target = datetime(tomorrow.year, tomorrow.month, tomorrow.day, SLOT_1_EDT_HOUR, SLOT_1_EDT_MIN, tzinfo=TZ_EDT) + timedelta(minutes=jitter_min)
-            return target, "Slot 1 (Tomorrow Afternoon Peak - 3:00 PM EDT)", jitter_min
+            target = datetime(tomorrow.year, tomorrow.month, tomorrow.day, SLOT_1_IST_HOUR, SLOT_1_IST_MIN, tzinfo=TZ_IST) + timedelta(minutes=jitter_min)
+            return target, "Slot 1 (Tomorrow Morning - 05:30 AM IST)", jitter_min
 
     def print_status(self):
         now_edt, now_ist = self.get_current_times()
-        next_slot_edt, slot_name, jitter = self.get_next_upload_slot()
-        next_slot_ist = next_slot_edt.astimezone(TZ_IST)
-        wait_seconds = (next_slot_edt - now_edt).total_seconds()
+        next_slot_ist, slot_name, jitter = self.get_next_upload_slot()
+        next_slot_edt = next_slot_ist.astimezone(TZ_EDT)
+        wait_seconds = (next_slot_ist - now_ist).total_seconds()
         wait_hours = wait_seconds / 3600.0
 
         print("=" * 80)
