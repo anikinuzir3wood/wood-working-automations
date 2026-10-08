@@ -38,6 +38,26 @@ Always maintain strict separation between the user's automation projects. NEVER 
 - **Copyright Inspection**: Query YouTube API status. If any claim or restriction exists, KEEP UNLISTED permanently to preserve 0-strike channel health.
 - **Public Promotion**: Promote from `UNLISTED` to `PUBLIC` ONLY after 100% clean verification.
 
+### 3. Permanent Zero-Expiry OAuth Protocol (Publish to Production Rule)
+- **Root Cause of 7-Day Revocation**:
+  - In Google Cloud Console, any OAuth 2.0 app set to **"Testing"** status issues refresh tokens that Google automatically and forcibly invalidates after **exactly 7 days (168 hours)** with error: `invalid_grant: Token has been expired or revoked`.
+  - Normal access token refreshes do NOT reset or extend this 7-day initial consent timer.
+- **Permanent Fix (Publish to Production)**:
+  - For continuous, uninterrupted background automation (e.g. GitHub Actions), every channel's Google Cloud project MUST have its Publishing Status set to **"In production"**.
+  - Refresh tokens issued under "In production" status **do NOT expire after 7 days** and remain active indefinitely.
+- **Mandatory Requirements to Unlock "Publish app" Button in Google Cloud**:
+  Google Cloud disables the "Publish app" button until the **Branding** configuration is 100% complete. To enable it:
+  1. **App Name**: Must be filled (e.g. `TimberCraft Archive`).
+  2. **User Support Email**: Must select owner email (e.g. `anikinuzir3@gmail.com`).
+  3. **Developer Contact Email**: Must include owner email.
+  4. **App Logo**: Must upload a square 120x120px PNG/JPG (<1MB) logo (generate via Gemini if missing).
+  5. **Application Home Page Link**: Must be a valid URL (e.g. `https://github.com/<owner>/<repo>`).
+  6. **Privacy Policy Link**: Must be a valid URL (e.g. `https://github.com/<owner>/<repo>`).
+  7. **Authorized Domain**: Must specify the clean domain without scheme (e.g. `github.com`, NOT `https://github.com`).
+  8. **Save Branding**: Once saved, return to the **Audience** page (`/auth/audience`). The "Publish app" button will become clickable.
+  9. **Push to Production**: Click "Publish app" and confirm in the modal dialog. Status changes to **In production**.
+  10. **Re-Authenticate Token**: Re-run `setup_auth.py` immediately to issue a fresh refresh token under the new "In production" status and sync to GitHub Secrets (`YOUTUBE_TOKEN_JSON`).
+
 ---
 
 ## Mandatory Reminder Protocol
@@ -46,3 +66,4 @@ Whenever instructing the user to log in, authenticate, configure Google Cloud AP
 1. **ALWAYS explicitly specify both the Channel Name AND the exact Gmail address.**
 2. **Warn the user clearly if they are about to log in, so they never select the wrong account by mistake.**
 3. In all authentication scripts (`setup_auth.py`), display a bold warning banner with the expected email and channel before initiating the browser flow.
+
