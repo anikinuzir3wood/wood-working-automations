@@ -150,17 +150,73 @@ class YouTubeUploader:
             }
         }
 
-        media = MediaFileUpload(str(video_path), mimetype="video/mp4", resumable=True, chunksize=1024*1024*5)
-        print("[*] Uploading video bytes to YouTube servers...")
-        request = self.service.videos().insert(part="snippet,status", body=body, media_body=media)
-        
-        response = None
-        while response is None:
-            status, response = request.next_chunk()
-            if status:
-                print(f"    Upload Progress: {int(status.progress() * 100)}%")
+        from googleapiclient.errors import HttpError
+        import http.client
+        import socket
 
-        video_id = response.get("id")
+        max_session_attempts = 3
+        chunk_retries = 5
+        response = None
+        video_id = None
+
+        print("[*] Uploading video bytes to YouTube servers...")
+        for session_attempt in range(1, max_session_attempts + 1):
+            try:
+                if session_attempt > 1:
+                    print(f"[*] Starting fresh upload session attempt {session_attempt}/{max_session_attempts}...")
+                media = MediaFileUpload(str(video_path), mimetype="video/mp4", resumable=True, chunksize=1024 * 1024 * 10)
+                request = self.service.videos().insert(part="snippet,status", body=body, media_body=media)
+                
+                response = None
+                while response is None:
+                    error = None
+                    for retry in range(1, chunk_retries + 1):
+                        try:
+                            status, response = request.next_chunk()
+                            if status:
+                                print(f"    Upload Progress: {int(status.progress() * 100)}%")
+                            error = None
+                            break
+                        except HttpError as e:
+                            if e.resp.status in [500, 502, 503, 504]:
+                                error = e
+                                sleep_sec = min(32, 2 ** retry)
+                                print(f"    [!] Transient YouTube server error ({e.resp.status}). Retrying chunk in {sleep_sec}s (retry {retry}/{chunk_retries})...")
+                                time.sleep(sleep_sec)
+                            elif e.resp.status == 410:
+                                print(f"    [!] Upload session expired/dropped by YouTube (HTTP 410 Gone). Re-initiating fresh session...")
+                                raise  # Break out to outer session retry
+                            else:
+                                raise  # Non-retriable HttpError
+                        except (socket.error, http.client.RemoteDisconnected, ConnectionResetError, TimeoutError, OSError) as e:
+                            error = e
+                            sleep_sec = min(32, 2 ** retry)
+                            print(f"    [!] Network glitch ({e}). Retrying chunk in {sleep_sec}s (retry {retry}/{chunk_retries})...")
+                            time.sleep(sleep_sec)
+
+                    if error is not None:
+                        raise error
+
+                if response and response.get("id"):
+                    video_id = response.get("id")
+                    break
+
+            except HttpError as e:
+                if e.resp.status == 410 and session_attempt < max_session_attempts:
+                    print(f"[*] Session invalidated by YouTube (410 Gone). Restarting upload attempt {session_attempt + 1} in 5s...")
+                    time.sleep(5)
+                    continue
+                raise
+            except Exception as e:
+                if session_attempt < max_session_attempts:
+                    print(f"[!] Upload attempt {session_attempt} failed: {e}. Retrying upload in 5s...")
+                    time.sleep(5)
+                    continue
+                raise
+
+        if not video_id:
+            raise RuntimeError("Failed to obtain video ID after resumable upload attempts.")
+
         print(f"[+] Successfully uploaded as UNLISTED! Video ID: {video_id}")
         print(f"    Watch Link: https://www.youtube.com/shorts/{video_id}")
 
