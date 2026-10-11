@@ -52,13 +52,20 @@ class TimberCraftPipeline:
 
         # 1. Probe Raw Footage
         info = probe_video(raw_video_path)
-        print(f"[1/5] Raw Video Probed: {info['width']}x{info['height']}, {info['duration']:.1f}s, Codec: {info['codec']}")
+        raw_dur = info.get('duration', 32.0)
+        print(f"[1/5] Raw Video Probed: {info['width']}x{info['height']}, {raw_dur:.1f}s, Codec: {info['codec']}")
+
+        # Enforce full raw video duration up to YouTube Shorts maximum limit (180s)
+        effective_duration = min(max(raw_dur, 15.0), 180.0)
 
         # 1b. Analyze Visual Content (Prioritize pre-computed queue analysis, fallback to live vision)
         if not video_analysis or not video_analysis.get("script_parts"):
             video_analysis = analyze_video_content(str(raw_video_path))
         else:
             print(f"[+] Using Pre-Computed Grounded Visual Analysis for '{video_analysis.get('object', 'Woodcraft')}'")
+
+        if video_analysis:
+            video_analysis["duration"] = effective_duration
 
         if video_analysis.get("reject", False):
             reason = video_analysis.get("reject_reason", "Rejected by visual analysis")
@@ -70,7 +77,11 @@ class TimberCraftPipeline:
             extra_plan_flags["has_foreign_captions"] = True
 
         # 2. Generate Director Script & Human Touch Directives
-        plan = custom_plan or self.director.generate_short_plan(topic=video_title, video_analysis=video_analysis)
+        plan = custom_plan or self.director.generate_short_plan(
+            topic=video_title,
+            video_analysis=video_analysis,
+            target_duration=effective_duration
+        )
         # Merge any extra flags (e.g. has_foreign_captions) into plan
         if extra_plan_flags:
             plan.update(extra_plan_flags)

@@ -115,6 +115,7 @@ def analyze_video_content(video_path: str) -> Dict[str, Any]:
         return {}
 
     try:
+        duration = get_video_duration(video_path)
         frame_paths = extract_keyframes(video_path, num_frames=5)
         if not frame_paths:
             return {}
@@ -134,7 +135,7 @@ def analyze_video_content(video_path: str) -> Dict[str, Any]:
 
         prompt = (
             "You are a master woodworking visual analyst and narrator for a high-end US YouTube Shorts channel.\n"
-            "Carefully examine these 5 chronological keyframes from a woodworking craft video.\n\n"
+            f"Carefully examine these 5 chronological keyframes from a woodworking craft video ({duration:.1f}s total duration).\n\n"
             "Answer EXACTLY in this format (one item per line):\n"
             "OBJECT: <What specific object, furniture, joint, or tool is shown? E.g., Marking Gauge Tool, Rosewood Bed Frame, Dovetail Box, Table Leg Joint, Hand Plane Shavings>\n"
             "ACTIONS: <Summary of what physical craft steps happen across the frames>\n"
@@ -142,10 +143,10 @@ def analyze_video_content(video_path: str) -> Dict[str, Any]:
             "HUGE_CHINESE_TEXT: <YES or NO. Is there HUGE, prominent, uneditable Chinese text/title covering a large part or center of the video frames?>\n"
             "CHINESE_SUBTITLES: <YES or NO. Are there small Chinese subtitles or watermarks in the video?>\n"
             "SUBTITLE_REGION: <BOTTOM, TOP, or NONE. Where are any Chinese subtitles or watermarks located?>\n"
-            "SCRIPT_PART_1: <Opening hook line (0-5s) in ultra-simple Grade-4 English, e.g., 'Look at how this wooden piece is built without a single nail.'>\n"
-            "SCRIPT_PART_2: <Explaining the action (6-13s) in simple words, describing what hands/tools are actually doing>\n"
-            "SCRIPT_PART_3: <The interlocking or cut (14-21s) in simple words, describing how the wood fits together>\n"
-            "SCRIPT_PART_4: <The final reveal (26-32s) in simple words, praising the rock-solid end result>\n\n"
+            "SCRIPT_PART_1: <Opening hook line in ultra-simple Grade-4 English, e.g., 'Look at how this wooden piece is built without a single nail.'>\n"
+            "SCRIPT_PART_2: <Explaining the crafting action in simple words, describing what hands/tools are actually doing>\n"
+            "SCRIPT_PART_3: <The interlocking or cut in simple words, describing how the wood fits together>\n"
+            "SCRIPT_PART_4: <The final reveal at the end in simple words, praising the rock-solid finished piece>\n\n"
             "CRITICAL RULES:\n"
             "- USE SIMPLE, PLAIN WORDS ONLY (Grade-4 reading level).\n"
             "- STRICTLY BANNED WORDS: 'tolerances', 'microscopic', 'fiber severance', 'tenon geometry', 'surgical discipline', 'unwavering patience', 'ingenuity', 'friction-fit'.\n"
@@ -202,8 +203,9 @@ def analyze_video_content(video_path: str) -> Dict[str, Any]:
             except Exception:
                 pass
 
+        analysis["duration"] = round(duration, 2)
         if analysis.get("script_parts"):
-            print(f"[+] Visual Analysis Complete: Object = '{analysis.get('object', 'Woodcraft')}' (via {used_model})")
+            print(f"[+] Visual Analysis Complete: Object = '{analysis.get('object', 'Woodcraft')}' (via {used_model}) | Duration = {duration:.1f}s")
             print(f"    Huge Chinese Text: {analysis.get('has_huge_chinese_text')} | Subtitles: {analysis.get('has_foreign_captions')} ({analysis.get('subtitle_region')})")
             return analysis
         else:

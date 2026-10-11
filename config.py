@@ -59,10 +59,11 @@ BROADCAST_AUDIO_FILTER = (
 # Result: Warm, clearly audible on all devices, never overpowers voiceover.
 MUSIC_SWEET_SPOT_LOCKED = True  # Set to True = sweet spot is calibrated and locked
 
-# Target Duration (Sweet-spot for >100% loop retention)
-MIN_DURATION = 30.0
-MAX_DURATION = 38.0
-OPTIMAL_DURATION = 34.0
+# Target Duration (Dynamic: plays full raw video up to YouTube Shorts max allowed of 3 minutes / 180s)
+MIN_DURATION = 15.0
+MAX_SHORTS_DURATION = 180.0  # Official YouTube Shorts maximum limit (3 minutes)
+OPTIMAL_DURATION = 59.0
+
 
 # Google Drive Buffer & Archive Configuration
 DRIVE_PARENT_FOLDER_ID = "1kl4GK0BsNJU6cOaDZUwM29l0jF-NRQj7"    # "YouTube Videos"

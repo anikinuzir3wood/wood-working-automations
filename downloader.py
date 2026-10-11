@@ -61,6 +61,11 @@ def probe_video(video_path: Path) -> Dict[str, Any]:
     
     v_stream = next((s for s in data["streams"] if s["codec_type"] == "video"), None)
     duration = float(data.get("format", {}).get("duration", 0.0))
+    if duration <= 0.0 and v_stream:
+        try:
+            duration = float(v_stream.get("duration", 0.0))
+        except (ValueError, TypeError):
+            pass
     
     width = int(v_stream.get("width", 1080)) if v_stream else 1080
     height = int(v_stream.get("height", 1920)) if v_stream else 1920

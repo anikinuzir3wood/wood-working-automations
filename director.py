@@ -8,7 +8,7 @@ CRITICAL MANDATE:
 - Supports Gemini Vision analysis when available for 100% grounded narration.
 """
 
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 import re
 
 
@@ -32,8 +32,8 @@ class ScriptDirector:
     def __init__(self):
         pass
 
-    def generate_vision_grounded_plan(self, topic: str, analysis: Dict[str, Any]) -> Dict[str, Any]:
-        """Builds a customized short plan directly from Gemini Vision frame analysis."""
+    def generate_vision_grounded_plan(self, topic: str, analysis: Dict[str, Any], target_duration: Optional[float] = None) -> Dict[str, Any]:
+        """Builds a customized short plan directly from Gemini Vision frame analysis scaling to full raw video length."""
         raw_obj = analysis.get("object", "")
         clean_obj = sanitize_english_text(raw_obj, fallback="Traditional Woodcraft")
         
@@ -46,63 +46,76 @@ class ScriptDirector:
         if len(masthead) > 26:
             masthead = masthead[:23] + "..."
 
+        # Determine full video duration (allow full raw length up to YouTube Shorts 180s limit)
+        dur = target_duration or analysis.get("duration") or 32.0
+        dur = min(max(float(dur), 15.0), 180.0)
+        dur = round(dur, 1)
+
         parts = analysis.get("script_parts", [])
         if len(parts) < 4:
-            return self.generate_dynamic_craft_plan(topic)
+            return self.generate_dynamic_craft_plan(topic, target_duration=dur)
 
         final_title = f"{clean_topic} #Shorts" if not clean_topic.endswith("#Shorts") else clean_topic
 
-        hud_spec_0 = clean_obj.upper()
-        if len(hud_spec_0) > 20:
-            hud_spec_0 = hud_spec_0[:17] + "..."
+        # Dynamically distribute speech, silence window, and HUD across full duration
+        t_hook = 0.0
+        t_action = round(dur * 0.18, 1)
+        t_assembly = round(dur * 0.45, 1)
+        t_silence_start = round(dur * 0.72, 1)
+        t_silence_dur = max(3.0, min(6.0, round(dur * 0.09, 1)))  # 3s to 6s pure ASMR window
+        t_silence_end = round(t_silence_start + t_silence_dur, 1)
+        if t_silence_end >= dur - 2.5:
+            t_silence_end = round(dur - 3.0, 1)
+            t_silence_start = round(t_silence_end - 3.0, 1)
+        t_reveal = round(t_silence_end + 0.4, 1)
 
         return {
             "title": final_title,
             "masthead_text": masthead,
-            "target_duration": 32.0,
+            "target_duration": dur,
             "narration_segments": [
-                {"start": 0.0, "end": 5.5, "text": parts[0]},
-                {"start": 6.0, "end": 13.5, "text": parts[1]},
-                {"start": 14.0, "end": 21.5, "text": parts[2]},
-                {"start": 26.5, "end": 31.8, "text": parts[3]}
+                {"start": t_hook, "end": round(t_action - 0.5, 1), "text": parts[0]},
+                {"start": t_action, "end": round(t_assembly - 0.5, 1), "text": parts[1]},
+                {"start": t_assembly, "end": round(t_silence_start - 0.5, 1), "text": parts[2]},
+                {"start": t_reveal, "end": round(dur - 0.2, 1), "text": parts[3]}
             ],
             "silence_window": {
-                "start": 22.0,
-                "end": 26.0,
+                "start": t_silence_start,
+                "end": t_silence_end,
                 "reason": "Climax pay-off: Pure acoustic wood joinery ASMR"
             },
             "hud_overlays": [
                 {
                     "start": 1.0,
-                    "end": 6.0,
+                    "end": round(t_action, 1),
                     "title": "TRADITIONAL WOODCRAFT",
                     "specs": ["Design: ZERO NAILS", "Method: 100% WOOD"]
                 },
                 {
-                    "start": 7.0,
-                    "end": 13.5,
+                    "start": round(t_action + 0.5, 1),
+                    "end": round(t_assembly, 1),
                     "title": "CORNER INTERLOCK",
                     "specs": ["Joint: SLIDE & LOCK", "Fit: CLEAN WOOD"]
                 },
                 {
-                    "start": 14.5,
-                    "end": 21.0,
+                    "start": round(t_assembly + 0.5, 1),
+                    "end": round(t_silence_start, 1),
                     "title": "SOLID FRAME",
                     "specs": ["Holding: PURE FRICTION", "Strength: HEIRLOOM"]
                 },
                 {
-                    "start": 26.5,
-                    "end": 31.5,
+                    "start": round(t_reveal, 1),
+                    "end": round(dur - 0.3, 1),
                     "title": "FINISHED PIECE",
                     "specs": ["Quality: LIFETIME BUILD", "Craft: MASTER HAND"]
                 }
             ],
             "speed_ramps": [
-                {"start": 0.0, "end": 6.0, "speed": 1.0, "label": "Opening"},
-                {"start": 6.0, "end": 14.0, "speed": 1.0, "label": "Interlocking action"},
-                {"start": 14.0, "end": 22.0, "speed": 0.95, "label": "Locking"},
-                {"start": 22.0, "end": 26.0, "speed": 1.0, "label": "ASMR lock"},
-                {"start": 26.0, "end": 32.0, "speed": 1.0, "label": "Full reveal"}
+                {"start": 0.0, "end": t_action, "speed": 1.0, "label": "Opening"},
+                {"start": t_action, "end": t_assembly, "speed": 1.0, "label": "Interlocking action"},
+                {"start": t_assembly, "end": t_silence_start, "speed": 1.0, "label": "Locking"},
+                {"start": t_silence_start, "end": t_silence_end, "speed": 1.0, "label": "ASMR lock"},
+                {"start": t_silence_end, "end": dur, "speed": 1.0, "label": "Full reveal"}
             ],
             "music_mood": "chisel_asmr",
             "sub_niche": "Traditional Woodworking",
@@ -961,145 +974,208 @@ class ScriptDirector:
             "force_new_music": False
         }
 
-    def generate_dynamic_craft_plan(self, topic: str) -> Dict[str, Any]:
-        """Dynamic plan synthesizer for any custom woodworking topic using simple words."""
+    def generate_dynamic_craft_plan(self, topic: str, target_duration: Optional[float] = None) -> Dict[str, Any]:
+        """Dynamic plan synthesizer for any custom woodworking topic scaling to full raw video length."""
         raw_clean = topic.replace("#Shorts", "").strip()
         clean_topic = sanitize_english_text(raw_clean, fallback="Traditional Woodcraft")
         masthead = clean_topic.upper()
         if len(masthead) > 26:
             masthead = masthead[:23] + "..."
 
+        dur = target_duration or 32.0
+        dur = min(max(float(dur), 15.0), 180.0)
+        dur = round(dur, 1)
+
+        t_hook = 0.0
+        t_action = round(dur * 0.18, 1)
+        t_assembly = round(dur * 0.45, 1)
+        t_silence_start = round(dur * 0.72, 1)
+        t_silence_dur = max(3.0, min(6.0, round(dur * 0.09, 1)))
+        t_silence_end = round(t_silence_start + t_silence_dur, 1)
+        if t_silence_end >= dur - 2.5:
+            t_silence_end = round(dur - 3.0, 1)
+            t_silence_start = round(t_silence_end - 3.0, 1)
+        t_reveal = round(t_silence_end + 0.4, 1)
+
         return {
             "title": f"{clean_topic} #Shorts",
             "masthead_text": masthead,
-            "target_duration": 32.0,
+            "target_duration": dur,
             "narration_segments": [
                 {
-                    "start": 0.0,
-                    "end": 5.5,
+                    "start": t_hook,
+                    "end": round(t_action - 0.5, 1),
                     "text": "In traditional woodworking, building by hand takes time and steady hands."
                 },
                 {
-                    "start": 6.0,
-                    "end": 14.0,
+                    "start": t_action,
+                    "end": round(t_assembly - 0.5, 1),
                     "text": "Every cut is made to follow the natural grain of the wood, with zero nails and zero screws."
                 },
                 {
-                    "start": 14.5,
-                    "end": 21.5,
+                    "start": t_assembly,
+                    "end": round(t_silence_start - 0.5, 1),
                     "text": "Watch closely as the woodworker fits the pieces together by hand, making sure every corner is flush..."
                 },
                 {
-                    "start": 26.5,
-                    "end": 31.8,
+                    "start": t_reveal,
+                    "end": round(dur - 0.2, 1),
                     "text": "giving you a clean, solid piece of woodwork that will last a lifetime. That is true craft."
                 }
             ],
             "silence_window": {
-                "start": 22.0,
-                "end": 26.0,
+                "start": t_silence_start,
+                "end": t_silence_end,
                 "reason": "Climax pay-off: Pure acoustic craftsman hands ASMR"
             },
             "hud_overlays": [
                 {
                     "start": 1.0,
-                    "end": 6.0,
+                    "end": round(t_action, 1),
                     "title": "MASTER WORK",
                     "specs": ["Craft: TRADITIONAL WOODCRAFT", "Method: 100% MANUAL"]
                 },
                 {
-                    "start": 7.0,
-                    "end": 13.5,
+                    "start": round(t_action + 0.5, 1),
+                    "end": round(t_assembly, 1),
                     "title": "GRAIN DYNAMICS",
                     "specs": ["Surface: HAND FINISHED", "Nails: ZERO"]
                 },
                 {
-                    "start": 14.5,
-                    "end": 21.0,
+                    "start": round(t_assembly + 0.5, 1),
+                    "end": round(t_silence_start, 1),
                     "title": "CLEAN FIT",
                     "specs": ["Fit: FLUSH EDGES", "Seam: TIGHT"]
                 },
                 {
-                    "start": 26.5,
-                    "end": 31.5,
+                    "start": round(t_reveal, 1),
+                    "end": round(dur - 0.3, 1),
                     "title": "FINAL REVEAL",
                     "specs": ["Quality: LIFETIME BUILD", "Grade: HEIRLOOM"]
                 }
             ],
             "speed_ramps": [
-                {"start": 0.0, "end": 6.0, "speed": 1.0, "label": "Opening craft"},
-                {"start": 6.0, "end": 14.0, "speed": 1.0, "label": "Detailed work"},
-                {"start": 14.0, "end": 22.0, "speed": 0.95, "label": "Fitting together"},
-                {"start": 22.0, "end": 26.0, "speed": 1.0, "label": "Pure ASMR payoff"},
-                {"start": 26.0, "end": 32.0, "speed": 1.0, "label": "Finished reveal"}
+                {"start": 0.0, "end": t_action, "speed": 1.0, "label": "Opening craft"},
+                {"start": t_action, "end": t_assembly, "speed": 1.0, "label": "Detailed work"},
+                {"start": t_assembly, "end": t_silence_start, "speed": 1.0, "label": "Fitting together"},
+                {"start": t_silence_start, "end": t_silence_end, "speed": 1.0, "label": "Pure ASMR payoff"},
+                {"start": t_silence_end, "end": dur, "speed": 1.0, "label": "Finished reveal"}
             ],
             "music_mood": "chisel_asmr",
             "sub_niche": "Traditional Woodworking",
             "force_new_music": False
         }
 
-    def generate_short_plan(self, topic: str = "end_grain", video_analysis: Dict[str, Any] = None) -> Dict[str, Any]:
+    def _scale_plan_to_duration(self, plan: Dict[str, Any], target_duration: Optional[float]) -> Dict[str, Any]:
+        """Ensures any selected plan (template or dynamic) matches target_duration across all timing cues."""
+        if not target_duration:
+            return plan
+
+        dur = min(max(float(target_duration), 15.0), 180.0)
+        dur = round(dur, 1)
+        orig_dur = float(plan.get("target_duration", 32.0))
+        if abs(orig_dur - dur) < 0.2:
+            plan["target_duration"] = dur
+            return plan
+
+        scale = dur / orig_dur if orig_dur > 0 else 1.0
+        plan["target_duration"] = dur
+
+        # Scale narration segments
+        if "narration_segments" in plan:
+            scaled_segs = []
+            for seg in plan["narration_segments"]:
+                st = round(seg["start"] * scale, 1)
+                en = round(min(seg["end"] * scale, dur - 0.2), 1)
+                scaled_segs.append({"start": st, "end": en, "text": seg["text"]})
+            plan["narration_segments"] = scaled_segs
+
+        # Scale silence window
+        if "silence_window" in plan and isinstance(plan["silence_window"], dict):
+            sw = plan["silence_window"]
+            st = round(sw.get("start", 22.0) * scale, 1)
+            en = round(sw.get("end", 26.0) * scale, 1)
+            if en >= dur - 2.5:
+                en = round(dur - 3.0, 1)
+                st = round(en - 3.5, 1)
+            plan["silence_window"] = {
+                "start": max(0.0, st),
+                "end": max(st + 2.0, en),
+                "reason": sw.get("reason", "Climax pay-off: Pure acoustic wood joinery ASMR")
+            }
+
+        # Scale HUD overlays
+        if "hud_overlays" in plan:
+            scaled_huds = []
+            for hud in plan["hud_overlays"]:
+                st = round(hud["start"] * scale, 1)
+                en = round(min(hud["end"] * scale, dur - 0.2), 1)
+                scaled_huds.append({
+                    "start": st,
+                    "end": en,
+                    "title": hud.get("title", "MASTER WORK"),
+                    "specs": hud.get("specs", [])
+                })
+            plan["hud_overlays"] = scaled_huds
+
+        # Scale speed ramps
+        if "speed_ramps" in plan:
+            scaled_ramps = []
+            for ramp in plan["speed_ramps"]:
+                st = round(ramp["start"] * scale, 1)
+                en = round(min(ramp["end"] * scale, dur), 1)
+                scaled_ramps.append({
+                    "start": st,
+                    "end": en,
+                    "speed": ramp.get("speed", 1.0),
+                    "label": ramp.get("label", "Craft")
+                })
+            plan["speed_ramps"] = scaled_ramps
+
+        return plan
+
+    def generate_short_plan(self, topic: str = "end_grain", video_analysis: Dict[str, Any] = None, target_duration: Optional[float] = None) -> Dict[str, Any]:
         """
         Dynamically selects or synthesizes a plan matching the specific video.
         If video_analysis is provided from Gemini Vision, grounds narration
         directly in what is actually visible on screen with simple words.
+        Scales plan duration to the exact length of the raw video (up to 180s).
         """
         # 0. Vision-grounded priority: If video analysis provided 4 simple script parts, use them!
         if video_analysis and video_analysis.get("script_parts"):
-            return self.generate_vision_grounded_plan(topic, video_analysis)
+            return self.generate_vision_grounded_plan(topic, video_analysis, target_duration=target_duration)
 
         t = (topic or "").lower()
 
         # 1. Bed frame joint / corner post (checked first for bed/furniture assembly)
         if any(w in t for w in ["bed", "bed frame", "corner assembly"]):
-            return self.generate_bed_frame_joint_plan()
+            plan = self.generate_bed_frame_joint_plan()
+        elif any(w in t for w in ["dissect", "hidden", "internal", "拆解"]):
+            plan = self.generate_locking_mortise_dissection_plan()
+        elif any(w in t for w in ["table leg", "legjoint", "leg"]):
+            plan = self.generate_table_leg_joint_plan()
+        elif any(w in t for w in ["puzzle", "lock", "鲁班锁", "secret", "slider", "magic", "impossible"]):
+            plan = self.generate_puzzle_lock_plan()
+        elif any(w in t for w in ["plane", "shaving", "shave", "刨", "ribbon", "kanna"]):
+            plan = self.generate_hand_plane_shaving_plan()
+        elif any(w in t for w in ["dovetail", "燕尾", "box joint"]):
+            plan = self.generate_dovetail_joint_plan()
+        elif any(w in t for w in ["master tenon", "corner"]):
+            plan = self.generate_corner_tenon_plan()
+        elif any(w in t for w in ["marking", "gauge", "划线器", "layout", "pencil", "line"]):
+            plan = self.generate_marking_gauge_plan()
+        elif any(w in t for w in ["kumiko", "lattice", "组子", "hexagonal", "grid"]):
+            plan = self.generate_kumiko_plan()
+        elif any(w in t for w in ["dougong", "bracket", "斗拱", "temple", "earthquake", "pavilion", "shrine"]):
+            plan = self.generate_dougong_plan()
+        elif any(w in t for w in ["end_grain", "chisel", "sharpness", "blade", "slice"]):
+            plan = self.generate_end_grain_sharpness_plan()
+        elif any(w in t for w in ["sunmao", "mortise", "tenon", "榫卯", "joint", "interlock"]):
+            plan = self.generate_sunmao_mortise_plan()
+        else:
+            return self.generate_dynamic_craft_plan(topic, target_duration=target_duration)
 
-        # 2. Dissecting hidden mortise / internal mechanism
-        if any(w in t for w in ["dissect", "hidden", "internal", "拆解"]):
-            return self.generate_locking_mortise_dissection_plan()
-
-        # 3. Table leg joint
-        if any(w in t for w in ["table leg", "legjoint", "leg"]):
-            return self.generate_table_leg_joint_plan()
-
-        # 4. Puzzle, secret lock, slider, magic joint
-        if any(w in t for w in ["puzzle", "lock", "鲁班锁", "secret", "slider", "magic", "impossible"]):
-            return self.generate_puzzle_lock_plan()
-
-        # 5. Hand plane, shaving, kanna
-        if any(w in t for w in ["plane", "shaving", "shave", "刨", "ribbon", "kanna"]):
-            return self.generate_hand_plane_shaving_plan()
-
-        # 6. Dovetail box joint
-        if any(w in t for w in ["dovetail", "燕尾", "box joint"]):
-            return self.generate_dovetail_joint_plan()
-
-        # 7. Master tenon corner assembly
-        if any(w in t for w in ["master tenon", "corner"]):
-            return self.generate_corner_tenon_plan()
-
-        # 8. Marking gauge / layout / measurement
-        if any(w in t for w in ["marking", "gauge", "划线器", "layout", "pencil", "line"]):
-            return self.generate_marking_gauge_plan()
-
-        # 9. Kumiko lattice
-        if any(w in t for w in ["kumiko", "lattice", "组子", "hexagonal", "grid"]):
-            return self.generate_kumiko_plan()
-
-        # 10. Dougong, Architecture, Temple
-        if any(w in t for w in ["dougong", "bracket", "斗拱", "temple", "earthquake", "pavilion", "shrine"]):
-            return self.generate_dougong_plan()
-
-        # 11. Chisel sharpness, end grain
-        if any(w in t for w in ["end_grain", "chisel", "sharpness", "blade", "slice"]):
-            return self.generate_end_grain_sharpness_plan()
-
-        # 12. Traditional Sunmao / Mortise & Tenon
-        if any(w in t for w in ["sunmao", "mortise", "tenon", "榫卯", "joint", "interlock"]):
-            return self.generate_sunmao_mortise_plan()
-
-        # 13. Generic dynamic fallback for any other craftsmanship topic
-        return self.generate_dynamic_craft_plan(topic)
+        return self._scale_plan_to_duration(plan, target_duration=target_duration)
 
 
 if __name__ == "__main__":

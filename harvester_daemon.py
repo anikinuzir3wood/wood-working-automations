@@ -122,6 +122,10 @@ class HarvesterDaemon:
                 print(f"[!] Video too short ({dur:.1f}s < 15s). REJECTING.")
                 local_path.unlink()
                 return False
+            if dur > 180.0:
+                print(f"[!] Video exceeds YouTube Shorts 3-minute limit ({dur:.1f}s > 180s). REJECTING.")
+                local_path.unlink()
+                return False
         except Exception as e:
             print(f"[!] Probe error: {e}")
 
